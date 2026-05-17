@@ -1,0 +1,444 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const waypoints = [
+  { t: 0.00, depth: 0,    label: 'Ingresso',           desc: 'Laghetto di Ponte Subiolo. Visibilità cristallina, 10°C costanti.' },
+  { t: 0.15, depth: -30,  label: 'Galleria principale', desc: 'Galleria 8–10 m larga. Pareti calcaree bianchissime.' },
+  { t: 0.28, depth: -80,  label: 'Prima restrizione',   desc: 'Il condotto si restringe. Passaggio tecnico con rebreather.' },
+  { t: 0.42, depth: -130, label: '–130 m',              desc: 'Galleria 10 m larga, 3 m alta. Inizio zona Cavedon.' },
+  { t: 0.54, depth: -140, label: '–140 m',              desc: 'Galleria inclinata 20 m con detriti di crollo sul fondo.' },
+  { t: 0.65, depth: -155, label: '–155 m',              desc: 'Fondo liscio e levigato. Difficile fissare il filo guida.' },
+  { t: 0.75, depth: -165, label: 'Pozzo triangolare',   desc: 'Pozzo 19 m profondo, 7–8 m largo, forma triangolare.' },
+  { t: 0.87, depth: -186, label: '–186 m',              desc: '530 m dall\'ingresso. 30 m di galleria continua.' },
+  { t: 1.00, depth: -226, label: '–226.7 m · Record',   desc: 'Profondità record (feb 2024). Fondo sconosciuto.' },
+];
+---
+
+<Layout
+  title="Elefante Bianco — Viaggio 3D · Alberto Cavedon"
+  description="Viaggio 3D interattivo nella Grotta dell'Elefante Bianco. Scroll per scendere fino a –226 m."
+>
+
+  <!-- Intro overlay -->
+  <div id="intro-overlay" class="fixed inset-0 z-50 bg-black flex flex-col items-center justify-center text-center px-6">
+    <p class="label-eyebrow mb-4">Babylon.js · Dati reali</p>
+    <h1 class="font-black text-white mb-3" style="font-size:clamp(2.5rem,8vw,6rem);letter-spacing:-0.03em;line-height:1.05">
+      Grotta dell'<br/><span class="gradient-text">Elefante Bianco</span>
+    </h1>
+    <p class="text-white/50 text-lg mb-2">Valstagna · 470 m · –226.7 m</p>
+    <p class="text-white/30 text-sm mb-10">Scroll per scendere nell'abisso</p>
+    <button id="start-btn" class="btn-apple text-base px-10 py-4">Inizia la discesa ↓</button>
+    <a href="/esperienze" class="mt-6 text-white/30 text-sm hover:text-white transition-colors">← Torna alle esplorazioni</a>
+  </div>
+
+  <!-- HUD -->
+  <div id="hud" class="fixed top-20 left-6 z-40 hidden">
+    <p class="text-ocean-blue text-xs font-mono tracking-widest uppercase mb-1">Profondità</p>
+    <p id="hud-depth" class="text-white font-mono font-black text-4xl tracking-tight tabular-nums">0 m</p>
+    <div class="w-32 h-px bg-white/10 my-2"></div>
+    <p id="hud-label" class="text-white/50 text-xs font-mono max-w-[160px] leading-relaxed">Ingresso</p>
+  </div>
+
+  <!-- Barra progress -->
+  <div id="progress-bar" class="fixed right-5 top-1/2 -translate-y-1/2 z-40 hidden flex-col items-center gap-2">
+    <p class="text-white/20 text-[9px] font-mono" style="writing-mode:vertical-rl;transform:rotate(180deg)">PROFONDITÀ</p>
+    <div class="w-0.5 h-44 bg-white/10 rounded-full relative overflow-hidden">
+      <div id="bar-fill" class="absolute top-0 inset-x-0 bg-ocean-blue rounded-full" style="height:0%;transition:height 0.1s linear"></div>
+    </div>
+    <p class="text-white/20 text-[9px] font-mono">–226m</p>
+  </div>
+
+  <!-- Canvas Babylon -->
+  <canvas id="cave-canvas" class="fixed inset-0 w-full h-full z-10 pointer-events-none" style="touch-action:none"></canvas>
+
+  <!-- Spazio scroll (900vh) -->
+  <div id="pin-section" style="height:900vh" class="relative z-20">
+
+    <!-- Waypoint cards -->
+    {waypoints.map((wp, i) => (
+      <div
+        id={`wp-${i}`}
+        class="fixed left-1/2 bottom-16 z-40 text-center px-4 pointer-events-none"
+        style="opacity:0;transform:translateX(-50%) translateY(20px);transition:opacity 0.5s ease,transform 0.5s ease;"
+      >
+        <div class="card-glass inline-block max-w-sm">
+          <p class="text-ocean-blue font-mono text-sm font-bold tracking-widest mb-1">{wp.depth} m</p>
+          <h2 class="text-white font-black text-xl mb-1">{wp.label}</h2>
+          <p class="text-white/50 text-xs leading-relaxed">{wp.desc}</p>
+        </div>
+      </div>
+    ))}
+
+    <!-- Exit card -->
+    <div id="exit-card"
+      class="fixed inset-0 z-40 flex flex-col items-center justify-center text-center px-6 pointer-events-none"
+      style="opacity:0;transition:opacity 1s ease;"
+    >
+      <p class="text-ocean-blue font-mono text-sm tracking-widest mb-4 uppercase">–226.7 m · Fondo inesplorato</p>
+      <h2 class="font-black text-white mb-6" style="font-size:clamp(2rem,6vw,4rem);letter-spacing:-0.02em;line-height:1.1">
+        Oltre questo punto,<br/>nessuno è ancora sceso.
+      </h2>
+      <div class="flex gap-4 pointer-events-auto">
+        <a href="/about" class="btn-apple">Alberto Cavedon</a>
+        <a href="/corsi" class="btn-apple-outline">Corsi UTR</a>
+      </div>
+    </div>
+  </div>
+
+</Layout>
+
+<script>
+document.documentElement.classList.add('no-lenis');
+</script>
+
+<script>
+import {
+  Engine, Scene, Vector3, Color3, Color4,
+  MeshBuilder, StandardMaterial, PBRMaterial,
+  SpotLight, PointLight, HemisphericLight,
+  GlowLayer, VolumetricLightScatteringPostProcess,
+  Camera, FreeCamera, Path3D,
+  Curve3,
+} from '@babylonjs/core';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
+
+// ═══════════════════════════════════════════════════
+// ENGINE + SCENE
+// ═══════════════════════════════════════════════════
+const canvas = document.getElementById('cave-canvas') as HTMLCanvasElement;
+const engine = new Engine(canvas, true, { preserveDrawingBuffer: false, stencil: false });
+engine.setHardwareScalingLevel(1 / Math.min(window.devicePixelRatio, 1.5));
+
+const scene = new Scene(engine);
+scene.clearColor = new Color4(0, 0.02, 0.06, 1);
+scene.ambientColor = new Color3(0, 0.05, 0.1);
+scene.fogMode = Scene.FOGMODE_EXP2;
+scene.fogDensity = 0.07;
+scene.fogColor = new Color3(0, 0.04, 0.1);
+
+// Camera (non controllabile dall'utente, pilotata da scroll)
+const camera = new FreeCamera('cam', new Vector3(0, 0, 0), scene);
+camera.minZ = 0.01;
+camera.maxZ = 60;
+camera.fov = 1.3;
+
+// ═══════════════════════════════════════════════════
+// PERCORSO GROTTA (dati reali delle sezioni)
+// ═══════════════════════════════════════════════════
+const pathVecs = [
+  new Vector3(0,     0,   0),
+  new Vector3(0.2,  -1,   4),
+  new Vector3(-0.3, -2.5, 9),
+  new Vector3(0.4,  -4,  14),
+  new Vector3(0.1,  -5.5,20),
+  new Vector3(-0.2, -7,  25),
+  new Vector3(0.3,  -7.8,29),
+  new Vector3(-0.1, -8.5,33),
+  new Vector3(0.5,  -9.5,37),
+  new Vector3(0,    -11, 42),
+  new Vector3(0.1,  -13, 46),
+];
+
+// Path3D per interpolazione
+const path3d = new Path3D(pathVecs);
+const STEPS  = 300;
+const fullPath: Vector3[] = [];
+for (let i = 0; i <= STEPS; i++) {
+  const t = i / STEPS;
+  // Interpolazione Catmull-Rom manuale lungo i punti
+  const seg = Math.floor(t * (pathVecs.length - 1));
+  const segT = (t * (pathVecs.length - 1)) - seg;
+  const i0 = Math.max(0, seg - 1);
+  const i1 = seg;
+  const i2 = Math.min(pathVecs.length - 1, seg + 1);
+  const i3 = Math.min(pathVecs.length - 1, seg + 2);
+  const p0 = pathVecs[i0], p1 = pathVecs[i1], p2 = pathVecs[i2], p3 = pathVecs[i3];
+  const st = segT;
+  const st2 = st * st, st3 = st2 * st;
+  fullPath.push(new Vector3(
+    0.5 * ((2*p1.x) + (-p0.x+p2.x)*st + (2*p0.x-5*p1.x+4*p2.x-p3.x)*st2 + (-p0.x+3*p1.x-3*p2.x+p3.x)*st3),
+    0.5 * ((2*p1.y) + (-p0.y+p2.y)*st + (2*p0.y-5*p1.y+4*p2.y-p3.y)*st2 + (-p0.y+3*p1.y-3*p2.y+p3.y)*st3),
+    0.5 * ((2*p1.z) + (-p0.z+p2.z)*st + (2*p0.z-5*p1.z+4*p2.z-p3.z)*st2 + (-p0.z+3*p1.z-3*p2.z+p3.z)*st3),
+  ));
+}
+
+// ═══════════════════════════════════════════════════
+// TUNNEL — tubo PBR con variazione raggio
+// ═══════════════════════════════════════════════════
+function radiusAt(t: number): number {
+  if (t < 0.10) return 1.8;
+  if (t < 0.22) return 1.4;
+  if (t < 0.26) return 0.6 + Math.sin(t * 60) * 0.08; // restrizione
+  if (t < 0.42) return 1.5;
+  if (t < 0.54) return 1.2;
+  if (t < 0.65) return 0.9;
+  if (t < 0.75) return 1.9; // pozzo triangolare
+  if (t < 0.87) return 1.0;
+  return 0.75 + Math.sin(t * 25) * 0.1;
+}
+
+// Crea il tunnel come serie di cilindri (Babylon non ha TubeGeometry built-in senza Path3D)
+const tubePoints: Vector3[] = [];
+const tubeRadii: number[]   = [];
+for (let i = 0; i <= STEPS; i++) {
+  const t = i / STEPS;
+  tubePoints.push(fullPath[i]);
+  tubeRadii.push(radiusAt(t));
+}
+
+const tunnel = MeshBuilder.CreateTube('tunnel', {
+  path: tubePoints,
+  radiusFunction: (i) => tubeRadii[i] ?? 1.0,
+  tessellation: 12,
+  sideOrientation: 1, // backside
+  updatable: false,
+}, scene);
+
+// PBR Material per roccia calcarea
+const rockMat = new PBRMaterial('rock', scene);
+rockMat.albedoColor    = new Color3(0.45, 0.50, 0.55);
+rockMat.metallic       = 0.0;
+rockMat.roughness      = 0.98;
+rockMat.backFaceCulling = false;
+rockMat.twoSidedLighting = true;
+tunnel.material = rockMat;
+tunnel.isPickable = false;
+
+// ═══════════════════════════════════════════════════
+// STALATTITI
+// ═══════════════════════════════════════════════════
+const stalaMat = new PBRMaterial('stala', scene);
+stalaMat.albedoColor = new Color3(0.55, 0.60, 0.65);
+stalaMat.roughness   = 0.99;
+stalaMat.metallic    = 0.0;
+
+for (let i = 0; i < 60; i++) {
+  const t   = 0.05 + Math.random() * 0.9;
+  const idx = Math.floor(t * STEPS);
+  const pos = fullPath[idx].clone();
+  const r   = radiusAt(t);
+  const ang = Math.random() * Math.PI * 2;
+  const h   = 0.15 + Math.random() * 0.35;
+  const cyl = MeshBuilder.CreateCylinder(`stala${i}`, {
+    diameterTop: 0.02, diameterBottom: 0.1,
+    height: h, tessellation: 5,
+  }, scene);
+  cyl.position = new Vector3(
+    pos.x + Math.cos(ang) * r * 0.7,
+    pos.y + r * 0.82,
+    pos.z + Math.sin(ang) * r * 0.45,
+  );
+  cyl.rotation.z = Math.PI + (Math.random() - 0.5) * 0.4;
+  cyl.material   = stalaMat;
+  cyl.isPickable = false;
+}
+
+// ═══════════════════════════════════════════════════
+// PARTICELLE sedimento
+// ═══════════════════════════════════════════════════
+const sedMat = new StandardMaterial('sed', scene);
+sedMat.emissiveColor = new Color3(0.3, 0.7, 1.0);
+sedMat.disableLighting = true;
+
+for (let i = 0; i < 400; i++) {
+  const t   = Math.random();
+  const idx = Math.floor(t * STEPS);
+  const p   = fullPath[idx].clone();
+  const r   = radiusAt(t) * 0.65;
+  const sp  = MeshBuilder.CreateSphere(`sed${i}`, { diameter: 0.018, segments: 2 }, scene);
+  sp.position = new Vector3(
+    p.x + (Math.random() - 0.5) * r * 2,
+    p.y + (Math.random() - 0.5) * r * 2,
+    p.z + (Math.random() - 0.5) * 0.6,
+  );
+  sp.material   = sedMat;
+  sp.isPickable = false;
+}
+
+// ═══════════════════════════════════════════════════
+// LUCI
+// ═══════════════════════════════════════════════════
+// Luce ambiente tenue (acqua profonda)
+const hemi = new HemisphericLight('hemi', new Vector3(0, 1, 0), scene);
+hemi.intensity     = 0.15;
+hemi.diffuse       = new Color3(0, 0.2, 0.5);
+hemi.groundColor   = new Color3(0, 0.05, 0.1);
+
+// Torcia della fotocamera (SpotLight che segue la cam)
+const torch = new SpotLight('torch', Vector3.Zero(), new Vector3(0, 0, 1), 1.1, 3, scene);
+torch.diffuse    = new Color3(0.85, 0.92, 1.0);
+torch.specular   = new Color3(0.5, 0.7, 1.0);
+torch.intensity  = 120;
+torch.range      = 14;
+
+// Glow Layer (Babylon built-in — nessun post-process custom)
+const glow = new GlowLayer('glow', scene, { mainTextureFixedSize: 512 });
+glow.intensity = 0.6;
+sedMat.emissiveColor = new Color3(0.1, 0.5, 1.0); // particelle glowanti
+
+// Point light blu all'ingresso
+const entryLight = new PointLight('entry', pathVecs[0].add(new Vector3(0, 0.5, 0)), scene);
+entryLight.diffuse    = new Color3(0, 0.6, 1.0);
+entryLight.intensity  = 8;
+entryLight.range      = 8;
+
+// ═══════════════════════════════════════════════════
+// WAYPOINT RINGS (indicatori visivi nella grotta)
+// ═══════════════════════════════════════════════════
+const waypointTs = [0, 0.15, 0.28, 0.42, 0.54, 0.65, 0.75, 0.87, 1.0];
+const ringMat = new StandardMaterial('ring', scene);
+ringMat.emissiveColor  = new Color3(0, 0.6, 1.0);
+ringMat.wireframe      = false;
+ringMat.disableLighting = true;
+
+waypointTs.slice(1).forEach((t, i) => {
+  const idx = Math.floor(t * STEPS);
+  const pos = fullPath[idx].clone();
+  const torus = MeshBuilder.CreateTorus(`ring${i}`, {
+    diameter: 0.6, thickness: 0.02, tessellation: 32,
+  }, scene);
+  torus.position   = pos;
+  torus.material   = ringMat;
+  torus.isPickable = false;
+
+  // Orienta perpendicolare al percorso
+  if (idx < fullPath.length - 1) {
+    const dir = fullPath[Math.min(idx + 3, fullPath.length - 1)].subtract(pos).normalize();
+    const axis = Vector3.Cross(Vector3.Forward(), dir);
+    if (axis.length() > 0.001) {
+      const angle = Math.acos(Vector3.Dot(Vector3.Forward(), dir));
+      torus.rotationQuaternion = undefined;
+      torus.rotation = axis.normalize().scale(angle);
+    }
+  }
+});
+
+// ═══════════════════════════════════════════════════
+// STATO + HUD
+// ═══════════════════════════════════════════════════
+const waypoints = [
+  { t: 0.00, depth: 0,    label: 'Ingresso' },
+  { t: 0.15, depth: -30,  label: 'Galleria principale' },
+  { t: 0.28, depth: -80,  label: 'Prima restrizione' },
+  { t: 0.42, depth: -130, label: '–130 m' },
+  { t: 0.54, depth: -140, label: '–140 m' },
+  { t: 0.65, depth: -155, label: '–155 m' },
+  { t: 0.75, depth: -165, label: 'Pozzo triangolare' },
+  { t: 0.87, depth: -186, label: '–186 m' },
+  { t: 1.00, depth: -226, label: '–226.7 m · Record' },
+];
+
+const hudDepth  = document.getElementById('hud-depth')!;
+const hudLabel  = document.getElementById('hud-label')!;
+const barFill   = document.getElementById('bar-fill')!;
+const exitCard  = document.getElementById('exit-card')!;
+const wpCards   = waypoints.map((_, i) => document.getElementById(`wp-${i}`)!);
+let lastWpIdx   = -1;
+let scrollProg  = 0;
+
+function updateCamera(prog: number) {
+  const clampT = Math.max(0.001, Math.min(0.999, prog));
+  const idx  = Math.floor(clampT * STEPS);
+  const idx2 = Math.min(STEPS, idx + 4);
+
+  const pos    = fullPath[idx].clone();
+  const lookAt = fullPath[idx2].clone();
+
+  // Leggero wobble nuoto
+  const t = Date.now() * 0.001;
+  pos.x += Math.sin(t * 0.8) * 0.04;
+  pos.y += Math.cos(t * 0.6) * 0.02;
+
+  camera.position = pos;
+  camera.setTarget(lookAt);
+
+  // Torch segue camera
+  torch.position  = pos;
+  torch.direction = lookAt.subtract(pos).normalize();
+
+  // HUD
+  const depth = Math.round(prog * -226);
+  hudDepth.textContent = `${depth} m`;
+  barFill.style.height = `${prog * 100}%`;
+
+  // Waypoint corrente
+  let activeIdx = 0;
+  for (let i = waypoints.length - 1; i >= 0; i--) {
+    if (prog >= waypoints[i].t - 0.01) { activeIdx = i; break; }
+  }
+  if (activeIdx !== lastWpIdx) {
+    hudLabel.textContent = waypoints[activeIdx].label;
+    wpCards.forEach((card, i) => {
+      if (i === activeIdx) {
+        card.style.opacity = '1';
+        card.style.transform = 'translateX(-50%) translateY(0)';
+      } else {
+        card.style.opacity = '0';
+        card.style.transform = 'translateX(-50%) translateY(20px)';
+      }
+    });
+    lastWpIdx = activeIdx;
+  }
+
+  // Exit
+  if (prog > 0.95) {
+    exitCard.style.opacity  = String(Math.min(1, (prog - 0.95) / 0.05));
+    exitCard.style.pointerEvents = 'auto';
+  } else {
+    exitCard.style.opacity  = '0';
+    exitCard.style.pointerEvents = 'none';
+  }
+}
+
+// ═══════════════════════════════════════════════════
+// SCROLLTRIGGER
+// ═══════════════════════════════════════════════════
+ScrollTrigger.create({
+  trigger: '#pin-section',
+  start: 'top top',
+  end: 'bottom bottom',
+  scrub: 0.6,
+  onUpdate(self) { scrollProg = self.progress; },
+});
+
+// ═══════════════════════════════════════════════════
+// RENDER LOOP
+// ═══════════════════════════════════════════════════
+engine.runRenderLoop(() => {
+  updateCamera(scrollProg);
+  scene.render();
+});
+
+// ═══════════════════════════════════════════════════
+// INTRO
+// ═══════════════════════════════════════════════════
+document.getElementById('start-btn')!.addEventListener('click', () => {
+  const intro = document.getElementById('intro-overlay')!;
+  const hud   = document.getElementById('hud')!;
+  const bar   = document.getElementById('progress-bar')!;
+
+  gsap.to(intro, {
+    opacity: 0, duration: 0.8,
+    onComplete() {
+      intro.style.display = 'none';
+      hud.style.display  = 'block';
+      bar.style.display  = 'flex';
+    },
+  });
+
+  const top = document.getElementById('pin-section')!.getBoundingClientRect().top + window.scrollY;
+  window.scrollTo({ top, behavior: 'smooth' });
+});
+
+// ═══════════════════════════════════════════════════
+// RESIZE
+// ═══════════════════════════════════════════════════
+window.addEventListener('resize', () => engine.resize());
+</script>
+
+<style>
+  html.no-lenis, html.no-lenis body { scroll-behavior: auto !important; overflow-y: scroll !important; }
+</style>

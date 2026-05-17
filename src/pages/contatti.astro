@@ -1,0 +1,151 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="Contatti — Alberto Cavedon"
+  description="Contatta Alberto Cavedon per informazioni sui corsi UTR, spedizioni o collaborazioni con il CNSAS."
+>
+
+  <!-- Hero -->
+  <section class="section-dark pt-40 pb-20 text-center">
+    <p class="label-eyebrow mb-4">Contatti</p>
+    <h1 class="display-xl text-white mb-4">Scrivimi.</h1>
+    <p class="body-lg max-w-md mx-auto">Per corsi, iscrizioni o collaborazioni.<br/>Rispondo entro 48 ore.</p>
+  </section>
+
+  <!-- Form + info -->
+  <section class="section-mid py-16">
+    <div class="max-w-5xl mx-auto px-6 grid md:grid-cols-5 gap-12">
+
+      <!-- Form -->
+      <div class="md:col-span-3 fade-up" x-data="contactForm()">
+        <form @submit.prevent="submit" novalidate class="space-y-5" aria-label="Modulo di contatto">
+
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div>
+              <label for="nome" class="block text-xs font-semibold text-apple-grey mb-2 uppercase tracking-wide">Nome *</label>
+              <input id="nome" type="text" x-model="form.nome" required autocomplete="given-name"
+                class="w-full bg-apple-dark border border-white/10 focus:border-apple-blue rounded-xl px-4 py-3 text-white placeholder-white/20 outline-none transition-colors text-sm"
+                placeholder="Mario" />
+            </div>
+            <div>
+              <label for="cognome" class="block text-xs font-semibold text-apple-grey mb-2 uppercase tracking-wide">Cognome *</label>
+              <input id="cognome" type="text" x-model="form.cognome" required autocomplete="family-name"
+                class="w-full bg-apple-dark border border-white/10 focus:border-apple-blue rounded-xl px-4 py-3 text-white placeholder-white/20 outline-none transition-colors text-sm"
+                placeholder="Rossi" />
+            </div>
+          </div>
+
+          <div>
+            <label for="email" class="block text-xs font-semibold text-apple-grey mb-2 uppercase tracking-wide">Email *</label>
+            <input id="email" type="email" x-model="form.email" required autocomplete="email"
+              class="w-full bg-apple-dark border border-white/10 focus:border-apple-blue rounded-xl px-4 py-3 text-white placeholder-white/20 outline-none transition-colors text-sm"
+              placeholder="mario@example.com" />
+          </div>
+
+          <div>
+            <label for="oggetto" class="block text-xs font-semibold text-apple-grey mb-2 uppercase tracking-wide">Argomento</label>
+            <select id="oggetto" x-model="form.oggetto"
+              class="w-full bg-apple-dark border border-white/10 focus:border-apple-blue rounded-xl px-4 py-3 text-white outline-none transition-colors text-sm">
+              <option value="">Seleziona...</option>
+              <option value="cave-base">Cave Diving Base</option>
+              <option value="utr-soccorso">UTR — Soccorso Subacqueo</option>
+              <option value="deep-cave">Deep Cave Exploration</option>
+              <option value="seminario">Seminario UTR</option>
+              <option value="spedizione">Spedizione / Collaborazione</option>
+              <option value="altro">Altro</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="messaggio" class="block text-xs font-semibold text-apple-grey mb-2 uppercase tracking-wide">Messaggio *</label>
+            <textarea id="messaggio" x-model="form.messaggio" required rows="5"
+              class="w-full bg-apple-dark border border-white/10 focus:border-apple-blue rounded-xl px-4 py-3 text-white placeholder-white/20 outline-none transition-colors text-sm resize-y"
+              placeholder="Scrivi qui..."></textarea>
+          </div>
+
+          <p x-show="error" class="text-red-400 text-sm" role="alert">Compila tutti i campi obbligatori.</p>
+          <p x-show="sent" class="text-green-400 text-sm" role="status">✓ Messaggio inviato. Ti risponderò presto.</p>
+
+          <button type="submit" class="btn-apple w-full justify-center py-4"
+            :disabled="sending" :class="sending && 'opacity-60 cursor-not-allowed'">
+            <span x-show="!sending">Invia messaggio</span>
+            <span x-show="sending">Invio in corso...</span>
+          </button>
+
+          <p class="text-white/20 text-xs text-center">* Campi obbligatori. Nessun dato ceduto a terzi.</p>
+        </form>
+      </div>
+
+      <!-- Info -->
+      <aside class="md:col-span-2 space-y-4 fade-up">
+        <div class="card-apple">
+          <p class="text-apple-grey text-xs uppercase tracking-wide mb-3">Riferimenti</p>
+          <div class="space-y-4">
+            <div>
+              <p class="text-apple-grey text-xs">Sito ufficiale</p>
+              <a href="https://www.speleosubtek.com" target="_blank" rel="noopener"
+                class="text-white font-medium hover:text-apple-blue transition-colors text-sm">speleosubtek.com</a>
+            </div>
+            <div>
+              <p class="text-apple-grey text-xs">Facebook</p>
+              <a href="https://www.facebook.com/p/speleosubit-Alberto-Cavedon-100066547968023/" target="_blank" rel="noopener"
+                class="text-white font-medium hover:text-apple-blue transition-colors text-sm">speleosubit · Alberto Cavedon</a>
+            </div>
+            <div>
+              <p class="text-apple-grey text-xs">Affiliazione</p>
+              <p class="text-white text-sm font-medium">CNSAS · Gruppo Grotte Giara Modon</p>
+            </div>
+            <div>
+              <p class="text-apple-grey text-xs">Sede operativa</p>
+              <p class="text-white text-sm font-medium">Valstagna (VI), Veneto, Italia</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Newsletter -->
+        <div class="card-apple" x-data="{ email: '', ok: false }">
+          <p class="text-white font-semibold mb-1 text-sm">Newsletter</p>
+          <p class="text-apple-grey text-xs mb-4">Aggiornamenti su corsi ed esplorazioni.</p>
+          <form @submit.prevent="ok = true" class="flex gap-2">
+            <input type="email" x-model="email" required placeholder="La tua email"
+              class="flex-1 bg-apple-black border border-white/10 focus:border-apple-blue rounded-xl px-3 py-2 text-white text-sm placeholder-white/20 outline-none" />
+            <button type="submit" class="btn-apple text-sm px-4 py-2 rounded-xl">OK</button>
+          </form>
+          <p x-show="ok" class="text-green-400 text-xs mt-2">✓ Iscritto!</p>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+</Layout>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  gsap.registerPlugin(ScrollTrigger);
+
+  gsap.utils.toArray<HTMLElement>('.fade-up').forEach(el => {
+    gsap.fromTo(el, { opacity: 0, y: 40 }, {
+      opacity: 1, y: 0, duration: 0.8, ease: 'power3.out',
+      scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' },
+    });
+  });
+
+  document.addEventListener('alpine:init', () => {
+    (window as any).Alpine.data('contactForm', () => ({
+      form: { nome: '', cognome: '', email: '', oggetto: '', messaggio: '' },
+      sending: false, sent: false, error: false,
+      submit() {
+        const { nome, cognome, email, messaggio } = this.form;
+        if (!nome || !cognome || !email || !messaggio) { this.error = true; return; }
+        this.error = false; this.sending = true;
+        setTimeout(() => {
+          this.sending = false; this.sent = true;
+          this.form = { nome: '', cognome: '', email: '', oggetto: '', messaggio: '' };
+        }, 1200);
+      },
+    }));
+  });
+</script>

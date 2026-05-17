@@ -1,17 +1,418 @@
 ---
+import Layout from '../layouts/Layout.astro';
+import HeroCanvas from '../components/HeroCanvas.astro';
 
+// URL immagini Unsplash verificate (200 OK)
+const photos = {
+  hero:       'https://images.unsplash.com/photo-1682687982167-d7fb3ed8541d',  // subacqueo in grotta
+  about:      'https://images.unsplash.com/photo-1683009427470-a36fee396389',  // cave diver
+  record:     'https://images.unsplash.com/photo-1543076499-a6133cb932fd',     // grotta con luce (cava Georgia)
+  quote:      'https://images.unsplash.com/photo-1510074232337-05d50fa189ba',  // diver pesci
+  blog1:      'https://images.unsplash.com/photo-1543076499-a6133cb932fd',
+  blog2:      'https://images.unsplash.com/photo-1682687982167-d7fb3ed8541d',
+  cta:        'https://images.unsplash.com/photo-1510074232337-05d50fa189ba',
+};
+
+const galleryPreview = [
+  { url: photos.hero,   caption: "Grotta dell'Elefante Bianco" },
+  { url: photos.about,  caption: 'Su Gologone, Sardegna' },
+  { url: photos.record, caption: 'Caverna con luce naturale' },
+  { url: 'https://images.unsplash.com/photo-1664888908848-d7e8ec255537', caption: 'Navigazione in grotta' },
+  { url: photos.quote,  caption: 'Raja Ampat — visibilità 40+ m' },
+  { url: photos.cta,    caption: 'Risalita nel blu' },
+];
+
+function u(base: string, w = 1200, h = 800) {
+  return `${base}?auto=format&fit=crop&w=${w}&h=${h}&q=80`;
+}
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout
+  title="Alberto Cavedon — Speleologo Subacqueo"
+  description="Alberto Cavedon: speleologo subacqueo di fama mondiale, oltre 300 immersioni nell'Elefante Bianco, –135m a Su Gologone. Direttore Scuola Nazionale Speleosubacquea CNSAS."
+>
+
+  <!-- ══════════════════════════════════════════════
+       HERO — Three.js WebGL scene + testo sovrapposto
+  ══════════════════════════════════════════════ -->
+  <section id="hero" class="relative h-screen flex flex-col items-center justify-center overflow-hidden bg-black">
+    <HeroCanvas />
+
+    <!-- Radial vignette overlay -->
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_40%,_rgba(0,0,0,0.85)_100%)] pointer-events-none z-10"></div>
+    <!-- Bottom fade -->
+    <div class="absolute bottom-0 inset-x-0 h-40 bg-gradient-to-t from-black to-transparent pointer-events-none z-10"></div>
+
+    <div class="relative z-20 text-center px-6 max-w-5xl mx-auto select-none">
+      <p id="hero-eyebrow" class="text-ocean-blue font-semibold tracking-[0.3em] uppercase text-sm mb-6 opacity-0">
+        Speleologo Subacqueo · Valstagna, Vicenza
+      </p>
+      <h1 id="hero-title" class="font-display font-black text-white leading-[0.95] mb-8 opacity-0"
+          style="font-size: clamp(4rem, 12vw, 10rem); letter-spacing: -0.03em;">
+        Alberto<br/>
+        <span class="gradient-text text-neon">Cavedon</span>
+      </h1>
+      <p id="hero-sub" class="text-xl md:text-2xl text-white/60 max-w-2xl mx-auto mb-12 opacity-0 leading-relaxed">
+        Dove finisce la luce, comincia l'esplorazione.
+      </p>
+      <div id="hero-cta" class="flex flex-col sm:flex-row gap-4 justify-center opacity-0">
+        <a href="/corsi" class="btn-apple text-base px-8 py-4">Scopri i corsi UTR</a>
+        <a href="/esperienze" class="btn-apple-outline text-base px-8 py-4">Esplorazioni →</a>
+      </div>
+    </div>
+
+    <!-- Scroll line -->
+    <div id="scroll-hint" class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-0 z-20">
+      <span class="text-white/30 text-[10px] tracking-[0.3em] uppercase">Scorri</span>
+      <div class="w-px h-12 bg-gradient-to-b from-ocean-blue/60 to-transparent"></div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       FOTO HERO — prima immersione reale (fullbleed)
+  ══════════════════════════════════════════════ -->
+  <section class="relative h-[70vh] overflow-hidden" aria-label="Foto: immersione in grotta">
+    <img
+      src={u(photos.hero, 1600, 900)}
+      alt="Subacqueo in una grotta sottomarina — stile esplorazioni di Alberto Cavedon"
+      class="w-full h-full object-cover"
+      loading="eager"
+    />
+    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></div>
+    <div class="absolute bottom-12 left-1/2 -translate-x-1/2 text-center z-10">
+      <p class="text-white/50 text-xs tracking-widest uppercase mb-2">Photo: NEOM / Unsplash</p>
+      <p class="text-white font-bold text-2xl md:text-3xl">Ogni discesa è un'altra storia.</p>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       METRICS — contatori animati
+  ══════════════════════════════════════════════ -->
+  <section class="bg-black py-24 border-y border-white/5">
+    <div class="max-w-5xl mx-auto px-6">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+        {[
+          { target: 300, suffix: '+', label: 'Immersioni Elefante Bianco' },
+          { target: 135, suffix: ' m', prefix: '–', label: 'Record profondità Su Gologone' },
+          { target: 40,  suffix: '+', label: 'Anni di esperienza attiva' },
+          { target: 2545, suffix: ' m', label: 'Sifone più lungo esplorato' },
+        ].map(m => (
+          <div class="stat-block fade-up" data-target={m.target} data-suffix={m.suffix} data-prefix={m.prefix ?? ''}>
+            <p class="counter text-4xl md:text-5xl font-black text-white tracking-tight">
+              {m.prefix ?? ''}{m.target}{m.suffix}
+            </p>
+            <p class="text-white/40 text-xs mt-2 leading-tight">{m.label}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       CHI È — split 50/50 con foto reale
+  ══════════════════════════════════════════════ -->
+  <section class="bg-black overflow-hidden">
+    <div class="max-w-7xl mx-auto grid md:grid-cols-2 min-h-[600px]">
+      <!-- Foto -->
+      <div class="relative overflow-hidden img-3d-wrap rounded-none order-2 md:order-1" style="border-radius:0">
+        <img
+          src={u(photos.about, 800, 1000)}
+          alt="Cave diver in grotta allagata"
+          class="w-full h-full object-cover"
+          loading="lazy"
+        />
+        <div class="absolute inset-0 bg-gradient-to-r from-transparent to-black/60 md:block hidden"></div>
+      </div>
+      <!-- Testo -->
+      <div class="flex flex-col justify-center px-8 md:px-16 py-20 order-1 md:order-2 fade-up">
+        <p class="label-eyebrow mb-4">Chi è</p>
+        <h2 class="display-lg text-white mb-6">Una vita<br/>nell'abisso.</h2>
+        <p class="text-white/60 text-lg leading-relaxed mb-4">
+          Alberto Cavedon è uno dei più esperti speleosubacquei italiani.
+          Membro del <strong class="text-white">Gruppo Grotte Giara Modon</strong> di Valstagna,
+          tecnico CNSAS e <strong class="text-white">Direttore della Scuola Nazionale Speleosubacquea</strong>.
+        </p>
+        <p class="text-white/60 text-lg leading-relaxed mb-10">
+          Ha esplorato grotte sommerse in Italia, Francia, Svizzera, Croazia e Grecia.
+          Il suo sito di riferimento è <a href="https://www.speleosubtek.com" target="_blank" rel="noopener" class="text-ocean-blue hover:underline">speleosubtek.com</a>.
+        </p>
+        <a href="/about" class="btn-apple self-start">La mia storia</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       SU GOLOGONE — Cinematic fullbleed + dati record
+  ══════════════════════════════════════════════ -->
+  <section class="relative min-h-screen flex items-center overflow-hidden" aria-labelledby="record-heading">
+    <img
+      src={u(photos.record, 1600, 1000)}
+      alt="Grotta sottomarina con raggio di luce"
+      class="absolute inset-0 w-full h-full object-cover"
+      loading="lazy"
+    />
+    <div class="absolute inset-0 bg-gradient-to-r from-black/95 via-black/70 to-transparent"></div>
+    <div class="relative z-10 max-w-6xl mx-auto px-6 py-32">
+      <div class="max-w-xl fade-up">
+        <p class="label-eyebrow mb-4">Sardegna · Maggio 2010</p>
+        <h2 id="record-heading" class="display-lg text-white mb-2">Su Gologone.</h2>
+        <p class="text-6xl md:text-8xl font-black gradient-text text-neon mb-8" style="letter-spacing: -0.03em;">–135 m</p>
+        <p class="text-white/60 text-lg leading-relaxed mb-8">
+          Dopo 13 anni dall'ultima esplorazione di Olivier Isler (–107 m),
+          Alberto supera la fessura a quota –107 m e spinge a –135 m,
+          aggiungendo <strong class="text-white">155 metri di nuovo sviluppo</strong>
+          nelle mappe della sorgente più profonda della Sardegna.
+        </p>
+        <div class="grid grid-cols-3 gap-4 mb-10">
+          {[
+            { n: '10', label: 'giorni di spedizione' },
+            { n: '3+', label: 'anni di preparazione' },
+            { n: '155 m', label: 'nuovo sviluppo' },
+          ].map(s => (
+            <div class="card-glass text-center tilt-3d">
+              <p class="text-white font-black text-2xl">{s.n}</p>
+              <p class="text-white/40 text-xs mt-1">{s.label}</p>
+            </div>
+          ))}
+        </div>
+        <a href="/esperienze" class="btn-apple">Tutte le esplorazioni</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       GALLERY STRIP — foto reali con hover 3D
+  ══════════════════════════════════════════════ -->
+  <section class="bg-black py-24 overflow-hidden" aria-labelledby="gallery-heading">
+    <div class="max-w-6xl mx-auto px-6 mb-10 flex items-end justify-between fade-up">
+      <div>
+        <p class="label-eyebrow mb-2">Gallery</p>
+        <h2 id="gallery-heading" class="display-md text-white">Dall'abisso.</h2>
+      </div>
+      <a href="/gallery" class="text-ocean-blue text-sm font-semibold hover:underline hidden md:block">
+        Vedi tutte →
+      </a>
+    </div>
+    <div class="scroll-strip px-6 max-w-none" role="list">
+      {galleryPreview.map(p => (
+        <a href="/gallery" class="img-3d-wrap tilt-3d w-72 h-52 shrink-0" role="listitem">
+          <img
+            src={u(p.url, 600, 400)}
+            alt={p.caption}
+            class="w-full h-full object-cover"
+            loading="lazy"
+            width="600"
+            height="400"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-4">
+            <p class="text-white text-sm font-medium">{p.caption}</p>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       CORSI — cards glassmorphism con tilt 3D
+  ══════════════════════════════════════════════ -->
+  <section class="bg-apple-dark py-28" aria-labelledby="corsi-heading">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="text-center mb-16 fade-up">
+        <p class="label-eyebrow mb-4">Formazione</p>
+        <h2 id="corsi-heading" class="display-md text-white mb-4">Corsi UTR</h2>
+        <p class="text-white/50 text-xl max-w-xl mx-auto">
+          Quarant'anni di esperienza reale.<br/>Niente di teorico.
+        </p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-5">
+        {[
+          { title: 'Cave Diving Base', price: '€ 890', duration: '4 giorni', href: '/corsi#cave-base', num: '01',
+            desc: "Tecniche di esplorazione in grotta allagata. Gas, filo guida, navigazione al buio." },
+          { title: 'UTR Soccorso', price: '€ 1.200', duration: '5 giorni', href: '/corsi#utr-soccorso', num: '02',
+            desc: "Soccorso avanzato in ambiente ipogeo sommerso. Per operatori CNSAS e istruttori." },
+          { title: 'Deep Cave', price: '€ 1.800', duration: '7 giorni', href: '/corsi#deep-cave', num: '03',
+            desc: "Rebreather e gas misti oltre i 100 m. Solo cave divers certificati." },
+        ].map(c => (
+          <a href={c.href} class="card-glass tilt-3d flex flex-col group fade-up" aria-label={c.title}>
+            <span class="font-mono text-ocean-blue text-sm font-bold tracking-widest mb-4 block">{c.num}</span>
+            <h3 class="text-white font-bold text-xl mb-2 group-hover:text-ocean-blue transition-colors">{c.title}</h3>
+            <p class="text-white/50 text-sm flex-1 mb-6 leading-relaxed">{c.desc}</p>
+            <div class="flex items-center justify-between border-t border-white/10 pt-5">
+              <span class="text-ocean-blue font-bold text-lg">{c.price}</span>
+              <span class="text-white/30 text-sm">{c.duration}</span>
+            </div>
+          </a>
+        ))}
+      </div>
+      <div class="text-center mt-12 fade-up">
+        <a href="/corsi" class="btn-apple px-10">Vedi tutti i corsi</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       QUOTE — fullbleed con foto + citazione
+  ══════════════════════════════════════════════ -->
+  <section class="relative py-40 overflow-hidden">
+    <img
+      src={u(photos.quote, 1600, 800)}
+      alt="Grotta sottomarina con luce naturale"
+      class="absolute inset-0 w-full h-full object-cover opacity-30"
+      loading="lazy"
+    />
+    <div class="absolute inset-0 bg-black/70"></div>
+    <div class="relative z-10 max-w-4xl mx-auto px-6 text-center fade-up">
+      <p class="text-7xl text-ocean-blue/40 font-black mb-6 leading-none">"</p>
+      <blockquote class="text-3xl md:text-5xl font-black text-white leading-tight mb-8" style="letter-spacing: -0.02em;">
+        Non esiste simulazione che sostituisca il buio reale, la corrente reale, il freddo reale.
+      </blockquote>
+      <p class="text-white/40 tracking-widest text-sm uppercase">— Alberto Cavedon · Scubazone 2013</p>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       BLOG — cards su sfondo dark
+  ══════════════════════════════════════════════ -->
+  <section class="bg-black py-24" aria-labelledby="blog-heading">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="flex items-end justify-between mb-12 fade-up">
+        <div>
+          <p class="label-eyebrow mb-2">Diario</p>
+          <h2 id="blog-heading" class="display-md text-white">Dal campo.</h2>
+        </div>
+        <a href="/blog" class="text-ocean-blue text-sm font-semibold hover:underline hidden md:block">
+          Tutti i post →
+        </a>
+      </div>
+      <div class="grid md:grid-cols-2 gap-5">
+        {[
+          {
+            photo: photos.blog1,
+            tag: 'Record',
+            date: 'Maggio 2010',
+            title: 'Su Gologone 2010: come ho superato il record di Isler',
+            href: '/blog/su-gologone-2010',
+          },
+          {
+            photo: photos.blog2,
+            tag: 'Cave Diving',
+            date: 'Gennaio 2012',
+            title: 'Arma del Lupo: tre ore dentro la montagna, –121 m',
+            href: '/blog/arma-del-lupo',
+          },
+        ].map(p => (
+          <a href={p.href} class="group relative overflow-hidden rounded-3xl h-72 img-3d-wrap tilt-3d fade-up" aria-label={p.title}>
+            <img
+              src={u(p.photo, 800, 500)}
+              alt={p.title}
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+              loading="lazy"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent"></div>
+            <div class="absolute bottom-0 left-0 p-6">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="text-xs bg-ocean-blue/20 text-ocean-blue px-2 py-0.5 rounded-full font-semibold">{p.tag}</span>
+                <span class="text-white/40 text-xs">{p.date}</span>
+              </div>
+              <h3 class="text-white font-bold text-lg leading-snug group-hover:text-ocean-blue transition-colors">
+                {p.title}
+              </h3>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       CTA finale — con foto + overlay
+  ══════════════════════════════════════════════ -->
+  <section class="relative py-40 overflow-hidden text-center">
+    <img
+      src={u(photos.cta, 1600, 800)}
+      alt="Luce nell'abisso"
+      class="absolute inset-0 w-full h-full object-cover opacity-20"
+      loading="lazy"
+    />
+    <div class="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black"></div>
+    <div class="relative z-10 max-w-2xl mx-auto px-6 fade-up">
+      <h2 class="display-lg text-white mb-6">Scendi con me.</h2>
+      <p class="text-white/50 text-xl mb-10">
+        Corsi UTR, spedizioni, seminari.<br/>Contattami per iniziare.
+      </p>
+      <a href="/contatti" class="btn-apple text-base px-12 py-4">Inizia il percorso</a>
+    </div>
+  </section>
+
+</Layout>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Hero elements start translated — must be set BEFORE the timeline plays
+  gsap.set(['#hero-eyebrow','#hero-title','#hero-sub','#hero-cta'], { y: 40 });
+
+  // Hero entrance sequence
+  const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
+  tl.to('#hero-eyebrow', { opacity: 1, y: 0, duration: 1,   delay: 0.5 }, 0)
+    .to('#hero-title',   { opacity: 1, y: 0, duration: 1.2 }, 0.3)
+    .to('#hero-sub',     { opacity: 1, y: 0, duration: 1   }, 0.7)
+    .to('#hero-cta',     { opacity: 1, y: 0, duration: 0.8 }, 1.0)
+    .to('#scroll-hint',  { opacity: 1,       duration: 0.6 }, 1.3);
+
+  // ScrollTrigger fade-up
+  gsap.utils.toArray<HTMLElement>('.fade-up').forEach(el => {
+    gsap.fromTo(el,
+      { opacity: 0, y: 60 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 88%',
+          toggleActions: 'play none none none',
+        },
+      }
+    );
+  });
+
+  // Animated number counters
+  gsap.utils.toArray<HTMLElement>('.counter').forEach(el => {
+    const parent = el.closest('[data-target]') as HTMLElement;
+    if (!parent) return;
+    const target = parseInt(parent.dataset.target ?? '0');
+    const suffix = parent.dataset.suffix ?? '';
+    const prefix = parent.dataset.prefix ?? '';
+
+    ScrollTrigger.create({
+      trigger: parent,
+      start: 'top 85%',
+      once: true,
+      onEnter: () => {
+        const obj = { val: 0 };
+        gsap.to(obj, {
+          val: target, duration: 2, ease: 'power2.out',
+          onUpdate() { el.textContent = prefix + Math.round(obj.val) + suffix; },
+        });
+      },
+    });
+  });
+
+  // Parallax on fullbleed images
+  gsap.utils.toArray<HTMLElement>('section img.absolute, section img.w-full.h-full').forEach(img => {
+    gsap.to(img, {
+      yPercent: 20,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: img.closest('section'),
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: true,
+      },
+    });
+  });
+</script>

@@ -1,0 +1,141 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+// URL Unsplash verificate (tutte 200 OK)
+const BASE = [
+  ['1682687982167-d7fb3ed8541d', "Grotta dell'Elefante Bianco — subacqueo in esplorazione"],
+  ['1683009427470-a36fee396389', 'Cave diving — navigazione con filo guida'],
+  ['1543076499-a6133cb932fd',    'Grotta con luce naturale — Martvili Canyon'],
+  ['1510074232337-05d50fa189ba', 'Raja Ampat — visibilità 40+ m'],
+  ['1664888908848-d7e8ec255537', 'Grotta sommersa — corridoio verticale'],
+  ['1544552299-bef3b82caa06',    'Su Gologone — risalita nel blu'],
+  ['1559825481-12a4ee2fb6d0',    'Arma del Lupo — a –80 m'],
+  ['1583212292454-1f6f8388bb72', 'Stalattiti sommerse, Carso'],
+  ['1621279137980-bef09827de18', 'Check rebreather pre-immersione'],
+  ['1601985705806-76c0f9a70f75', 'Formazione team speleosubtek'],
+  ['1626544827763-d516dce335e2', 'Grotta del Bue Marino, Sardegna 2020'],
+  ['1682687982361-a79c119d6dd7', 'Documentario Su Gologone sul set'],
+] as const;
+
+const items = BASE.map(([id, caption], i) => ({
+  id: i,
+  src:   `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=1200&h=800&q=80`,
+  thumb: `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=600&h=400&q=80`,
+  alt: `${caption} — foto Alberto Cavedon`,
+  caption,
+}));
+---
+
+<Layout
+  title="Gallery — Alberto Cavedon"
+  description="Fotografie delle esplorazioni speleosub di Alberto Cavedon: grotte, sorgenti carsiche e il mondo sommerso."
+>
+  <div x-data="lightbox()">
+
+    <!-- Hero -->
+    <section class="section-dark pt-40 pb-16 text-center">
+      <p class="label-eyebrow mb-4">Gallery</p>
+      <h1 class="display-xl text-white mb-4">Fotografie<br/><span class="text-ocean-blue">dall'abisso.</span></h1>
+      <p class="text-apple-grey text-lg">Clicca per ingrandire · ← → per navigare · Esc per chiudere</p>
+    </section>
+
+    <!-- Grid -->
+    <section class="bg-apple-black pb-24 px-6">
+      <div class="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
+        {items.map((item, idx) => (
+          <button
+            class="group relative overflow-hidden aspect-[4/3] bg-apple-mid focus:outline-none focus:ring-2 focus:ring-apple-blue rounded-xl"
+            @click={`open(${idx})`}
+            aria-label={`Apri: ${item.caption}`}
+          >
+            <img
+              src={item.thumb}
+              alt={item.alt}
+              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              loading={idx < 4 ? 'eager' : 'lazy'}
+              width="600"
+              height="400"
+            />
+            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300 flex items-end p-3">
+              <p class="text-white text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 line-clamp-2">
+                {item.caption}
+              </p>
+            </div>
+          </button>
+        ))}
+      </div>
+    </section>
+
+    <!-- Lightbox -->
+    <div
+      x-show="isOpen"
+      x-transition:enter="transition ease-out duration-200"
+      x-transition:enter-start="opacity-0"
+      x-transition:enter-end="opacity-100"
+      x-transition:leave="transition ease-in duration-150"
+      x-transition:leave-start="opacity-100"
+      x-transition:leave-end="opacity-0"
+      class="fixed inset-0 z-50 bg-black/95 backdrop-blur-sm flex items-center justify-center p-4"
+      @click.self="isOpen = false"
+      @keydown.escape.window="isOpen = false"
+      @keydown.arrow-left.window="prev()"
+      @keydown.arrow-right.window="next()"
+      role="dialog"
+      aria-modal="true"
+    >
+      <div class="relative max-w-5xl w-full">
+        <img
+          :src="items[currentIdx].src"
+          :alt="items[currentIdx].alt"
+          class="w-full max-h-[80vh] object-contain rounded-2xl"
+        />
+        <p class="text-center text-apple-grey mt-4 text-sm" x-text="items[currentIdx].caption"></p>
+        <p class="text-center text-apple-grey/40 text-xs mt-1" x-text="(currentIdx + 1) + ' / ' + items.length"></p>
+      </div>
+
+      <button @click="prev()" class="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors" aria-label="Precedente">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+      </button>
+      <button @click="next()" class="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors" aria-label="Successiva">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </button>
+      <button @click="isOpen = false" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors" aria-label="Chiudi">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  const BASE = [
+    ['1682687982167-d7fb3ed8541d', "Grotta dell'Elefante Bianco — subacqueo in esplorazione"],
+    ['1683009427470-a36fee396389', 'Cave diving — navigazione con filo guida'],
+    ['1543076499-a6133cb932fd',    'Grotta con luce naturale — Martvili Canyon'],
+    ['1510074232337-05d50fa189ba', 'Raja Ampat — visibilità 40+ m'],
+    ['1664888908848-d7e8ec255537', 'Grotta sommersa — corridoio verticale'],
+    ['1544552299-bef3b82caa06',    'Su Gologone — risalita nel blu'],
+    ['1559825481-12a4ee2fb6d0',    'Arma del Lupo — a –80 m'],
+    ['1583212292454-1f6f8388bb72', 'Stalattiti sommerse, Carso'],
+    ['1621279137980-bef09827de18', 'Check rebreather pre-immersione'],
+    ['1601985705806-76c0f9a70f75', 'Formazione team speleosubtek'],
+    ['1626544827763-d516dce335e2', 'Grotta del Bue Marino, Sardegna 2020'],
+    ['1682687982361-a79c119d6dd7', 'Documentario Su Gologone sul set'],
+  ] as const;
+
+  const items = BASE.map(([id, caption]) => ({
+    src:   `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=1200&h=800&q=80`,
+    alt:   `${caption} — foto Alberto Cavedon`,
+    caption,
+  }));
+
+  document.addEventListener('alpine:init', () => {
+    (window as any).Alpine.data('lightbox', () => ({
+      isOpen: false,
+      currentIdx: 0,
+      items,
+      open(idx: number) { this.currentIdx = idx; this.isOpen = true; },
+      prev() { this.currentIdx = (this.currentIdx - 1 + this.items.length) % this.items.length; },
+      next() { this.currentIdx = (this.currentIdx + 1) % this.items.length; },
+    }));
+  });
+</script>

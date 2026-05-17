@@ -1,0 +1,101 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout
+  title="Grotte di Vrelo Bune — Alberto Cavedon"
+  description="La mia prima immersione nelle grotte di Vrelo Bune, Bosnia: un sistema carsico con visibilità oltre 40 m e stalattiti sommerse."
+>
+  <div class="pt-24 pb-20">
+    <article class="max-w-3xl mx-auto px-4 py-12">
+
+      <!-- Header -->
+      <header class="mb-10">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="text-xs bg-ocean-700 text-ocean-300 px-2 py-0.5 rounded-full font-semibold">Cave Diving</span>
+          <span class="text-ocean-400 text-sm">12 marzo 2025</span>
+          <span class="text-ocean-600 text-sm">· 5 min lettura</span>
+        </div>
+        <h1 class="text-3xl md:text-5xl font-heading font-black text-white leading-tight mb-4">
+          La mia prima immersione nelle grotte di Vrelo Bune
+        </h1>
+        <p class="text-ocean-200 text-xl leading-relaxed">
+          Un sistema carsico in Bosnia quasi sconosciuto al grande pubblico,
+          con visibilità oltre i 40 metri e stalattiti sommerse di rara bellezza.
+        </p>
+      </header>
+
+      <!-- Hero visual placeholder -->
+      <div class="py-16 bg-gradient-to-br from-ocean-deep via-apple-black to-apple-dark rounded-3xl flex items-center justify-center mb-14 border border-white/10 border-b border-ocean-blue/20">
+        <div class="text-center">
+          <p class="text-ocean-blue font-bold text-2xl mb-2">Vrelo Bune · Bosnia-Erzegovina</p>
+          <p class="font-mono text-white/50 text-sm">–65 m · vis. 40 m</p>
+        </div>
+      </div>
+
+      <!-- Corpo articolo -->
+      <div class="prose prose-invert prose-ocean max-w-none space-y-6 text-ocean-200 leading-relaxed">
+        <p>
+          Ne avevo sentito parlare per la prima volta nel 2019, da un amico speleosub sloveno che aveva
+          esplorato il sistema anni prima. "Alberto, è diverso da tutto ciò che hai visto" — mi disse.
+          Non esageravo a non credergli. Ne avevo sentite tante. Ma questa volta aveva ragione.
+        </p>
+
+        <h2 class="fade-up text-white font-heading font-bold text-2xl mt-10 mb-4">Come ci sono arrivato</h2>
+        <p>
+          Vrelo Bune è la sorgente del fiume Buna, in Bosnia Erzegovina, pochi chilometri da Mostar.
+          La grotta si apre al di sotto di un castello ottomano su una scogliera, in una scenografia
+          quasi irreale. La sorgente è attiva: in cerimonia una portata d'acqua enorme, ma in tarda
+          estate la corrente si riduce abbastanza da permettere l'ingresso a team tecnici attrezzati.
+        </p>
+        <p>
+          Ho organizzato la spedizione con due colleghi: Federico (geologo e cave diver certificato)
+          e Marta (tecnica CNSAS). Tre settimane di pianificazione, permessi dalle autorità locali,
+          ricognizione del punto d'ingresso. Tutto per un'immersione di 90 minuti.
+        </p>
+
+        <h2 class="fade-up text-white font-heading font-bold text-2xl mt-10 mb-4">Dentro la grotta</h2>
+        <p>
+          L'ingresso è ampio — quasi 10 metri di diametro — e la visibilità già nei primi metri
+          è eccezionale: oltre 40 metri. L'acqua è a 10°C costanti, turchese, quasi luminosa.
+          Le stalattiti sommerse sono ricoperte da depositi bianchi di calcite che brillano nel fascio
+          delle torce. Una cattedrale.
+        </p>
+        <p>
+          Ci siamo spinti fino a –65 m seguendo il filo guida già posizionato da una spedizione
+          precedente. Il condotto si allarga progressivamente, poi piega verso est in un cunicolo
+          che non abbiamo esplorato — materiale per il prossimo anno.
+        </p>
+
+        <h2 class="fade-up text-white font-heading font-bold text-2xl mt-10 mb-4">Cosa ho imparato</h2>
+        <p>
+          Dopo quarant'anni di grotte, penso di sapere come gestire l'emozione sott'acqua.
+          Vrelo Bune mi ha ricordato che non si finisce mai di imparare — e che certe grotte
+          ti aspettano finché non sei pronto per incontrarle davvero.
+        </p>
+        <p>
+          Se vuoi saperne di più sulle tecniche di esplorazione che utilizzo, dai un'occhiata
+          ai miei <a href="/corsi" class="text-ocean-400 hover:text-ocean-300 underline">corsi UTR</a>.
+        </p>
+      </div>
+
+      <!-- Nav post -->
+      <div class="mt-16 pt-8 border-t border-ocean-700 flex justify-between">
+        <a href="/blog" class="text-ocean-400 hover:text-ocean-300 text-sm font-semibold transition-colors">← Tutti i post</a>
+        <a href="/blog/blue-hole-dahab" class="text-ocean-400 hover:text-ocean-300 text-sm font-semibold transition-colors">Post successivo →</a>
+      </div>
+    </article>
+  </div>
+</Layout>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  gsap.registerPlugin(ScrollTrigger);
+  gsap.utils.toArray<HTMLElement>('.fade-up').forEach(el => {
+    gsap.fromTo(el, { opacity: 0, y: 40 }, {
+      opacity: 1, y: 0, duration: 0.8, ease: 'power3.out',
+      scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none none' },
+    });
+  });
+</script>

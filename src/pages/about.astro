@@ -1,0 +1,161 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="Chi sono — Alberto Cavedon"
+  description="Biografia di Alberto Cavedon: speleologo subacqueo di Valstagna, direttore Scuola Nazionale Speleosubacquea CNSAS, oltre 300 immersioni nell'Elefante Bianco."
+>
+
+  <!-- Hero page -->
+  <section class="section-dark pt-40 pb-24 text-center">
+    <div class="max-w-4xl mx-auto px-6">
+      <p class="label-eyebrow mb-4">Chi sono</p>
+      <h1 class="display-xl text-white mb-6">Alberto<br/><span class="text-ocean-blue">Cavedon</span></h1>
+      <p class="text-ocean-blue font-semibold tracking-wide text-xl mb-4">Oltre 40 anni sotto la superficie.</p>
+      <p class="body-lg max-w-2xl mx-auto">
+        Speleologo subacqueo. Valstagna, Vicenza.<br/>
+        Direttore della Scuola Nazionale Speleosubacquea CNSAS.
+      </p>
+    </div>
+  </section>
+
+  <!-- Bio -->
+  <section class="section-mid py-24">
+    <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-5 gap-16 items-start">
+      <div class="md:col-span-3 space-y-6 text-apple-grey leading-relaxed text-lg fade-up">
+        <p>
+          Alberto Cavedon nasce e cresce a <strong class="text-white">Valstagna</strong>, nel Canale di Brenta
+          (Vicenza). È in questo territorio, dominato da altopiani carsici e grotte, che nasce la sua
+          passione per la speleologia e, naturalmente, per la sua declinazione sommersa.
+        </p>
+        <p>
+          È membro del <strong class="text-white">Gruppo Grotte Giara Modon</strong> di Valstagna e tecnico
+          della Commissione Speleosubacquea del CNSAS (Corpo Nazionale Soccorso Alpino e Speleologico).
+          Nel corso degli anni è diventato <strong class="text-white">Direttore della Scuola Nazionale
+          Speleosubacquea</strong> del CNSAS — il massimo riconoscimento istituzionale nel campo della
+          didattica speleosub in Italia.
+        </p>
+        <blockquote class="border-l-4 border-ocean-blue pl-5 py-2 my-2 italic text-white/80 text-lg leading-snug">
+          "La grotta non perdona chi non si prepara. Ed è proprio questa la sua bellezza: ti chiede tutto, e in cambio ti dà qualcosa che nessuna parola riesce a descrivere."
+          <footer class="mt-2 text-ocean-blue not-italic text-sm font-semibold">— Alberto Cavedon</footer>
+        </blockquote>
+        <p>
+          Ha effettuato oltre <strong class="text-white">300 immersioni nella Grotta dell'Elefante Bianco</strong>
+          (Valstagna, VI), un sistema che conosce meglio di chiunque altro, con sviluppo di 365 m
+          e profondità massima di –149 m. Ha esplorato grotte sommerse in
+          <strong class="text-white">Italia, Francia, Svizzera, Croazia e Grecia</strong>.
+        </p>
+        <p>
+          Nel maggio 2010 ha guidato una spedizione di 10 giorni alla sorgente di
+          <strong class="text-white">Su Gologone</strong> (Oliena, Sardegna), superando il limite di
+          –107 m stabilito 13 anni prima da Olivier Isler e raggiungendo –135 m,
+          con 155 metri di nuovo sviluppo esplorato.
+        </p>
+        <p>
+          Ha partecipato a operazioni di recupero in ambienti estremi, tra cui la
+          bonifica della Grotta dell'Elefante Bianco dopo l'incidente di un subacqueo straniero,
+          immergendosi in solitaria per raggiungere e assicurare il corpo prima dei soccorritori.
+        </p>
+      </div>
+
+      <aside class="md:col-span-2 space-y-5">
+        <!-- Identity card -->
+        <div class="card-apple fade-up">
+          <div class="grid grid-cols-2 gap-3 mb-5">
+            {[
+              { num: '300+',  label: 'immersioni Elefante Bianco' },
+              { num: '–135 m', label: 'Su Gologone' },
+              { num: '40+',   label: 'anni di esperienza' },
+              { num: '6',     label: 'paesi esplorati' },
+            ].map(s => (
+              <div class="bg-apple-black/60 rounded-xl p-4 flex flex-col items-center text-center">
+                <span class="text-ocean-blue font-bold text-2xl leading-none">{s.num}</span>
+                <span class="text-apple-grey text-xs mt-1 leading-tight">{s.label}</span>
+              </div>
+            ))}
+          </div>
+          <p class="text-white font-bold text-lg">Alberto Cavedon</p>
+          <p class="text-apple-grey text-sm">Valstagna · Vicenza · Italia</p>
+        </div>
+
+        <!-- Quick facts -->
+        <div class="card-apple fade-up">
+          <h2 class="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Dati chiave</h2>
+          <dl class="space-y-3">
+            {[
+              { dt: 'Gruppo',     dd: 'Grotte Giara Modon, Valstagna' },
+              { dt: 'CNSAS',      dd: 'Direttore Scuola Speleosubacquea' },
+              { dt: 'Sito web',   dd: 'speleosubtek.com' },
+              { dt: 'Record',     dd: '–135 m, Su Gologone (2010)' },
+              { dt: 'Immersioni', dd: '300+ solo Elefante Bianco' },
+            ].map(f => (
+              <div class="flex justify-between text-sm">
+                <dt class="text-apple-grey">{f.dt}</dt>
+                <dd class="text-white font-medium text-right max-w-[60%]">{f.dd}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- Timeline -->
+  <section class="section-mid py-24">
+    <div class="max-w-3xl mx-auto px-6">
+      <div class="text-center mb-16 fade-up">
+        <p class="label-eyebrow mb-3">Cronologia</p>
+        <h2 class="display-md text-white">Tappe principali</h2>
+      </div>
+      <ol class="relative border-l border-ocean-blue/40 space-y-10 ml-3">
+        {[
+          { year: "Anni '80",   text: "Prime esplorazioni speleologiche nel Canale di Brenta. Ingresso nel Gruppo Grotte Giara Modon di Valstagna." },
+          { year: "Anni '90",   text: "Specializzazione nella speleologia subacquea. Prime immersioni nella Grotta dell'Elefante Bianco — inizia un rapporto che porterà a oltre 300 discese. Ingresso nel CNSAS come tecnico speleosubacqueo." },
+          { year: "Anni 2000",  text: "Esplorazioni sui sifoni dell'Altopiano di Asiago con team internazionale (P. Balordi, S. Kuster, G. Wimmer, G. Faur): 2545 m + 1150 m di sifoni superati, penetrando per chilometri nel cuore dell'altopiano." },
+          { year: "2008",       text: "Operazione di bonifica nella Grotta dell'Elefante Bianco: recupero in solitaria di un subacqueo straniero disperso a oltre 100 m di profondità." },
+          { year: "Mag. 2010",  text: "Spedizione di 10 giorni a Su Gologone (Oliena, Sardegna). Superato il record di Olivier Isler del 1997: raggiunge –135 m con +155 m di nuovo sviluppo esplorato — record nazionale di profondità in grotta allagata." },
+          { year: "Gen. 2012",  text: "Arma del Lupo, Veneto: –121 m, tre ore di penetrazione. Una delle immersioni in grotta più lunghe della sua carriera." },
+          { year: "Giu. 2012",  text: "Ritorno a Su Gologone con team internazionale italo-svizzero per continuare la mappatura oltre i –135 m." },
+          { year: "2013",       text: "Il racconto della spedizione Su Gologone viene pubblicato sulla rivista Scubazone, dando risonanza nazionale all'impresa." },
+          { year: "2020",       text: "Grotta del Bue Marino, Sardegna: esplorazione con il team speleosubtek in settembre." },
+          { year: "Oggi",       text: "Direttore Scuola Nazionale Speleosubacquea CNSAS. Attività didattica con certificazioni UTRtek, seminari e formazione di nuovi tecnici speleosub." },
+        ].map(e => (
+          <li class="ml-8 relative fade-up">
+            <span class="absolute -left-10 top-1 w-4 h-4 bg-ocean-blue rounded-full border-2 border-ocean-deep" aria-hidden="true"></span>
+            <p class="text-ocean-blue font-bold text-sm">{e.year}</p>
+            <p class="text-white/70 mt-1 text-sm leading-relaxed">{e.text}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section-dark py-24 text-center">
+    <div class="fade-up">
+      <h2 class="display-md text-white mb-8">Impara dall'esperienza.</h2>
+      <a href="/corsi" class="btn-apple">Vedi i corsi UTR</a>
+      <p class="mt-6">
+        <a href="/esperienze" class="text-ocean-blue hover:text-white transition-colors text-sm underline underline-offset-4">Scopri le esperienze guidate</a>
+      </p>
+    </div>
+  </section>
+
+</Layout>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  gsap.registerPlugin(ScrollTrigger);
+
+  gsap.utils.toArray<HTMLElement>('.fade-up').forEach(el => {
+    gsap.fromTo(el,
+      { opacity: 0, y: 40 },
+      {
+        opacity: 1, y: 0, duration: 0.8, ease: 'power3.out',
+        scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' },
+      }
+    );
+  });
+</script>

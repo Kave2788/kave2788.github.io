@@ -1,0 +1,106 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout
+  title="300 immersioni nell'Elefante Bianco — Alberto Cavedon"
+  description="Riflessioni di Alberto Cavedon dopo oltre 300 immersioni nella Grotta dell'Elefante Bianco a Valstagna: cosa insegna una grotta che conosci centimetro per centimetro."
+>
+  <div class="pt-24">
+    <article class="max-w-3xl mx-auto px-6 py-16">
+      <header class="mb-12">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="text-xs bg-apple-blue/20 text-ocean-blue px-3 py-1 rounded-full font-semibold">Elefante Bianco</span>
+          <span class="text-apple-grey text-sm">Estate 2009</span>
+          <span class="text-apple-grey/40 text-sm">· 7 min lettura</span>
+        </div>
+        <h1 class="display-lg text-white leading-tight mb-6">
+          300 immersioni<br/>
+          nell'Elefante Bianco:<br/>
+          cosa mi ha insegnato.
+        </h1>
+        <p class="text-xl text-apple-grey leading-relaxed">
+          Una grotta che conosco centimetro per centimetro.
+          Eppure continua a sorprendermi. Riflessioni dopo trecento discese.
+        </p>
+      </header>
+
+      <div class="py-16 bg-gradient-to-br from-ocean-deep via-apple-black to-apple-dark rounded-3xl flex items-center justify-center mb-14 border border-white/10 border-b border-ocean-blue/20">
+        <div class="text-center">
+          <p class="text-ocean-blue font-bold text-2xl mb-2">Grotta dell'Elefante Bianco · Valstagna, VI</p>
+          <p class="font-mono text-white/50 text-sm">365 m · –149 m</p>
+        </div>
+      </div>
+
+      <div class="space-y-7 text-apple-grey text-lg leading-relaxed">
+        <p>
+          La <strong class="text-white">Grotta dell'Elefante Bianco</strong> è a pochi
+          minuti da casa mia, nel Canale di Brenta. È qui che ho imparato la speleologia
+          subacquea, che ho fatto i miei errori, che ho affinato la tecnica. Trecentosei
+          immersioni — a essere precisi — nell'estate del 2009. Un numero che all'epoca
+          sembrava già enorme, e che oggi mi fa capire quanto ci fosse ancora da imparare.
+        </p>
+
+        <h2 class="fade-up text-white font-bold text-2xl mt-10 mb-4">La grotta di casa</h2>
+        <p>
+          Il sistema si sviluppa per 365 metri con profondità massima di –149 m.
+          Per gli standard internazionali non è una grotta enorme, ma è tecnicamente
+          impegnativa: accesso stretto, corrente variabile, visibilità che cambia
+          a seconda delle precipitazioni in superficie. Ogni stagione la reimparo.
+        </p>
+        <p>
+          Le prime immersioni risalgono agli anni Novanta. Da allora ho partecipato
+          a ogni fase della sua esplorazione: mappatura dei corridoi principali,
+          diramazioni laterali, la zona terminale oltre i –120 m. Ho anche coordinato
+          l'operazione di bonifica del 2008 quando un subacqueo straniero è rimasto
+          intrappolato oltre i cento metri.
+        </p>
+
+        <h2 class="fade-up text-white font-bold text-2xl mt-10 mb-4">Cosa insegna una grotta familiare</h2>
+        <p>
+          La tentazione, conoscendo bene un sistema, è abbassare la guardia.
+          La routine è il peggior nemico del cave diver. Dopo trecento immersioni
+          mi sono accorto che il mio livello di attenzione al briefing, alla
+          pianificazione del gas, al controllo dell'attrezzatura era leggermente
+          calato. Ho dovuto reintrodurre consapevolmente le checklist come se fosse
+          la prima volta ogni volta.
+        </p>
+        <p>
+          La seconda lezione è sull'ambiente: una grotta allagata non è mai identica
+          a sé stessa. La sedimentazione si sposta, i filamenti di alghe crescono
+          e muoiono, le colate di fango cambiano profilo dopo le piene. La planimetria
+          che hai in testa è sempre una versione del passato.
+        </p>
+
+        <h2 class="fade-up text-white font-bold text-2xl mt-10 mb-4">Il luogo come maestro</h2>
+        <p>
+          Molti dei tecnici che ho formato nella Scuola Nazionale Speleosubacquea hanno
+          fatto le loro prime immersioni in grotta proprio all'Elefante Bianco.
+          È un ambiente esigente ma prevedibile se lo si rispetta — il tipo di grotta
+          ideale per capire cosa significhi davvero il cave diving, prima di affrontare
+          sistemi più complessi in Sardegna, in Croazia o altrove.
+        </p>
+        <p>
+          Trecentosei non è un traguardo. È un punto di partenza da cui guardare avanti.
+        </p>
+      </div>
+
+      <div class="mt-16 pt-8 border-t border-white/10 flex justify-between">
+        <a href="/blog" class="text-apple-blue text-sm font-semibold hover:underline">← Tutti i post</a>
+        <a href="/blog/su-gologone-2010" class="text-apple-blue text-sm font-semibold hover:underline">Post successivo →</a>
+      </div>
+    </article>
+  </div>
+</Layout>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  gsap.registerPlugin(ScrollTrigger);
+  gsap.utils.toArray<HTMLElement>('.fade-up').forEach(el => {
+    gsap.fromTo(el, { opacity: 0, y: 40 }, {
+      opacity: 1, y: 0, duration: 0.8, ease: 'power3.out',
+      scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none none' },
+    });
+  });
+</script>

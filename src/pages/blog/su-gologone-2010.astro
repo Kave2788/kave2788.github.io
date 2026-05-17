@@ -1,0 +1,105 @@
+---
+import Layout from '../../layouts/Layout.astro';
+---
+
+<Layout
+  title="Su Gologone 2010 — Alberto Cavedon"
+  description="La storia completa dell'esplorazione di Su Gologone nel maggio 2010: come Alberto Cavedon ha superato il record di Olivier Isler raggiungendo –135 m."
+>
+  <div class="pt-24">
+
+    <article class="max-w-3xl mx-auto px-6 py-16">
+      <header class="mb-12">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="text-xs bg-apple-blue/20 text-ocean-blue px-3 py-1 rounded-full font-semibold">Record</span>
+          <span class="text-apple-grey text-sm">Maggio 2010</span>
+          <span class="text-apple-grey/40 text-sm">· 12 min lettura</span>
+        </div>
+        <h1 class="display-lg text-white leading-tight mb-6">
+          Su Gologone 2010:<br/>
+          come ho superato<br/>
+          il record di Isler.
+        </h1>
+        <p class="text-xl text-apple-grey leading-relaxed">
+          Dieci giorni di spedizione. Tre anni di preparazione. –135 m.<br/>
+          La storia dell'esplorazione che ha riscritto le mappe.
+        </p>
+      </header>
+
+      <!-- Hero visual placeholder -->
+      <div class="py-16 bg-gradient-to-br from-ocean-deep via-apple-black to-apple-dark rounded-3xl flex items-center justify-center mb-14 border border-white/10 border-b border-ocean-blue/20">
+        <div class="text-center">
+          <p class="text-ocean-blue font-bold text-2xl mb-2">Su Gologone · Oliena, Sardegna</p>
+          <p class="font-mono text-white/50 text-sm">–135 m</p>
+        </div>
+      </div>
+
+      <div class="space-y-7 text-apple-grey text-lg leading-relaxed">
+        <p>
+          La sorgente di <strong class="text-white">Su Gologone</strong> si trova ad Oliena, nel cuore del
+          Supramonte sardo. È la sorgente più importante della Sardegna per portata d'acqua, e sotto la
+          superficie nasconde un sistema carsico di proporzioni straordinarie. Nel 1997 lo speleosub svizzero
+          Olivier Isler si era fermato a –107 m, bloccato da una fessura stretta. Per tredici anni nessuno
+          era riuscito ad andare oltre.
+        </p>
+
+        <h2 class="fade-up text-white font-bold text-2xl mt-10 mb-4">La preparazione (2009–2010)</h2>
+        <p>
+          Nell'estate 2009 la <strong class="text-white">Scuola Nazionale di Speleologia Subacquea</strong>
+          della SSI e l'associazione ASSO di Roma mi contattano per tentare il superamento del limite.
+          Non è una decisione che si prende in fretta. Tre anni di esplorazione progressiva a Su Gologone,
+          studio delle planimetrie di Isler, analisi della fessura stretta, scelta dei gas e del
+          configurazione dell'attrezzatura. Il rebreather è obbligatorio a quelle profondità.
+        </p>
+        <p>
+          La spedizione di maggio 2010 dura dieci giorni. Con me ci sono tecnici italiani e svizzeri.
+          Il campo è organizzato sulla riva della sorgente: gas, attrezzatura di riserva, supporto medico.
+          Ogni giorno un'immersione più profonda dell'altra per installare i corpi morti e i sacchi
+          di gas nelle stazioni giuste.
+        </p>
+
+        <h2 class="fade-up text-white font-bold text-2xl mt-10 mb-4">L'immersione record</h2>
+        <p>
+          Il giorno dell'immersione principale scendo seguendo il filo guida installato nelle settimane
+          precedenti. Supero la fessura di Isler a –107 m — era più transitabile di quanto le planimetrie
+          lasciassero intendere, con la configurazione giusta. Oltre c'è un condotto che si allarga
+          progressivamente verso est.
+        </p>
+        <p>
+          Raggiungo <strong class="text-white">–135 m</strong>. Aggiungo
+          <strong class="text-white">155 metri di nuovo sviluppo</strong> alle mappe.
+          Il condotto continua oltre — materiale per spedizioni future.
+        </p>
+
+        <h2 class="fade-up text-white font-bold text-2xl mt-10 mb-4">Cosa ho trovato</h2>
+        <p>
+          Visibilità straordinaria oltre i 40 metri, acqua a 13°C costanti, pareti di calcite bianchissima.
+          Un ambiente di rara bellezza che non aveva visto esseri umani dai tempi di Isler — e in certi
+          corridoi, mai.
+        </p>
+        <p>
+          Un documentario completo di tre anni di esplorazioni,
+          <em>"Su Gologone: Dove la Terra si Spacca"</em>, è stato prodotto da Massimo D'Alessandro
+          per l'associazione ASSO ed è disponibile su YouTube.
+        </p>
+      </div>
+
+      <div class="mt-16 pt-8 border-t border-white/10 flex justify-between">
+        <a href="/blog" class="text-apple-blue text-sm font-semibold hover:underline">← Tutti i post</a>
+        <a href="/blog/su-gologone-2012" class="text-apple-blue text-sm font-semibold hover:underline">Post successivo →</a>
+      </div>
+    </article>
+  </div>
+</Layout>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  gsap.registerPlugin(ScrollTrigger);
+  gsap.utils.toArray<HTMLElement>('.fade-up').forEach(el => {
+    gsap.fromTo(el, { opacity: 0, y: 40 }, {
+      opacity: 1, y: 0, duration: 0.8, ease: 'power3.out',
+      scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none none' },
+    });
+  });
+</script>

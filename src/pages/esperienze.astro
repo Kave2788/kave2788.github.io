@@ -1,0 +1,142 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const dives = [
+  { id: 1, lat: 45.84, lng: 11.73, name: "Grotta dell'Elefante Bianco", place: "Valstagna, VI", desc: "Oltre 300 immersioni. –226.7 m profondità massima attuale, 470 m di sviluppo. La grotta di casa sua.", depth: "–226.7 m", year: "anni '90 → oggi" },
+  { id: 2, lat: 40.27, lng:  9.43, name: "Su Gologone", place: "Oliena, Sardegna", desc: "Maggio 2010: –135 m, superato il record di Olivier Isler del 1997. +155 m di nuovo sviluppo.", depth: "–135 m", year: "2010 / 2012" },
+  { id: 3, lat: 45.84, lng: 11.73, name: "Arma del Lupo", place: "Veneto", desc: "Gennaio 2012: tre ore di penetrazione, –121 m. Una delle immersioni più lunghe della sua carriera.", depth: "–121 m", year: "gen. 2012" },
+  { id: 4, lat: 45.95, lng: 11.58, name: "Altopiano di Asiago — Sifoni", place: "Asiago, VI", desc: "Team internazionale: superati sifoni di 2545 m e 1150 m, penetrando nel cuore dell'altopiano.", depth: "n.d.", year: "2000s" },
+  { id: 5, lat: 45.97, lng: 13.64, name: "Carso / Vrtnarija", place: "Slovenia / Friuli", desc: "Esplorazioni nelle grotte carsiche del confine italo-sloveno.", depth: "n.d.", year: "varie" },
+  { id: 6, lat: 40.06, lng:  9.88, name: "Grotta del Bue Marino", place: "Sardegna", desc: "Settembre 2020: esplorazione con il team speleosubtek.", depth: "n.d.", year: "2020" },
+];
+---
+
+<Layout
+  title="Esplorazioni — Alberto Cavedon"
+  description="Mappa delle esplorazioni di Alberto Cavedon: Elefante Bianco, Su Gologone, Arma del Lupo, Grotta del Bue Marino e molto altro."
+>
+
+  <!-- Hero -->
+  <section class="section-dark pt-40 pb-20 text-center">
+    <div class="max-w-4xl mx-auto px-6">
+      <p class="label-eyebrow mb-4">Esplorazioni</p>
+      <h1 class="display-xl text-white mb-6">Il mappamondo<br/><span class="text-ocean-blue">sommerso.</span></h1>
+      <p class="body-lg max-w-xl mx-auto">Ogni punto è una storia. Clicca per scoprirla.</p>
+    </div>
+  </section>
+
+  <!-- Mappa -->
+  <section class="bg-apple-dark py-4">
+    <div class="max-w-6xl mx-auto px-6">
+      <div id="map" class="w-full h-[500px] rounded-3xl overflow-hidden border border-white/10" role="img" aria-label="Mappa interattiva delle esplorazioni di Alberto Cavedon"></div>
+    </div>
+  </section>
+
+  <!-- Cards esplorazioni -->
+  <section class="section-mid py-24">
+    <div class="max-w-6xl mx-auto px-6">
+      <h2 class="display-md text-white text-center mb-14 fade-up">Log esplorazioni</h2>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+        {dives.map(d => (
+          <article class="card-apple fade-up">
+            <div class="flex items-start justify-between mb-4">
+              <span class="text-xs bg-apple-blue/20 text-ocean-blue px-3 py-1 rounded-full font-semibold">{d.year}</span>
+              <span class="text-xs text-apple-grey bg-apple-black/40 px-2 py-1 rounded-full">{d.depth}</span>
+            </div>
+            <h3 class="text-white font-semibold text-lg mb-1">{d.name}</h3>
+            <p class="text-apple-blue text-xs font-medium mb-3">{d.place}</p>
+            <p class="text-apple-grey text-sm leading-relaxed">{d.desc}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Viaggio 3D Elefante Bianco -->
+  <section class="bg-black py-20">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="relative overflow-hidden rounded-3xl border border-ocean-blue/20 bg-gradient-to-br from-apple-mid to-ocean-deep p-12 text-center fade-up">
+        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(0,163,224,0.08)_0%,_transparent_70%)]"></div>
+        <div class="relative z-10">
+          <p class="label-eyebrow mb-3">Esperienza immersiva</p>
+          <h2 class="display-md text-white mb-4">
+            Grotta dell'Elefante Bianco<br/>
+            <span class="gradient-text">Viaggio 3D interattivo</span>
+          </h2>
+          <p class="text-white/50 text-lg max-w-xl mx-auto mb-8">
+            Scendi fino a –226.7 m attraverso le sezioni reali della grotta più esplorata da Cavedon.
+            470 m di sviluppo ricostruiti in Three.js dai dati speleologici.
+          </p>
+          <a href="/elefante-bianco" class="btn-apple text-base px-10 py-4">
+            Inizia il viaggio →
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Highlight: team internazionale -->
+  <section class="section-dark py-24">
+    <div class="max-w-4xl mx-auto px-6 text-center fade-up">
+      <p class="label-eyebrow mb-4">Team</p>
+      <h2 class="display-md text-white mb-6">Esplorazioni internazionali</h2>
+      <p class="body-lg max-w-2xl mx-auto">
+        Alberto ha collaborato con speleosub di Italia, Svizzera, Francia e Croazia.
+        Il team che ha esplorato i sifoni dell'Asiago includeva
+        <strong class="text-white">Peter Balordi, Sebastian Kuster, Gherard Wimmer e Gunther Faur</strong>:
+        2545 + 1150 metri di sifoni superati, penetrando per chilometri nel cuore dell'altopiano.
+      </p>
+    </div>
+  </section>
+
+</Layout>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  gsap.registerPlugin(ScrollTrigger);
+
+  gsap.utils.toArray<HTMLElement>('.fade-up').forEach(el => {
+    gsap.fromTo(el, { opacity: 0, y: 40 }, {
+      opacity: 1, y: 0, duration: 0.8, ease: 'power3.out',
+      scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' },
+    });
+  });
+
+  // Leaflet — caricato dinamicamente per evitare SSR
+  (async () => {
+    const L = (await import('leaflet')).default;
+
+    const map = L.map('map', { scrollWheelZoom: false, zoomControl: false }).setView([44, 12], 5);
+    L.control.zoom({ position: 'bottomright' }).addTo(map);
+
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; OpenStreetMap, &copy; CARTO',
+      subdomains: 'abcd',
+      maxZoom: 18,
+    }).addTo(map);
+
+    const dives = [
+      { lat: 45.84, lng: 11.73, name: "Grotta dell'Elefante Bianco", depth: "–226.7 m", year: "anni '90 → oggi", desc: "Oltre 300 immersioni personali. Profondità massima attuale –226.7 m." },
+      { lat: 40.27, lng:  9.43, name: "Su Gologone", depth: "–135 m", year: "2010 / 2012", desc: "Record nazionale: +155 m di sviluppo esplorato." },
+      { lat: 45.84, lng: 11.83, name: "Arma del Lupo", depth: "–121 m", year: "gen. 2012", desc: "3 ore di penetrazione." },
+      { lat: 45.95, lng: 11.58, name: "Sifoni Altopiano di Asiago", depth: "n.d.", year: "2000s", desc: "Sifoni da 2545 m + 1150 m." },
+      { lat: 40.06, lng:  9.88, name: "Grotta del Bue Marino", depth: "n.d.", year: "2020", desc: "Esplorazione team speleosubtek." },
+    ];
+
+    const icon = L.divIcon({
+      html: `<div style="width:12px;height:12px;background:#00a3e0;border-radius:50%;border:2px solid #fff;box-shadow:0 0 10px #00a3e0;"></div>`,
+      className: '',
+      iconSize: [12, 12],
+      iconAnchor: [6, 6],
+    });
+
+    dives.forEach(d => {
+      L.marker([d.lat, d.lng], { icon, title: d.name })
+        .addTo(map)
+        .bindPopup(`<strong>${d.name}</strong><br/>${d.desc}<br/><em>${d.depth} · ${d.year}</em>`);
+    });
+  })();
+</script>

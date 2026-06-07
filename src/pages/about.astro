@@ -101,6 +101,115 @@ import Layout from '../layouts/Layout.astro';
     </div>
   </section>
 
+  <!-- Brevetti UTRtek reali -->
+  <section class="section-dark py-24" aria-labelledby="brevetti-heading">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="text-center mb-14 fade-up">
+        <p class="label-eyebrow mb-3">Qualifiche istruttore</p>
+        <h2 id="brevetti-heading" class="display-md text-white" style="font-family: var(--font-family-display);">
+          Brevetti UTRtek
+        </h2>
+        <p class="text-white/40 text-sm mt-3 max-w-xl mx-auto leading-relaxed">
+          Certificazioni istruttore rilasciate da <strong class="text-white/60">UTRtek UK Ltd · International Diving Certification</strong> — ISO International · SV Cert. Group
+        </p>
+      </div>
+      <div class="grid md:grid-cols-2 gap-5">
+        {[
+          {
+            cat:     'Correctly Instructor',
+            title:   'Professional Trimix Instructor',
+            sub:     '100 Mt',
+            iso:     'ISO 24802-2',
+            pik:     'ITA PTI/25-0158',
+            code:    'ITA 00082-I',
+            cert:    '342-EDU-25',
+            expires: '31 Dic 2026',
+            color:   'text-ocean-blue border-ocean-blue/30 bg-ocean-blue/5',
+            dot:     'bg-ocean-blue',
+          },
+          {
+            cat:     'Correctly Instructor',
+            title:   'Technical Cave Instructor',
+            sub:     'Cave Diving',
+            iso:     'ISO 24802-2',
+            pik:     'ITA CV3I/25-0158',
+            code:    'ITA 00082-I',
+            cert:    '342-EDU-25',
+            expires: '31 Dic 2026',
+            color:   'text-amber-400 border-amber-500/30 bg-amber-500/5',
+            dot:     'bg-amber-400',
+          },
+          {
+            cat:     'Correctly',
+            title:   'Professional CCR Rebreather',
+            sub:     '100 Mt — 508',
+            iso:     'ISO 24807',
+            pik:     'ITA ECCR4/24-16557',
+            code:    'ITA 00082-I',
+            cert:    '342-EDU-25',
+            expires: null,
+            issued:  '28 Ott 2024',
+            color:   'text-rose-400 border-rose-500/30 bg-rose-500/5',
+            dot:     'bg-rose-400',
+          },
+          {
+            cat:     'Other Instructor',
+            title:   'BLS-D & RCP',
+            sub:     'Medical First Aid Instructor',
+            iso:     'ISO 24802-2',
+            pik:     'ITA MDFI/25-0158',
+            code:    'ITA 00082-I',
+            cert:    '342-EDU-25',
+            expires: '31 Dic 2026',
+            color:   'text-emerald-400 border-emerald-500/30 bg-emerald-500/5',
+            dot:     'bg-emerald-400',
+          },
+        ].map(b => (
+          <article class={`card-glass fade-up border ${b.color} flex flex-col gap-4`}>
+            <div class="flex items-start justify-between gap-3">
+              <div>
+                <p class="text-white/35 text-[10px] font-bold tracking-[0.2em] uppercase mb-1">
+                  UTRtek · {b.cat}
+                </p>
+                <h3 class="text-white font-bold text-xl leading-tight" style="font-family: var(--font-family-display);">
+                  {b.title}
+                </h3>
+                <p class="text-white/50 text-sm mt-0.5">{b.sub}</p>
+              </div>
+              <span class={`w-2.5 h-2.5 rounded-full shrink-0 mt-1.5 ${b.dot}`}></span>
+            </div>
+
+            <dl class="grid grid-cols-2 gap-x-6 gap-y-2 text-xs border-t border-white/8 pt-4">
+              <div>
+                <dt class="text-white/30 mb-0.5">Standard</dt>
+                <dd class="text-white/70 font-mono font-semibold">{b.iso}</dd>
+              </div>
+              <div>
+                <dt class="text-white/30 mb-0.5">Codice istruttore</dt>
+                <dd class="text-white/70 font-mono font-semibold">{b.code}</dd>
+              </div>
+              <div>
+                <dt class="text-white/30 mb-0.5">PIK</dt>
+                <dd class="text-white/60 font-mono text-[11px]">{b.pik}</dd>
+              </div>
+              <div>
+                <dt class="text-white/30 mb-0.5">{b.expires ? 'Scadenza' : 'Rilascio'}</dt>
+                <dd class="text-white/70 font-semibold">{b.expires ?? b.issued}</dd>
+              </div>
+            </dl>
+
+            <p class="text-white/20 text-[10px] font-mono tracking-wide border-t border-white/5 pt-3">
+              Certificate n° {b.cert} · UTRtek UK Ltd · #1033518+
+            </p>
+          </article>
+        ))}
+      </div>
+      <p class="text-center text-white/20 text-xs mt-8 fade-up">
+        Verificabile su <a href="https://www.utrtek.com" target="_blank" rel="noopener" class="hover:text-white/40 transition-colors">utrtek.com</a>
+      </p>
+    </div>
+  </section>
+
   <!-- Timeline -->
   <section class="section-mid py-24">
     <div class="max-w-3xl mx-auto px-6">

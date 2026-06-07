@@ -7,7 +7,6 @@ const dives = [
   { id: 3, lat: 45.84, lng: 11.73, name: "Arma del Lupo", place: "Veneto", desc: "Gennaio 2012: tre ore di penetrazione, –121 m. Una delle immersioni più lunghe della sua carriera.", depth: "–121 m", year: "gen. 2012" },
   { id: 4, lat: 45.95, lng: 11.58, name: "Altopiano di Asiago — Sifoni", place: "Asiago, VI", desc: "Team internazionale: superati sifoni di 2545 m e 1150 m, penetrando nel cuore dell'altopiano.", depth: "n.d.", year: "2000s" },
   { id: 5, lat: 45.97, lng: 13.64, name: "Carso / Vrtnarija", place: "Slovenia / Friuli", desc: "Esplorazioni nelle grotte carsiche del confine italo-sloveno.", depth: "n.d.", year: "varie" },
-  { id: 6, lat: 40.06, lng:  9.88, name: "Grotta del Bue Marino", place: "Sardegna", desc: "Settembre 2020: esplorazione con il team speleosubtek.", depth: "n.d.", year: "2020" },
 ];
 ---
 
@@ -48,29 +47,6 @@ const dives = [
             <p class="text-apple-grey text-sm leading-relaxed">{d.desc}</p>
           </article>
         ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA Viaggio 3D Elefante Bianco -->
-  <section class="bg-black py-20">
-    <div class="max-w-6xl mx-auto px-6">
-      <div class="relative overflow-hidden rounded-3xl border border-ocean-blue/20 bg-gradient-to-br from-apple-mid to-ocean-deep p-12 text-center fade-up">
-        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(0,163,224,0.08)_0%,_transparent_70%)]"></div>
-        <div class="relative z-10">
-          <p class="label-eyebrow mb-3">Esperienza immersiva</p>
-          <h2 class="display-md text-white mb-4">
-            Grotta dell'Elefante Bianco<br/>
-            <span class="gradient-text">Viaggio 3D interattivo</span>
-          </h2>
-          <p class="text-white/50 text-lg max-w-xl mx-auto mb-8">
-            Scendi fino a –226.7 m attraverso le sezioni reali della grotta più esplorata da Cavedon.
-            470 m di sviluppo ricostruiti in Three.js dai dati speleologici.
-          </p>
-          <a href="/elefante-bianco" class="btn-apple text-base px-10 py-4">
-            Inizia il viaggio →
-          </a>
-        </div>
       </div>
     </div>
   </section>
@@ -123,7 +99,6 @@ const dives = [
       { lat: 40.27, lng:  9.43, name: "Su Gologone", depth: "–135 m", year: "2010 / 2012", desc: "Record nazionale: +155 m di sviluppo esplorato." },
       { lat: 45.84, lng: 11.83, name: "Arma del Lupo", depth: "–121 m", year: "gen. 2012", desc: "3 ore di penetrazione." },
       { lat: 45.95, lng: 11.58, name: "Sifoni Altopiano di Asiago", depth: "n.d.", year: "2000s", desc: "Sifoni da 2545 m + 1150 m." },
-      { lat: 40.06, lng:  9.88, name: "Grotta del Bue Marino", depth: "n.d.", year: "2020", desc: "Esplorazione team speleosubtek." },
     ];
 
     const icon = L.divIcon({

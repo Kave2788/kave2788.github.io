@@ -43,16 +43,19 @@ function u(base: string, w = 1200, h = 800) {
     <!-- Bottom fade -->
     <div class="absolute bottom-0 inset-x-0 h-40 bg-gradient-to-t from-black to-transparent pointer-events-none z-10"></div>
 
+    <!-- Ambient glow behind title -->
+    <div class="hero-glow z-10"></div>
+
     <div class="relative z-20 text-center px-6 max-w-5xl mx-auto select-none">
-      <p id="hero-eyebrow" class="text-ocean-blue font-semibold tracking-[0.3em] uppercase text-sm mb-6 opacity-0">
+      <p id="hero-eyebrow" class="label-eyebrow mb-6 opacity-0">
         Speleologo Subacqueo · Valstagna, Vicenza
       </p>
-      <h1 id="hero-title" class="font-display font-black text-white leading-[0.95] mb-8 opacity-0"
-          style="font-size: clamp(4rem, 12vw, 10rem); letter-spacing: -0.03em;">
+      <h1 id="hero-title" class="text-white leading-[0.92] mb-8 opacity-0"
+          style="font-family: var(--font-family-display); font-size: clamp(4rem, 12vw, 10rem); font-weight: 800; letter-spacing: -0.04em;">
         Alberto<br/>
         <span class="gradient-text text-neon">Cavedon</span>
       </h1>
-      <p id="hero-sub" class="text-xl md:text-2xl text-white/60 max-w-2xl mx-auto mb-12 opacity-0 leading-relaxed">
+      <p id="hero-sub" class="text-xl md:text-2xl text-white/55 max-w-2xl mx-auto mb-12 opacity-0 leading-relaxed font-light">
         Dove finisce la luce, comincia l'esplorazione.
       </p>
       <div id="hero-cta" class="flex flex-col sm:flex-row gap-4 justify-center opacity-0">
@@ -98,10 +101,10 @@ function u(base: string, w = 1200, h = 800) {
           { target: 2545, suffix: ' m', label: 'Sifone più lungo esplorato' },
         ].map(m => (
           <div class="stat-block fade-up" data-target={m.target} data-suffix={m.suffix} data-prefix={m.prefix ?? ''}>
-            <p class="counter text-4xl md:text-5xl font-black text-white tracking-tight">
+            <p class="counter stat-number">
               {m.prefix ?? ''}{m.target}{m.suffix}
             </p>
-            <p class="text-white/40 text-xs mt-2 leading-tight">{m.label}</p>
+            <p class="text-white/40 text-xs mt-2 leading-tight font-medium tracking-wide uppercase">{m.label}</p>
           </div>
         ))}
       </div>
@@ -126,7 +129,7 @@ function u(base: string, w = 1200, h = 800) {
       <!-- Testo -->
       <div class="flex flex-col justify-center px-8 md:px-16 py-20 order-1 md:order-2 fade-up">
         <p class="label-eyebrow mb-4">Chi è</p>
-        <h2 class="display-lg text-white mb-6">Una vita<br/>nell'abisso.</h2>
+        <h2 class="display-lg text-white mb-6" style="font-family: var(--font-family-display);">Una vita<br/>nell'abisso.</h2>
         <p class="text-white/60 text-lg leading-relaxed mb-4">
           Alberto Cavedon è uno dei più esperti speleosubacquei italiani.
           Membro del <strong class="text-white">Gruppo Grotte Giara Modon</strong> di Valstagna,
@@ -155,8 +158,8 @@ function u(base: string, w = 1200, h = 800) {
     <div class="relative z-10 max-w-6xl mx-auto px-6 py-32">
       <div class="max-w-xl fade-up">
         <p class="label-eyebrow mb-4">Sardegna · Maggio 2010</p>
-        <h2 id="record-heading" class="display-lg text-white mb-2">Su Gologone.</h2>
-        <p class="text-6xl md:text-8xl font-black gradient-text text-neon mb-8" style="letter-spacing: -0.03em;">–135 m</p>
+        <h2 id="record-heading" class="display-lg text-white mb-2" style="font-family: var(--font-family-display);">Su Gologone.</h2>
+        <p class="gradient-text text-neon mb-8" style="font-family: var(--font-family-display); font-size: clamp(4rem, 10vw, 8rem); font-weight: 800; letter-spacing: -0.04em; line-height: 1;">–135 m</p>
         <p class="text-white/60 text-lg leading-relaxed mb-8">
           Dopo 13 anni dall'ultima esplorazione di Olivier Isler (–107 m),
           Alberto supera la fessura a quota –107 m e spinge a –135 m,
@@ -187,28 +190,31 @@ function u(base: string, w = 1200, h = 800) {
     <div class="max-w-6xl mx-auto px-6 mb-10 flex items-end justify-between fade-up">
       <div>
         <p class="label-eyebrow mb-2">Gallery</p>
-        <h2 id="gallery-heading" class="display-md text-white">Dall'abisso.</h2>
+        <h2 id="gallery-heading" class="display-md text-white" style="font-family: var(--font-family-display);">Dall'abisso.</h2>
       </div>
       <a href="/gallery" class="text-ocean-blue text-sm font-semibold hover:underline hidden md:block">
         Vedi tutte →
       </a>
     </div>
-    <div class="scroll-strip px-6 max-w-none" role="list">
-      {galleryPreview.map(p => (
-        <a href="/gallery" class="img-3d-wrap tilt-3d w-72 h-52 shrink-0" role="listitem">
-          <img
-            src={u(p.url, 600, 400)}
-            alt={p.caption}
-            class="w-full h-full object-cover"
-            loading="lazy"
-            width="600"
-            height="400"
-          />
-          <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-4">
-            <p class="text-white text-sm font-medium">{p.caption}</p>
-          </div>
-        </a>
-      ))}
+    <!-- Auto-scroll strip: le immagini sono duplicate per il loop seamless -->
+    <div class="scroll-strip-auto-outer" role="list" aria-label="Galleria foto">
+      <div class="scroll-strip-auto pl-6">
+        {[...galleryPreview, ...galleryPreview].map((p, i) => (
+          <a href="/gallery" class="img-3d-wrap w-72 h-52" role="listitem" aria-hidden={i >= galleryPreview.length ? 'true' : undefined}>
+            <img
+              src={u(p.url, 600, 400)}
+              alt={p.caption}
+              class="w-full h-full object-cover"
+              loading="lazy"
+              width="600"
+              height="400"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent flex items-end p-4">
+              <p class="text-white text-sm font-medium">{p.caption}</p>
+            </div>
+          </a>
+        ))}
+      </div>
     </div>
   </section>
 
@@ -219,7 +225,7 @@ function u(base: string, w = 1200, h = 800) {
     <div class="max-w-6xl mx-auto px-6">
       <div class="text-center mb-16 fade-up">
         <p class="label-eyebrow mb-4">Formazione</p>
-        <h2 id="corsi-heading" class="display-md text-white mb-4">Corsi UTR</h2>
+        <h2 id="corsi-heading" class="display-md text-white mb-4" style="font-family: var(--font-family-display);">Corsi UTR</h2>
         <p class="text-white/50 text-xl max-w-xl mx-auto">
           Quarant'anni di esperienza reale.<br/>Niente di teorico.
         </p>
@@ -262,11 +268,11 @@ function u(base: string, w = 1200, h = 800) {
     />
     <div class="absolute inset-0 bg-black/70"></div>
     <div class="relative z-10 max-w-4xl mx-auto px-6 text-center fade-up">
-      <p class="text-7xl text-ocean-blue/40 font-black mb-6 leading-none">"</p>
-      <blockquote class="text-3xl md:text-5xl font-black text-white leading-tight mb-8" style="letter-spacing: -0.02em;">
+      <p class="text-ocean-blue/50 font-black mb-4 leading-none" style="font-family: var(--font-family-display); font-size: 6rem; line-height: 0.8;">"</p>
+      <blockquote class="text-white leading-tight mb-8" style="font-family: var(--font-family-display); font-size: clamp(1.75rem, 4vw, 3.5rem); font-weight: 700; letter-spacing: -0.03em;">
         Non esiste simulazione che sostituisca il buio reale, la corrente reale, il freddo reale.
       </blockquote>
-      <p class="text-white/40 tracking-widest text-sm uppercase">— Alberto Cavedon · Scubazone 2013</p>
+      <p class="text-white/35 tracking-[0.25em] text-xs uppercase">— Alberto Cavedon · Scubazone 2013</p>
     </div>
   </section>
 
@@ -278,7 +284,7 @@ function u(base: string, w = 1200, h = 800) {
       <div class="flex items-end justify-between mb-12 fade-up">
         <div>
           <p class="label-eyebrow mb-2">Diario</p>
-          <h2 id="blog-heading" class="display-md text-white">Dal campo.</h2>
+          <h2 id="blog-heading" class="display-md text-white" style="font-family: var(--font-family-display);">Dal campo.</h2>
         </div>
         <a href="/blog" class="text-ocean-blue text-sm font-semibold hover:underline hidden md:block">
           Tutti i post →
@@ -336,8 +342,8 @@ function u(base: string, w = 1200, h = 800) {
     />
     <div class="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black"></div>
     <div class="relative z-10 max-w-2xl mx-auto px-6 fade-up">
-      <h2 class="display-lg text-white mb-6">Scendi con me.</h2>
-      <p class="text-white/50 text-xl mb-10">
+      <h2 class="display-lg text-white mb-6" style="font-family: var(--font-family-display);">Scendi con me.</h2>
+      <p class="text-white/50 text-xl mb-10 font-light leading-relaxed">
         Corsi UTR, spedizioni, seminari.<br/>Contattami per iniziare.
       </p>
       <a href="/contatti" class="btn-apple text-base px-12 py-4">Inizia il percorso</a>

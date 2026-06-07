@@ -14,8 +14,8 @@
   --color-ocean-blue: #00a3e0;
   --color-ocean-glow: #40c4ff;
 
-  --font-family-sans: -apple-system, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
-  --font-family-display: -apple-system, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+  --font-family-sans: 'Inter', -apple-system, 'Helvetica Neue', Arial, sans-serif;
+  --font-family-display: 'Syne', -apple-system, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
 }
 
 @layer base {
@@ -38,15 +38,30 @@
 
 @layer components {
   .btn-apple {
-    @apply inline-flex items-center justify-center bg-apple-blue hover:bg-apple-blue-hover text-white font-semibold px-6 py-3 rounded-full transition-all duration-200 text-base focus:outline-none focus:ring-2 focus:ring-apple-blue focus:ring-offset-2 focus:ring-offset-apple-black;
+    @apply inline-flex items-center justify-center bg-apple-blue text-white font-semibold px-6 py-3 rounded-full transition-all duration-300 text-base focus:outline-none focus:ring-2 focus:ring-apple-blue focus:ring-offset-2 focus:ring-offset-apple-black;
+    box-shadow: 0 0 0 rgba(0, 113, 227, 0);
+  }
+  .btn-apple:hover {
+    background: #0077ed;
+    box-shadow: 0 0 32px rgba(0, 113, 227, 0.5), 0 4px 20px rgba(0, 113, 227, 0.35);
+    transform: translateY(-1px);
+  }
+  .btn-apple:active {
+    transform: translateY(0);
+    box-shadow: 0 0 16px rgba(0, 113, 227, 0.3);
   }
 
   .btn-apple-outline {
-    @apply inline-flex items-center justify-center border border-apple-blue text-apple-blue hover:bg-apple-blue hover:text-white font-semibold px-6 py-3 rounded-full transition-all duration-200 text-base focus:outline-none;
+    @apply inline-flex items-center justify-center border border-apple-blue text-apple-blue font-semibold px-6 py-3 rounded-full transition-all duration-300 text-base focus:outline-none;
+  }
+  .btn-apple-outline:hover {
+    @apply bg-apple-blue text-white;
+    box-shadow: 0 0 24px rgba(0, 113, 227, 0.4);
+    transform: translateY(-1px);
   }
 
   .btn-apple-light {
-    @apply inline-flex items-center justify-center bg-apple-blue hover:bg-apple-blue-hover text-white font-semibold px-6 py-3 rounded-full transition-all duration-200 text-base;
+    @apply inline-flex items-center justify-center bg-apple-blue hover:bg-apple-blue-hover text-white font-semibold px-6 py-3 rounded-full transition-all duration-300 text-base;
   }
 
   /* Apple-style section alternating */
@@ -66,26 +81,29 @@
     @apply bg-apple-light text-apple-dark;
   }
 
-  /* Typography */
+  /* Typography — Syne per i titoli */
   .display-xl {
+    font-family: var(--font-family-display);
     font-size: clamp(3rem, 8vw, 7rem);
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    line-height: 1.05;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.0;
   }
 
   .display-lg {
+    font-family: var(--font-family-display);
     font-size: clamp(2rem, 5vw, 4.5rem);
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    line-height: 1.08;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.06;
   }
 
   .display-md {
+    font-family: var(--font-family-display);
     font-size: clamp(1.5rem, 3.5vw, 2.8rem);
-    font-weight: 600;
-    letter-spacing: -0.01em;
-    line-height: 1.15;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
   }
 
   .body-lg {
@@ -93,7 +111,7 @@
   }
 
   .label-eyebrow {
-    @apply text-apple-blue font-semibold text-base tracking-wide uppercase;
+    @apply text-ocean-blue font-semibold text-sm tracking-[0.25em] uppercase;
   }
 
   /* Fade-up animation target */
@@ -120,10 +138,10 @@
   /* Nav */
   .nav-apple {
     @apply fixed top-0 inset-x-0 z-50 h-14 flex items-center;
-    background: rgba(0, 0, 0, 0.8);
-    backdrop-filter: saturate(180%) blur(20px);
-    -webkit-backdrop-filter: saturate(180%) blur(20px);
-    border-bottom: 1px solid rgba(255,255,255,0.08);
+    background: rgba(0, 0, 0, 0.72);
+    backdrop-filter: saturate(180%) blur(24px);
+    -webkit-backdrop-filter: saturate(180%) blur(24px);
+    border-bottom: 1px solid rgba(255,255,255,0.07);
   }
 
   /* Metric block */
@@ -207,21 +225,23 @@
   pointer-events: none;
 }
 
-/* Glassmorphism card */
+/* Glassmorphism card — migliorato */
 .card-glass {
-  background: rgba(255,255,255,0.04);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.035);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255,255,255,0.07);
   border-radius: 24px;
   padding: 2rem;
-  transition: border-color 0.3s, transform 0.15s, box-shadow 0.3s;
+  transition: border-color 0.4s, transform 0.15s, box-shadow 0.4s, background 0.4s;
 }
 .card-glass:hover {
-  border-color: rgba(0,163,224,0.4);
+  border-color: rgba(0,163,224,0.5);
+  background: rgba(0,163,224,0.06);
+  box-shadow: 0 0 40px rgba(0,163,224,0.12), inset 0 0 30px rgba(0,163,224,0.04);
 }
 
-/* Horizontal scroll strip */
+/* Horizontal scroll strip — versione auto-scroll */
 .scroll-strip {
   display: flex;
   gap: 1.5rem;
@@ -237,9 +257,32 @@
   flex-shrink: 0;
 }
 
+/* Auto-scrolling gallery strip */
+.scroll-strip-auto-outer {
+  overflow: hidden;
+  width: 100%;
+}
+.scroll-strip-auto {
+  display: flex;
+  gap: 1.5rem;
+  width: max-content;
+  animation: gallery-scroll 40s linear infinite;
+}
+.scroll-strip-auto:hover {
+  animation-play-state: paused;
+}
+.scroll-strip-auto > * {
+  flex-shrink: 0;
+}
+
+@keyframes gallery-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
 /* Neon text glow */
 .text-neon {
-  text-shadow: 0 0 20px rgba(0,163,224,0.8), 0 0 60px rgba(0,163,224,0.3);
+  text-shadow: 0 0 30px rgba(0,163,224,0.9), 0 0 80px rgba(0,163,224,0.4), 0 0 120px rgba(0,163,224,0.15);
 }
 
 /* Image with 3D depth overlay */
@@ -250,19 +293,19 @@
   border-radius: 24px;
 }
 .img-3d-wrap img {
-  transition: transform 0.5s ease;
+  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 .img-3d-wrap:hover img {
-  transform: scale(1.04);
+  transform: scale(1.06);
 }
 
-/* Gradient text */
+/* Gradient text — più vibrante */
 .gradient-text {
-  background: linear-gradient(135deg, #00a3e0 0%, #40ffcc 50%, #ffffff 100%);
+  background: linear-gradient(135deg, #00c6ff 0%, #40ffcc 45%, #e0ffff 80%, #ffffff 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -285,8 +328,46 @@
 
 /* Stat counter */
 .stat-block {
-  border-left: 2px solid rgba(0,163,224,0.3);
+  border-left: 2px solid rgba(0,163,224,0.4);
   padding-left: 1.5rem;
+}
+
+/* Stat number glow */
+.stat-number {
+  font-family: var(--font-family-display);
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  background: linear-gradient(135deg, #ffffff 0%, #00c6ff 60%, #40ffcc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 20px rgba(0,163,224,0.3));
+}
+
+/* Hero ambient glow */
+.hero-glow {
+  position: absolute;
+  width: 600px;
+  height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(0,163,224,0.18) 0%, transparent 70%);
+  filter: blur(40px);
+  pointer-events: none;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: glow-pulse 4s ease-in-out infinite;
+}
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
+  50%       { opacity: 1;   transform: translate(-50%, -50%) scale(1.1); }
+}
+
+/* Divider luminoso */
+.divider-glow {
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(0,163,224,0.5), transparent);
 }
 
 /* Lenis html override */

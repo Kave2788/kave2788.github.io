@@ -4,148 +4,215 @@ import Layout from '../layouts/Layout.astro';
 
 <Layout
   title="Contatti — Alberto Cavedon"
-  description="Contatta Alberto Cavedon per informazioni sui corsi UTR, spedizioni o collaborazioni con il CNSAS."
+  description="Contatta Alberto Cavedon per formazione, spedizioni, consulenze, interviste o materiali d'archivio."
 >
+  <header class="page-hero">
+    <div class="shell page-hero__grid">
+      <div class="hero-animate">
+        <p class="eyebrow">Contatto / Diretto</p>
+        <h1 class="display-title">Una richiesta<br /><span class="text-accent">ben preparata.</span></h1>
+      </div>
+      <div class="page-hero__aside hero-animate hero-animate--delay">
+        <p class="lead">Formazione, spedizioni, consulenze tecniche, interviste e materiali d’archivio.</p>
+        <a class="source-link" href="mailto:info@speleosubtek.com">info@speleosubtek.com</a>
+      </div>
+    </div>
+  </header>
 
-  <!-- Hero -->
-  <section class="section-dark pt-40 pb-20 text-center">
-    <p class="label-eyebrow mb-4">Contatti</p>
-    <h1 class="display-xl text-white mb-4">Scrivimi.</h1>
-    <p class="body-lg max-w-md mx-auto">Per corsi, iscrizioni o collaborazioni.<br/>Rispondo entro 48 ore.</p>
-  </section>
-
-  <!-- Form + info -->
-  <section class="section-mid py-16">
-    <div class="max-w-5xl mx-auto px-6 grid md:grid-cols-5 gap-12">
-
-      <!-- Form -->
-      <div class="md:col-span-3 fade-up" x-data="contactForm()">
-        <form @submit.prevent="submit" novalidate class="space-y-5" aria-label="Modulo di contatto">
-
-          <div class="grid sm:grid-cols-2 gap-4">
-            <div>
-              <label for="nome" class="block text-xs font-semibold text-apple-grey mb-2 uppercase tracking-wide">Nome *</label>
-              <input id="nome" type="text" x-model="form.nome" required autocomplete="given-name"
-                class="w-full bg-apple-dark border border-white/10 focus:border-apple-blue rounded-xl px-4 py-3 text-white placeholder-white/20 outline-none transition-colors text-sm"
-                placeholder="Mario" />
-            </div>
-            <div>
-              <label for="cognome" class="block text-xs font-semibold text-apple-grey mb-2 uppercase tracking-wide">Cognome *</label>
-              <input id="cognome" type="text" x-model="form.cognome" required autocomplete="family-name"
-                class="w-full bg-apple-dark border border-white/10 focus:border-apple-blue rounded-xl px-4 py-3 text-white placeholder-white/20 outline-none transition-colors text-sm"
-                placeholder="Rossi" />
-            </div>
-          </div>
-
-          <div>
-            <label for="email" class="block text-xs font-semibold text-apple-grey mb-2 uppercase tracking-wide">Email *</label>
-            <input id="email" type="email" x-model="form.email" required autocomplete="email"
-              class="w-full bg-apple-dark border border-white/10 focus:border-apple-blue rounded-xl px-4 py-3 text-white placeholder-white/20 outline-none transition-colors text-sm"
-              placeholder="mario@example.com" />
-          </div>
-
-          <div>
-            <label for="oggetto" class="block text-xs font-semibold text-apple-grey mb-2 uppercase tracking-wide">Argomento</label>
-            <select id="oggetto" x-model="form.oggetto"
-              class="w-full bg-apple-dark border border-white/10 focus:border-apple-blue rounded-xl px-4 py-3 text-white outline-none transition-colors text-sm">
-              <option value="">Seleziona...</option>
-              <option value="cave-base">Cave Diving Base</option>
-              <option value="utr-soccorso">UTR — Soccorso Subacqueo</option>
-              <option value="deep-cave">Deep Cave Exploration</option>
-              <option value="seminario">Seminario UTR</option>
-              <option value="spedizione">Spedizione / Collaborazione</option>
-              <option value="altro">Altro</option>
-            </select>
-          </div>
-
-          <div>
-            <label for="messaggio" class="block text-xs font-semibold text-apple-grey mb-2 uppercase tracking-wide">Messaggio *</label>
-            <textarea id="messaggio" x-model="form.messaggio" required rows="5"
-              class="w-full bg-apple-dark border border-white/10 focus:border-apple-blue rounded-xl px-4 py-3 text-white placeholder-white/20 outline-none transition-colors text-sm resize-y"
-              placeholder="Scrivi qui..."></textarea>
-          </div>
-
-          <p x-show="error" class="text-red-400 text-sm" role="alert">Compila tutti i campi obbligatori.</p>
-          <p x-show="sent" class="text-green-400 text-sm" role="status">✓ Messaggio inviato. Ti risponderò presto.</p>
-
-          <button type="submit" class="btn-apple w-full justify-center py-4"
-            :disabled="sending" :class="sending && 'opacity-60 cursor-not-allowed'">
-            <span x-show="!sending">Invia messaggio</span>
-            <span x-show="sending">Invio in corso...</span>
-          </button>
-
-          <p class="text-white/20 text-xs text-center">* Campi obbligatori. Nessun dato ceduto a terzi.</p>
-        </form>
+  <section class="section">
+    <div class="shell contact-grid">
+      <div>
+        <p class="eyebrow">Prima di scrivere / 01</p>
+        <h2 class="display-xl">Metti nel messaggio ciò che serve a rispondere.</h2>
+        <ol class="contact-checklist">
+          <li><span>01</span><div><strong>Obiettivo</strong><p>Che cosa vuoi imparare, organizzare o verificare.</p></div></li>
+          <li><span>02</span><div><strong>Esperienza</strong><p>Brevetti, attività recente e configurazione usata.</p></div></li>
+          <li><span>03</span><div><strong>Tempo e luogo</strong><p>Periodo disponibile e area da cui parti.</p></div></li>
+          <li><span>04</span><div><strong>Contesto</strong><p>Per archivio e media: autore, data, provenienza e diritti.</p></div></li>
+        </ol>
       </div>
 
-      <!-- Info -->
-      <aside class="md:col-span-2 space-y-4 fade-up">
-        <div class="card-apple">
-          <p class="text-apple-grey text-xs uppercase tracking-wide mb-3">Riferimenti</p>
-          <div class="space-y-4">
-            <div>
-              <p class="text-apple-grey text-xs">Sito ufficiale</p>
-              <a href="https://www.speleosubtek.com" target="_blank" rel="noopener"
-                class="text-white font-medium hover:text-apple-blue transition-colors text-sm">speleosubtek.com</a>
+      <div class="contact-form-wrap">
+        <form id="contact-form" class="contact-form">
+          <div class="form-grid">
+            <div class="field">
+              <label for="name">Nome e cognome *</label>
+              <input id="name" name="name" type="text" autocomplete="name" required />
             </div>
-            <div>
-              <p class="text-apple-grey text-xs">Facebook</p>
-              <a href="https://www.facebook.com/p/speleosubit-Alberto-Cavedon-100066547968023/" target="_blank" rel="noopener"
-                class="text-white font-medium hover:text-apple-blue transition-colors text-sm">speleosubit · Alberto Cavedon</a>
+            <div class="field">
+              <label for="email">La tua email *</label>
+              <input id="email" name="email" type="email" autocomplete="email" required />
             </div>
-            <div>
-              <p class="text-apple-grey text-xs">Affiliazione</p>
-              <p class="text-white text-sm font-medium">CNSAS · Gruppo Grotte Giara Modon</p>
+            <div class="field field--wide">
+              <label for="topic">Argomento *</label>
+              <select id="topic" name="topic" required>
+                <option value="">Seleziona</option>
+                <option value="Formazione">Formazione e corsi</option>
+                <option value="Spedizione">Spedizione o collaborazione tecnica</option>
+                <option value="Archivio">Archivio, fotografie o documenti</option>
+                <option value="Intervista">Intervista, podcast o conferenza</option>
+                <option value="Qualifiche">Verifica qualifiche</option>
+                <option value="Altro">Altro</option>
+              </select>
             </div>
-            <div>
-              <p class="text-apple-grey text-xs">Sede operativa</p>
-              <p class="text-white text-sm font-medium">Valstagna (VI), Veneto, Italia</p>
+            <div class="field field--wide">
+              <label for="message">Messaggio *</label>
+              <textarea id="message" name="message" required placeholder="Obiettivo, esperienza o contesto, periodo disponibile e domanda specifica."></textarea>
+              <p class="field-help">Nessun dato viene inviato da questo sito. Il pulsante prepara una normale email nel tuo programma di posta.</p>
             </div>
           </div>
-        </div>
 
-        <!-- Newsletter -->
-        <div class="card-apple" x-data="{ email: '', ok: false }">
-          <p class="text-white font-semibold mb-1 text-sm">Newsletter</p>
-          <p class="text-apple-grey text-xs mb-4">Aggiornamenti su corsi ed esplorazioni.</p>
-          <form @submit.prevent="ok = true" class="flex gap-2">
-            <input type="email" x-model="email" required placeholder="La tua email"
-              class="flex-1 bg-apple-black border border-white/10 focus:border-apple-blue rounded-xl px-3 py-2 text-white text-sm placeholder-white/20 outline-none" />
-            <button type="submit" class="btn-apple text-sm px-4 py-2 rounded-xl">OK</button>
-          </form>
-          <p x-show="ok" class="text-green-400 text-xs mt-2">✓ Iscritto!</p>
-        </div>
-      </aside>
+          <p id="form-error" class="form-message form-message--error" role="alert" hidden>Controlla i campi obbligatori evidenziati.</p>
+          <p id="form-ready" class="form-message" aria-live="polite" hidden>L’email è pronta: completa l’invio nel tuo programma di posta.</p>
+          <button class="button" type="submit">Apri l’email pronta <span aria-hidden="true">↗</span></button>
+        </form>
+
+        <noscript>
+          <p class="noscript-note">JavaScript è disattivato. Scrivi direttamente a <a href="mailto:info@speleosubtek.com">info@speleosubtek.com</a>.</p>
+        </noscript>
+      </div>
     </div>
   </section>
 
+  <section class="section section--surface">
+    <div class="shell contact-options">
+      <article class="card">
+        <div class="card-index"><span>01</span><span>Fonte principale</span></div>
+        <h3>Speleosubtek</h3>
+        <p>Archivio storico, corsi, pubblicazioni e gallerie fotografiche.</p>
+        <a class="source-link" href="https://www.speleosubtek.com" target="_blank" rel="noopener">Visita speleosubtek.com ↗</a>
+      </article>
+      <article class="card">
+        <div class="card-index"><span>02</span><span>Social</span></div>
+        <h3>Facebook</h3>
+        <p>Aggiornamenti pubblici e contatto attraverso la pagina Speleosub.</p>
+        <a class="source-link" href="https://www.facebook.com/p/speleosubit-Alberto-Cavedon-100066547968023/" target="_blank" rel="noopener">Apri la pagina ↗</a>
+      </article>
+      <article class="card">
+        <div class="card-index"><span>03</span><span>Privacy</span></div>
+        <h3>Niente invii finti.</h3>
+        <p>Il sito non salva il modulo, non simula conferme e non iscrive automaticamente a newsletter.</p>
+        <a class="source-link" href="/privacy">Leggi la nota privacy →</a>
+      </article>
+    </div>
+  </section>
 </Layout>
 
 <script>
-  import { gsap } from 'gsap';
-  import { ScrollTrigger } from 'gsap/ScrollTrigger';
-  gsap.registerPlugin(ScrollTrigger);
+  const form = document.querySelector<HTMLFormElement>('#contact-form');
+  const error = document.querySelector<HTMLElement>('#form-error');
+  const ready = document.querySelector<HTMLElement>('#form-ready');
+  const topic = document.querySelector<HTMLSelectElement>('#topic');
 
-  gsap.utils.toArray<HTMLElement>('.fade-up').forEach(el => {
-    gsap.fromTo(el, { opacity: 0, y: 40 }, {
-      opacity: 1, y: 0, duration: 0.8, ease: 'power3.out',
-      scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' },
-    });
-  });
+  const requestedTopic = new URLSearchParams(window.location.search).get('argomento');
+  if (requestedTopic && topic) {
+    const normalized = requestedTopic.toLowerCase();
+    const option = Array.from(topic.options).find(item => item.value && normalized.includes(item.value.toLowerCase()));
+    if (option) topic.value = option.value;
+    else if (normalized.includes('cave') || normalized.includes('tecnico')) topic.value = 'Formazione';
+  }
 
-  document.addEventListener('alpine:init', () => {
-    (window as any).Alpine.data('contactForm', () => ({
-      form: { nome: '', cognome: '', email: '', oggetto: '', messaggio: '' },
-      sending: false, sent: false, error: false,
-      submit() {
-        const { nome, cognome, email, messaggio } = this.form;
-        if (!nome || !cognome || !email || !messaggio) { this.error = true; return; }
-        this.error = false; this.sending = true;
-        setTimeout(() => {
-          this.sending = false; this.sent = true;
-          this.form = { nome: '', cognome: '', email: '', oggetto: '', messaggio: '' };
-        }, 1200);
-      },
-    }));
+  form?.addEventListener('submit', event => {
+    event.preventDefault();
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      if (error) error.hidden = false;
+      if (ready) ready.hidden = true;
+      return;
+    }
+
+    if (error) error.hidden = true;
+    const data = new FormData(form);
+    const name = String(data.get('name') || '').trim();
+    const email = String(data.get('email') || '').trim();
+    const selectedTopic = String(data.get('topic') || '').trim();
+    const message = String(data.get('message') || '').trim();
+    const subject = `[${selectedTopic}] Richiesta dal sito — ${name}`;
+    const body = [
+      `Nome: ${name}`,
+      `Email per la risposta: ${email}`,
+      `Argomento: ${selectedTopic}`,
+      '',
+      message,
+    ].join('\n');
+
+    if (ready) ready.hidden = false;
+    window.location.href = `mailto:info@speleosubtek.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   });
 </script>
+
+<style>
+  .contact-grid {
+    display: grid;
+    grid-template-columns: minmax(280px, 0.76fr) minmax(360px, 1.24fr);
+    gap: clamp(2.5rem, 8vw, 8rem);
+    align-items: start;
+  }
+
+  .contact-checklist {
+    margin: 2.5rem 0 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--line);
+  }
+
+  .contact-checklist li {
+    display: grid;
+    grid-template-columns: 3rem 1fr;
+    gap: 1rem;
+    padding-block: 1.1rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .contact-checklist > li > span {
+    color: var(--cyan);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+  }
+
+  .contact-checklist strong {
+    font-family: var(--font-display);
+    font-size: 1.45rem;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .contact-checklist p { margin: 0.25rem 0 0; color: var(--mist); }
+
+  .contact-form-wrap {
+    padding: clamp(1.25rem, 4vw, 2.5rem);
+    background: var(--ink-soft);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+  }
+
+  .contact-form { display: grid; gap: 1.25rem; }
+
+  .form-message {
+    margin: 0;
+    padding: 0.75rem 1rem;
+    color: var(--cyan);
+    background: rgba(117, 229, 255, 0.08);
+    border-left: 3px solid var(--cyan);
+  }
+
+  .form-message--error { color: var(--danger); background: rgba(255, 121, 111, 0.08); border-color: var(--danger); }
+  .noscript-note { margin: 1rem 0 0; color: var(--mist); }
+  .noscript-note a { color: var(--cyan); }
+
+  .contact-options {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .contact-options .card { min-height: 21rem; }
+  .contact-options .source-link { position: absolute; right: 2rem; bottom: 1.25rem; left: 2rem; }
+
+  @media (max-width: 900px) {
+    .contact-grid { grid-template-columns: 1fr; }
+    .contact-options { grid-template-columns: 1fr; }
+    .contact-options .card { min-height: 18rem; }
+  }
+</style>

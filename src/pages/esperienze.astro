@@ -1,117 +1,431 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { archiveStories } from '../data/archive';
 
-const dives = [
-  { id: 1, lat: 45.84, lng: 11.73, name: "Grotta dell'Elefante Bianco", place: "Valstagna, VI", desc: "Oltre 300 immersioni. –226.7 m profondità massima attuale, 470 m di sviluppo. La grotta di casa sua.", depth: "–226.7 m", year: "anni '90 → oggi" },
-  { id: 2, lat: 40.27, lng:  9.43, name: "Su Gologone", place: "Oliena, Sardegna", desc: "Maggio 2010: –135 m, superato il record di Olivier Isler del 1997. +155 m di nuovo sviluppo.", depth: "–135 m", year: "2010 / 2012" },
-  { id: 3, lat: 45.84, lng: 11.73, name: "Arma del Lupo", place: "Veneto", desc: "Gennaio 2012: tre ore di penetrazione, –121 m. Una delle immersioni più lunghe della sua carriera.", depth: "–121 m", year: "gen. 2012" },
-  { id: 4, lat: 45.95, lng: 11.58, name: "Altopiano di Asiago — Sifoni", place: "Asiago, VI", desc: "Team internazionale: superati sifoni di 2545 m e 1150 m, penetrando nel cuore dell'altopiano.", depth: "n.d.", year: "2000s" },
-  { id: 5, lat: 45.97, lng: 13.64, name: "Carso / Vrtnarija", place: "Slovenia / Friuli", desc: "Esplorazioni nelle grotte carsiche del confine italo-sloveno.", depth: "n.d.", year: "varie" },
+const verified = archiveStories.filter(story => story.status === 'Verificato');
+const review = archiveStories.filter(story => story.status === 'In revisione');
+const orderedStories = [...verified, ...review];
+
+const depthPoints = [
+  { value: 0, label: 'Superficie' },
+  { value: 40, label: '−40 m' },
+  { value: 80, label: '−80 m' },
+  { value: 120, label: 'Fontanazzi · −120 m' },
+  { value: 121, label: 'Arma del Lupo · −121 m' },
+  { value: 135, label: 'Su Gologone · −135 m' },
 ];
 ---
 
 <Layout
-  title="Esplorazioni — Alberto Cavedon"
-  description="Mappa delle esplorazioni di Alberto Cavedon: Elefante Bianco, Su Gologone, Arma del Lupo, Grotta del Bue Marino e molto altro."
+  title="Atlante delle esplorazioni — Alberto Cavedon"
+  description="Un atlante documentato delle esplorazioni speleosubacquee legate ad Alberto Cavedon, con stato di verifica e fonti consultabili."
 >
+  <header class="page-hero">
+    <div class="shell page-hero__grid">
+      <div class="hero-animate">
+        <p class="eyebrow">Atlante / Esplorazioni</p>
+        <h1 class="display-title">Luoghi, squadre,<br /><span class="text-accent">prove.</span></h1>
+      </div>
+      <div class="page-hero__aside hero-animate hero-animate--delay">
+        <p class="lead">Una mappa non per trovare l’ingresso, ma per capire quali informazioni reggono e quali attendono ancora una fonte.</p>
+        <p class="meta">{verified.length} schede verificate · {review.length} in revisione</p>
+      </div>
+    </div>
+  </header>
 
-  <!-- Hero -->
-  <section class="section-dark pt-40 pb-20 text-center">
-    <div class="max-w-4xl mx-auto px-6">
-      <p class="label-eyebrow mb-4">Esplorazioni</p>
-      <h1 class="display-xl text-white mb-6">Il mappamondo<br/><span class="text-ocean-blue">sommerso.</span></h1>
-      <p class="body-lg max-w-xl mx-auto">Ogni punto è una storia. Clicca per scoprirla.</p>
+  <section class="section section--tight section--surface" aria-labelledby="map-heading">
+    <div class="shell atlas-map-grid">
+      <div>
+        <p class="eyebrow">Geografia / 01</p>
+        <h2 id="map-heading" class="display-xl">Il sistema prima del punto.</h2>
+        <p class="lead">Schema geografico editoriale. Le posizioni servono a orientare il racconto e non sono coordinate di navigazione o accesso.</p>
+        <ul class="map-legend" aria-label="Legenda luoghi">
+          <li><span class="map-dot map-dot--cyan"></span> Dato esplorativo verificato</li>
+          <li><span class="map-dot map-dot--amber"></span> Attività personale in revisione</li>
+        </ul>
+      </div>
+
+      <figure class="atlas-map">
+        <svg viewBox="0 0 760 620" role="img" aria-labelledby="atlas-map-title atlas-map-desc">
+          <title id="atlas-map-title">Schema dei luoghi presenti nell’archivio</title>
+          <desc id="atlas-map-desc">Il Canale di Brenta e il Piemonte sono nell’Italia settentrionale; Su Gologone e Bue Marino in Sardegna; Vrelo Bune in Bosnia-Erzegovina.</desc>
+          <g class="contours" aria-hidden="true">
+            <path d="M40 120c130-85 274-64 390 14s210 58 286-25" />
+            <path d="M15 173c148-92 303-68 420 16s217 60 305-30" />
+            <path d="M28 232c156-88 305-58 410 22s205 73 286-2" />
+            <path d="M66 296c133-67 256-38 349 35s181 80 275 19" />
+            <path d="M84 372c125-52 234-17 320 48s172 86 257 39" />
+            <path d="M104 454c113-36 211 1 286 58s154 78 230 48" />
+          </g>
+          <g class="guide-line" aria-hidden="true"><path d="M109 514L262 419 353 285 489 213 631 276" /></g>
+
+          <g class="point point--verified" transform="translate(489 213)">
+            <circle r="10" /><circle r="24" class="pulse" />
+            <text x="18" y="-17">Canale di Brenta</text><text x="18" y="3" class="map-meta">Elefante Bianco · Fontanazzi</text>
+          </g>
+          <g class="point point--verified" transform="translate(353 285)">
+            <circle r="10" /><circle r="24" class="pulse" />
+            <text x="-18" y="-20" text-anchor="end">Piemonte</text><text x="-18" y="0" text-anchor="end" class="map-meta">Arma del Lupo</text>
+          </g>
+          <g class="point point--verified" transform="translate(262 419)">
+            <circle r="10" /><circle r="24" class="pulse" />
+            <text x="18" y="-17">Sardegna</text><text x="18" y="3" class="map-meta">Su Gologone</text>
+          </g>
+          <g class="point point--review" transform="translate(217 476)">
+            <circle r="8" />
+            <text x="18" y="6" class="map-meta">Bue Marino · revisione</text>
+          </g>
+          <g class="point point--review" transform="translate(631 276)">
+            <circle r="8" />
+            <text x="-18" y="-15" text-anchor="end">Bosnia-Erzegovina</text><text x="-18" y="5" text-anchor="end" class="map-meta">Vrelo Bune · revisione</text>
+          </g>
+        </svg>
+        <figcaption>Rappresentazione schematica · non usare per pianificare immersioni</figcaption>
+      </figure>
     </div>
   </section>
 
-  <!-- Mappa -->
-  <section class="bg-apple-dark py-4">
-    <div class="max-w-6xl mx-auto px-6">
-      <div id="map" class="w-full h-[500px] rounded-3xl overflow-hidden border border-white/10" role="img" aria-label="Mappa interattiva delle esplorazioni di Alberto Cavedon"></div>
-    </div>
-  </section>
+  <section class="section" aria-labelledby="archive-heading">
+    <div class="shell">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Schede / 02</p>
+          <h2 id="archive-heading" class="display-xl">Aprire una storia, vedere le prove.</h2>
+        </div>
+        <div>
+          <p class="lead">Ogni voce espone il proprio stato. Le schede in revisione spiegano esattamente quale documento manca.</p>
+          <div class="atlas-filters" role="group" aria-label="Filtra le schede">
+            <button type="button" class="is-active" data-filter="all" aria-pressed="true">Tutte</button>
+            <button type="button" data-filter="Verificato" aria-pressed="false">Verificate</button>
+            <button type="button" data-filter="In revisione" aria-pressed="false">In revisione</button>
+          </div>
+        </div>
+      </div>
 
-  <!-- Cards esplorazioni -->
-  <section class="section-mid py-24">
-    <div class="max-w-6xl mx-auto px-6">
-      <h2 class="display-md text-white text-center mb-14 fade-up">Log esplorazioni</h2>
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-        {dives.map(d => (
-          <article class="card-apple fade-up">
-            <div class="flex items-start justify-between mb-4">
-              <span class="text-xs bg-apple-blue/20 text-ocean-blue px-3 py-1 rounded-full font-semibold">{d.year}</span>
-              <span class="text-xs text-apple-grey bg-apple-black/40 px-2 py-1 rounded-full">{d.depth}</span>
+      <div class="atlas-list" id="atlas-list">
+        {orderedStories.map((story, index) => (
+          <article class="atlas-entry" data-status={story.status}>
+            <div class="atlas-entry__index">{String(index + 1).padStart(2, '0')}</div>
+            <div>
+              <div class="atlas-entry__meta">
+                <span class={story.status === 'Verificato' ? 'status' : 'status status--review'}>{story.status}</span>
+                <span>{story.dateLabel}</span>
+              </div>
+              <h3><a href={`/blog/${story.slug}`}>{story.title}</a></h3>
+              <p>{story.summary}</p>
             </div>
-            <h3 class="text-white font-semibold text-lg mb-1">{d.name}</h3>
-            <p class="text-apple-blue text-xs font-medium mb-3">{d.place}</p>
-            <p class="text-apple-grey text-sm leading-relaxed">{d.desc}</p>
+            <dl>
+              {story.facts.slice(0, 2).map(fact => (
+                <div><dt>{fact.label}</dt><dd>{fact.value}</dd></div>
+              ))}
+            </dl>
+            <a class="atlas-entry__open" href={`/blog/${story.slug}`} aria-label={`Apri la scheda ${story.title}`}>↗</a>
           </article>
         ))}
       </div>
+      <p id="atlas-empty" class="atlas-empty" hidden>Nessuna scheda per questo filtro.</p>
     </div>
   </section>
 
-  <!-- Highlight: team internazionale -->
-  <section class="section-dark py-24">
-    <div class="max-w-4xl mx-auto px-6 text-center fade-up">
-      <p class="label-eyebrow mb-4">Team</p>
-      <h2 class="display-md text-white mb-6">Esplorazioni internazionali</h2>
-      <p class="body-lg max-w-2xl mx-auto">
-        Alberto ha collaborato con speleosub di Italia, Svizzera, Francia e Croazia.
-        Il team che ha esplorato i sifoni dell'Asiago includeva
-        <strong class="text-white">Peter Balordi, Sebastian Kuster, Gherard Wimmer e Gunther Faur</strong>:
-        2545 + 1150 metri di sifoni superati, penetrando per chilometri nel cuore dell'altopiano.
-      </p>
+  <section class="section section--paper" aria-labelledby="depth-heading">
+    <div class="shell depth-grid">
+      <div>
+        <p class="eyebrow eyebrow--dark">Profilo / 03</p>
+        <h2 id="depth-heading" class="display-xl">Tre quote, tre contesti.</h2>
+        <p class="lead lead--dark">
+          La profondità è mostrata soltanto dove una fonte la collega chiaramente a una
+          specifica esplorazione. Il grafico non confronta difficoltà né rischio.
+        </p>
+      </div>
+      <figure class="depth-profile">
+        <figcaption class="meta">Profondità documentate · metri</figcaption>
+        <div class="depth-axis" aria-hidden="true">
+          {depthPoints.map(point => (
+            <div class="depth-tick" style={`--depth: ${point.value / 135}`}>
+              <span>{point.label}</span>
+            </div>
+          ))}
+          <div class="depth-water"></div>
+        </div>
+        <div class="sr-summary">
+          Fontanazzi: meno 120 metri; Arma del Lupo: meno 121 metri; Su Gologone: meno 135 metri.
+        </div>
+      </figure>
     </div>
   </section>
 
+  <section class="section section--surface" aria-labelledby="sources-heading">
+    <div class="shell">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Registro / 04</p>
+          <h2 id="sources-heading" class="display-xl">Fonti aperte.</h2>
+        </div>
+        <p class="lead">Documenti pubblici usati per costruire l’atlante. Nessun link sostituisce la verifica operativa con gli enti competenti.</p>
+      </div>
+      <ul class="source-ledger">
+        <li><span class="source-type">Istituzionale</span><span>Su Gologone · scheda del luogo e quota 2010</span><a href="https://idese.cultura.gov.it/en/place/su-gologone/" target="_blank" rel="noopener">Idese ↗</a></li>
+        <li><span class="source-type">Soccorso</span><span>Operazione Elefante Bianco · gennaio 2008</span><a href="https://www.cnsas.it/wp-content/uploads/2017/05/aprile-2008.pdf" target="_blank" rel="noopener">CNSAS ↗</a></li>
+        <li><span class="source-type">Tecnica</span><span>Arma del Lupo · quota, durata e sviluppo</span><a href="https://www.speleosubtek.com/archivio/esplorazioni-e-spedizioni/" target="_blank" rel="noopener">Speleosubtek ↗</a></li>
+        <li><span class="source-type">Progetto</span><span>Fontanazzi · storia del ramo profondo</span><a href="https://www.gue.com/files/annualreports/2017-Project-Reports.pdf" target="_blank" rel="noopener">GUE ↗</a></li>
+      </ul>
+    </div>
+  </section>
 </Layout>
 
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
-
 <script>
-  import { gsap } from 'gsap';
-  import { ScrollTrigger } from 'gsap/ScrollTrigger';
-  gsap.registerPlugin(ScrollTrigger);
+  const buttons = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-filter]'));
+  const entries = Array.from(document.querySelectorAll<HTMLElement>('.atlas-entry'));
+  const empty = document.querySelector<HTMLElement>('#atlas-empty');
 
-  gsap.utils.toArray<HTMLElement>('.fade-up').forEach(el => {
-    gsap.fromTo(el, { opacity: 0, y: 40 }, {
-      opacity: 1, y: 0, duration: 0.8, ease: 'power3.out',
-      scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' },
-    });
-  });
-
-  // Leaflet — caricato dinamicamente per evitare SSR
-  (async () => {
-    const L = (await import('leaflet')).default;
-
-    const map = L.map('map', { scrollWheelZoom: false, zoomControl: false }).setView([44, 12], 5);
-    L.control.zoom({ position: 'bottomright' }).addTo(map);
-
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-      attribution: '&copy; OpenStreetMap, &copy; CARTO',
-      subdomains: 'abcd',
-      maxZoom: 18,
-    }).addTo(map);
-
-    const dives = [
-      { lat: 45.84, lng: 11.73, name: "Grotta dell'Elefante Bianco", depth: "–226.7 m", year: "anni '90 → oggi", desc: "Oltre 300 immersioni personali. Profondità massima attuale –226.7 m." },
-      { lat: 40.27, lng:  9.43, name: "Su Gologone", depth: "–135 m", year: "2010 / 2012", desc: "Record nazionale: +155 m di sviluppo esplorato." },
-      { lat: 45.84, lng: 11.83, name: "Arma del Lupo", depth: "–121 m", year: "gen. 2012", desc: "3 ore di penetrazione." },
-      { lat: 45.95, lng: 11.58, name: "Sifoni Altopiano di Asiago", depth: "n.d.", year: "2000s", desc: "Sifoni da 2545 m + 1150 m." },
-    ];
-
-    const icon = L.divIcon({
-      html: `<div style="width:12px;height:12px;background:#00a3e0;border-radius:50%;border:2px solid #fff;box-shadow:0 0 10px #00a3e0;"></div>`,
-      className: '',
-      iconSize: [12, 12],
-      iconAnchor: [6, 6],
+  buttons.forEach(button => button.addEventListener('click', () => {
+    const filter = button.dataset.filter || 'all';
+    buttons.forEach(item => {
+      const active = item === button;
+      item.classList.toggle('is-active', active);
+      item.setAttribute('aria-pressed', String(active));
     });
 
-    dives.forEach(d => {
-      L.marker([d.lat, d.lng], { icon, title: d.name })
-        .addTo(map)
-        .bindPopup(`<strong>${d.name}</strong><br/>${d.desc}<br/><em>${d.depth} · ${d.year}</em>`);
+    let visible = 0;
+    entries.forEach(entry => {
+      const show = filter === 'all' || entry.dataset.status === filter;
+      entry.hidden = !show;
+      if (show) visible += 1;
     });
-  })();
+    if (empty) empty.hidden = visible > 0;
+  }));
 </script>
+
+<style>
+  .atlas-map-grid {
+    display: grid;
+    grid-template-columns: minmax(280px, 0.72fr) minmax(0, 1.28fr);
+    gap: clamp(2.5rem, 7vw, 7rem);
+    align-items: center;
+  }
+
+  .map-legend {
+    display: grid;
+    gap: 0.55rem;
+    margin: 2rem 0 0;
+    padding: 0;
+    color: var(--mist);
+    list-style: none;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    text-transform: uppercase;
+  }
+
+  .map-dot {
+    display: inline-block;
+    width: 0.65rem;
+    height: 0.65rem;
+    margin-right: 0.5rem;
+    border-radius: 50%;
+  }
+
+  .map-dot--cyan { background: var(--cyan); }
+  .map-dot--amber { background: var(--amber); }
+
+  .atlas-map {
+    margin: 0;
+    padding: 1rem;
+    background: #090d0e;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+  }
+
+  .atlas-map svg { width: 100%; height: auto; }
+
+  .atlas-map figcaption {
+    color: rgba(174, 187, 184, 0.65);
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.08em;
+    text-align: right;
+    text-transform: uppercase;
+  }
+
+  .contours path {
+    fill: none;
+    stroke: rgba(117, 229, 255, 0.14);
+    stroke-width: 1;
+  }
+
+  .guide-line path { fill: none; stroke: rgba(229, 169, 79, 0.55); stroke-width: 1; stroke-dasharray: 4 7; }
+
+  .point circle { fill: var(--cyan); }
+  .point .pulse { fill: none; stroke: rgba(117, 229, 255, 0.35); stroke-width: 1; }
+  .point--review circle { fill: var(--amber); }
+  .point text { fill: var(--bone); font-family: var(--font-display); font-size: 18px; font-weight: 600; text-transform: uppercase; }
+  .point .map-meta { fill: var(--mist); font-family: var(--font-mono); font-size: 10px; font-weight: 400; text-transform: none; }
+
+  .atlas-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .atlas-filters button {
+    min-height: 44px;
+    padding: 0.55rem 0.9rem;
+    color: var(--mist);
+    background: transparent;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    cursor: pointer;
+    font-size: 0.78rem;
+    font-weight: 700;
+  }
+
+  .atlas-filters button:hover,
+  .atlas-filters button.is-active { color: var(--ink); background: var(--cyan); border-color: var(--cyan); }
+
+  .atlas-list { border-top: 1px solid var(--line); }
+
+  .atlas-entry {
+    display: grid;
+    grid-template-columns: 4rem minmax(0, 1.1fr) minmax(240px, 0.65fr) 3rem;
+    gap: clamp(1rem, 3vw, 2.5rem);
+    align-items: center;
+    padding-block: 1.7rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .atlas-entry[hidden] { display: none; }
+  .atlas-entry__index { color: var(--cyan); font-family: var(--font-mono); font-size: 0.72rem; }
+
+  .atlas-entry__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: center;
+    margin-bottom: 0.75rem;
+    color: var(--mist);
+    font-family: var(--font-mono);
+    font-size: 0.64rem;
+    text-transform: uppercase;
+  }
+
+  .atlas-entry h3 {
+    margin-bottom: 0.55rem;
+    font-family: var(--font-display);
+    font-size: clamp(1.7rem, 1.35rem + 1vw, 2.5rem);
+    line-height: 0.95;
+    text-transform: uppercase;
+  }
+
+  .atlas-entry h3 a { text-decoration: none; }
+  .atlas-entry h3 a:hover { color: var(--cyan); }
+  .atlas-entry p { margin: 0; color: var(--mist); }
+
+  .atlas-entry dl { display: grid; gap: 0.8rem; margin: 0; }
+  .atlas-entry dl div { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .atlas-entry dt { color: var(--mist); font-size: 0.72rem; }
+  .atlas-entry dd { margin: 0; color: var(--bone); font-family: var(--font-mono); font-size: 0.72rem; text-align: right; }
+
+  .atlas-entry__open {
+    display: grid;
+    width: 44px;
+    height: 44px;
+    place-items: center;
+    color: var(--cyan);
+    border: 1px solid var(--line-strong);
+    border-radius: 50%;
+    text-decoration: none;
+  }
+
+  .atlas-entry__open:hover { color: var(--ink); background: var(--cyan); border-color: var(--cyan); }
+  .atlas-empty { padding: 2rem; color: var(--mist); text-align: center; }
+
+  .depth-grid {
+    display: grid;
+    grid-template-columns: minmax(280px, 0.78fr) minmax(360px, 1.22fr);
+    gap: clamp(3rem, 8vw, 8rem);
+    align-items: center;
+  }
+
+  .depth-profile { margin: 0; }
+  .depth-profile figcaption { color: #465150; }
+
+  .depth-axis {
+    position: relative;
+    height: 36rem;
+    margin-top: 1.5rem;
+    overflow: hidden;
+    background: linear-gradient(#d9eef0 0%, #80b6c0 22%, #214f59 63%, #071618 100%);
+    border: 1px solid rgba(8, 11, 12, 0.24);
+    border-radius: var(--radius-lg);
+  }
+
+  .depth-axis::after {
+    position: absolute;
+    inset: 0;
+    content: '';
+    opacity: 0.35;
+    background: repeating-linear-gradient(to bottom, transparent 0 3.95rem, rgba(241, 238, 229, 0.35) 4rem);
+  }
+
+  .depth-tick {
+    position: absolute;
+    z-index: 2;
+    top: calc(var(--depth) * 88% + 4%);
+    right: 1rem;
+    left: 1rem;
+    border-top: 1px solid rgba(241, 238, 229, 0.75);
+  }
+
+  .depth-tick span {
+    position: absolute;
+    top: -0.75rem;
+    left: 0;
+    padding: 0.2rem 0.45rem;
+    color: var(--bone);
+    background: rgba(8, 11, 12, 0.78);
+    border-radius: 0.3rem;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+  }
+
+  .depth-water {
+    position: absolute;
+    right: 15%;
+    bottom: 0;
+    width: 1px;
+    height: 100%;
+    background: var(--amber);
+    transform: rotate(8deg);
+    transform-origin: bottom;
+  }
+
+  .sr-summary {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  @media (max-width: 920px) {
+    .atlas-map-grid,
+    .depth-grid { grid-template-columns: 1fr; }
+    .atlas-entry { grid-template-columns: 3rem 1fr 3rem; }
+    .atlas-entry dl { grid-column: 2; }
+    .atlas-entry__open { grid-column: 3; grid-row: 1; }
+  }
+
+  @media (max-width: 600px) {
+    .atlas-map { padding: 0.25rem; overflow-x: auto; }
+    .atlas-map svg { min-width: 650px; }
+    .atlas-entry { grid-template-columns: 1fr auto; }
+    .atlas-entry__index { display: none; }
+    .atlas-entry dl { grid-column: 1 / -1; }
+    .atlas-entry__open { grid-column: 2; grid-row: 1; }
+    .depth-axis { height: 30rem; }
+  }
+</style>

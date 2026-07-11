@@ -1,180 +1,445 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import corsiRaw from '../data/corsi-utrtek.json';
 
-// Raggruppa per categoria
-const categorie = ['Ricreativo', 'Tecnico', 'Cave', 'Long Range', 'Rebreather', 'Professionale'];
+const tracks = [
+  {
+    code: 'BASE / 01',
+    title: 'Fondamenta e controllo',
+    forWho: 'Per chi inizia o vuole ricostruire basi solide.',
+    focus: ['Assetto e trim', 'Propulsione', 'Gestione gas', 'Procedure d’emergenza'],
+    outcome: 'Un profilo stabile da cui scegliere il livello successivo.',
+  },
+  {
+    code: 'TEK / 02',
+    title: 'Immersione tecnica',
+    forWho: 'Per subacquei attivi che vogliono decompressione, range e miscele.',
+    focus: ['Nitrox avanzato', 'Decompressione', 'Extended range', 'Trimix'],
+    outcome: 'Pianificazione e controllo prima dell’aumento di profondità.',
+  },
+  {
+    code: 'CAVE / 03',
+    title: 'Ambiente ostruito',
+    forWho: 'Per chi ha già controllo tecnico e vuole entrare nel percorso cave.',
+    focus: ['Cavern', 'Intro to cave', 'Full cave', 'Filo e navigazione'],
+    outcome: 'Progressione graduale, con limiti operativi espliciti a ogni livello.',
+  },
+  {
+    code: 'CCR / 04',
+    title: 'Rebreather e long range',
+    forWho: 'Per profili tecnici già maturi e obiettivi di autonomia estesa.',
+    focus: ['Procedure CCR', 'Failure management', 'DPV', 'Missioni lunghe'],
+    outcome: 'Ridondanza, disciplina procedurale e scelta consapevole dell’unità.',
+  },
+  {
+    code: 'PRO / 05',
+    title: 'Professionale e soccorso',
+    forWho: 'Per chi vuole guidare, insegnare o operare in squadra tecnica.',
+    focus: ['Leadership', 'Valutazione rischio', 'Briefing e debriefing', 'Primo soccorso'],
+    outcome: 'Responsabilità verso gli altri, non soltanto competenza personale.',
+  },
+];
 
-const corsiPerCategoria = categorie.map(cat => ({
-  cat,
-  corsi: corsiRaw.filter(c => c.categoria === cat),
-})).filter(g => g.corsi.length > 0);
-
-const colori: Record<string, string> = {
-  'Ricreativo':    'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
-  'Tecnico':       'bg-ocean-blue/10 text-ocean-blue border-ocean-blue/20',
-  'Cave':          'bg-amber-500/10 text-amber-400 border-amber-500/20',
-  'Long Range':    'bg-purple-500/10 text-purple-400 border-purple-500/20',
-  'Rebreather':    'bg-rose-500/10 text-rose-400 border-rose-500/20',
-  'Professionale': 'bg-gold-400/10 text-gold-400 border-gold-400/20',
-};
-
-const descrizioni: Record<string, string> = {
-  'Ricreativo':    'Brevetti per subacquei che vogliono esplorare in sicurezza fino a 40 m, con o senza decompressione.',
-  'Tecnico':       'Programmi open circuit con aria, heliair e trimix fino a –100 m per chi vuole spingere i limiti.',
-  'Cave':          'Immersione in ambienti confinati: grotte allagate, tecniche di navigazione e gestione filo guida.',
-  'Long Range':    'Autonomia sott\'acqua da 100 a 240 minuti con configurazioni back-mount, side-mount e scooter.',
-  'Rebreather':    'Sistema Mnemonic per ECCR e CCR: procedure standardizzate su Vision, rEvo, Hammerhead, Poseidon.',
-  'Professionale': 'Percorsi per chi vuole guidare gruppi o diventare istruttore nel circuito UTRtek.',
-};
+const faqs = [
+  {
+    q: 'Quanto dura un corso?',
+    a: 'Dipende dal livello di partenza, dagli standard del programma e dalla continuità delle sessioni. Prima della conferma ricevi un calendario realistico; il superamento non è garantito dalla sola presenza.',
+  },
+  {
+    q: 'Quali prerequisiti servono?',
+    a: 'Cambiano per livello e agenzia. Oltre ai brevetti contano immersioni recenti, controllo della configurazione, stato medico e capacità dimostrate. La verifica iniziale serve proprio a non scoprirlo durante il corso.',
+  },
+  {
+    q: 'Posso fare cave se non uso ancora bene bibombola o sidemount?',
+    a: 'L’ambiente ostruito non è il posto in cui imparare da zero una configurazione complessa. Prima si stabilizza l’attrezzatura scelta in acqua libera, poi si entra nel percorso specifico.',
+  },
+  {
+    q: 'Come vengono definiti costi e attrezzatura?',
+    a: 'Dopo il colloquio ricevi per iscritto programma, cosa è incluso, cosa resta a carico dell’allievo e attrezzatura richiesta. Nessun prezzo generico viene pubblicato senza conoscere logistica e obiettivo.',
+  },
+  {
+    q: 'Cosa succede se non sono pronto?',
+    a: 'Si definisce un piano di preparazione o un livello intermedio. Fermarsi prima di un ambiente non adatto è una decisione tecnica corretta, non una bocciatura personale.',
+  },
+];
 ---
 
 <Layout
-  title="Corsi UTRtek — Alberto Cavedon"
-  description="Tutti i corsi UTRtek con Alberto Cavedon: ricreativo, tecnico, cave diving, long range, rebreather. Dati ufficiali utrtek.it."
+  title="Formazione tecnica — Alberto Cavedon"
+  description="Percorsi di formazione subacquea tecnica e cave diving con Alberto Cavedon: orientamento, prerequisiti chiari e valutazione iniziale."
 >
-
-  <!-- Hero -->
-  <section class="section-dark pt-40 pb-24 text-center">
-    <div class="max-w-4xl mx-auto px-6">
-      <p class="label-eyebrow mb-4">Formazione ufficiale</p>
-      <h1 class="display-xl text-white mb-6">Corsi <span class="text-ocean-blue">UTRtek</span></h1>
-      <p class="body-lg max-w-2xl mx-auto mb-6">
-        Tutti i brevetti del circuito <strong class="text-white">UTRtek — Underwater Technical Research</strong>,
-        erogati da Alberto Cavedon con certificazione ISO International.
-      </p>
-      <a href="https://www.utrtek.it" target="_blank" rel="noopener"
-         class="text-white/30 text-sm hover:text-ocean-blue transition-colors">
-        Fonte: utrtek.it ↗
-      </a>
-    </div>
-  </section>
-
-  <!-- Unico x-data che governa sia la barra filtri che la section corsi -->
-  <div x-data="{ active: 'Tutti' }">
-
-    <!-- Filtri categoria (Alpine.js) -->
-    <div class="sticky top-14 z-30 bg-apple-dark/80 backdrop-blur border-b border-white/5">
-      <div class="max-w-6xl mx-auto px-6 py-3 flex gap-2 overflow-x-auto scrollbar-hide">
-        {['Tutti', ...categorie].map(cat => (
-          <button
-            @click={`active = '${cat}'`}
-            :class={`active === '${cat}' ? 'bg-ocean-blue text-white' : 'text-white/40 hover:text-white'`}
-            class="whitespace-nowrap text-xs font-semibold px-4 py-1.5 rounded-full transition-colors border border-white/10 shrink-0"
-          >
-            {cat}
-          </button>
-        ))}
+  <header class="page-hero">
+    <div class="shell page-hero__grid">
+      <div class="hero-animate">
+        <p class="eyebrow">Formazione / Orientamento</p>
+        <h1 class="display-title">Il brevetto è<br />il risultato. <span class="text-accent">Non l’inizio.</span></h1>
+      </div>
+      <div class="page-hero__aside hero-animate hero-animate--delay">
+        <p class="lead">Un percorso tecnico deve dichiarare cosa richiede, cosa insegna e cosa succede se serve più tempo.</p>
+        <p class="meta">Valutazione · Piano · Addestramento · Verifica</p>
       </div>
     </div>
+  </header>
 
-    <!-- Corsi per categoria -->
-    <section class="section-mid py-16">
-      <div class="max-w-6xl mx-auto px-6 space-y-16">
-        {corsiPerCategoria.map(({ cat, corsi }) => (
-          <div
-            x-show={`active === 'Tutti' || active === '${cat}'`}
-            x-transition:enter="transition ease-out duration-300"
-            x-transition:enter-start="opacity-0 translate-y-2"
-            x-transition:enter-end="opacity-100 translate-y-0"
-            class="fade-up"
-          >
-
-            <!-- Intestazione categoria -->
-            <div class="flex items-center gap-4 mb-3">
-              <span class={`text-xs font-bold px-3 py-1 rounded-full border ${colori[cat]}`}>
-                {cat}
-              </span>
-              <div class="flex-1 h-px bg-white/10"></div>
-              <span class="text-white/20 text-xs">{corsi.length} {corsi.length === 1 ? 'corso' : 'corsi'}</span>
-            </div>
-            <p class="text-white/40 text-sm mb-8">{descrizioni[cat]}</p>
-
-            <!-- Grid corsi -->
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {corsi.map(corso => (
-                <article id={corso.id} class="card-glass tilt-3d flex flex-col group">
-                  <div class="flex items-start justify-between mb-4">
-                    <p class="text-white/30 text-xs font-mono">{corso.codice}</p>
-                    <div class="flex flex-col items-end gap-1">
-                      {corso.profondita_max && (
-                        <span class="text-xs font-mono text-ocean-blue bg-ocean-blue/10 px-2 py-0.5 rounded-full">
-                          –{corso.profondita_max} m
-                        </span>
-                      )}
-                      {corso.durata_min && (
-                        <span class="text-xs font-mono text-purple-400 bg-purple-500/10 px-2 py-0.5 rounded-full">
-                          {corso.durata_min}–{corso.durata_max} min
-                        </span>
-                      )}
-                    </div>
-                  </div>
-
-                  <h2 class="text-white font-bold text-lg leading-tight mb-1 group-hover:text-ocean-blue transition-colors">
-                    {corso.titolo}
-                  </h2>
-                  <p class="text-ocean-blue text-xs font-medium mb-3">{corso.sottotitolo}</p>
-                  <p class="text-white/50 text-sm leading-relaxed flex-1 mb-5">{corso.descrizione}</p>
-
-                  <div class="border-t border-white/10 pt-4 space-y-2">
-                    <p class="text-white/30 text-xs">{corso.certificazione}</p>
-                    {corso.prezzo_pik && (
-                      <div class="flex items-center justify-between">
-                        <span class="text-white/30 text-xs">PIK ufficiale</span>
-                        <span class="text-gold-400 font-bold">€ {corso.prezzo_pik}</span>
-                      </div>
-                    )}
-                  </div>
-                </article>
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
-    </section>
-
-  </div>
-
-  <!-- Nota UTRtek + CTA -->
-  <section class="section-dark py-16">
-    <div class="max-w-4xl mx-auto px-6 grid md:grid-cols-2 gap-8">
-      <div class="card-glass">
-        <p class="text-white font-semibold mb-3">Circuito UTRtek</p>
-        <p class="text-white/50 text-sm leading-relaxed mb-4">
-          UTRtek (Underwater Technical Research) è un'agenzia didattica internazionale con sede a Londra e ufficio a Milano.
-          Certificazioni ISO, eCard digitali e badge stampati. Materiale didattico su <strong class="text-white">myutrtek.com</strong>.
+  <section id="orientamento" class="section" aria-labelledby="finder-heading">
+    <div class="shell finder-grid">
+      <div>
+        <p class="eyebrow">Pre-orientamento / 01</p>
+        <h2 id="finder-heading" class="display-xl">Da dove parti?</h2>
+        <p class="lead">
+          Tre risposte per identificare la conversazione giusta. È un orientamento,
+          non una valutazione né un’iscrizione; nessun dato viene inviato o salvato.
         </p>
-        <a href="https://www.utrtek.it" target="_blank" rel="noopener" class="text-ocean-blue text-sm hover:underline">
-          utrtek.it ↗
-        </a>
       </div>
-      <div class="card-glass text-center flex flex-col items-center justify-center">
-        <p class="text-white font-semibold mb-2">Vuoi iscriverti a un corso?</p>
-        <p class="text-white/50 text-sm mb-5">Contattami per disponibilità, date e requisiti.</p>
-        <a href="/contatti" class="btn-apple">Scrivimi</a>
-        <a href="https://www.utrtek.it" target="_blank" rel="noopener"
-           class="mt-3 text-white/40 text-xs hover:text-white transition-colors">
-          o vedi tutti i corsi UTRtek ↗
-        </a>
+
+      <form id="course-finder" class="finder" novalidate>
+        <div class="field">
+          <label for="experience">Esperienza attuale</label>
+          <select id="experience" name="experience" required>
+            <option value="">Seleziona</option>
+            <option value="new">Sto iniziando / poche immersioni</option>
+            <option value="rec">Ricreativo attivo</option>
+            <option value="tech">Tecnico, bibombola o sidemount</option>
+            <option value="cave">Cave / CCR già certificato</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="goal">Obiettivo principale</label>
+          <select id="goal" name="goal" required>
+            <option value="">Seleziona</option>
+            <option value="control">Migliorare controllo e sicurezza</option>
+            <option value="depth">Decompressione e profondità</option>
+            <option value="overhead">Cavern e cave diving</option>
+            <option value="ccr">Rebreather / autonomia estesa</option>
+            <option value="pro">Percorso professionale / soccorso</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="frequency">Continuità recente</label>
+          <select id="frequency" name="frequency" required>
+            <option value="">Seleziona</option>
+            <option value="low">Meno di una immersione al mese</option>
+            <option value="steady">Da una a tre immersioni al mese</option>
+            <option value="high">Attività settimanale / addestramento regolare</option>
+          </select>
+        </div>
+        <button class="button" type="submit">Mostra il punto di partenza</button>
+
+        <div id="finder-result" class="finder-result" aria-live="polite" hidden>
+          <p class="meta">Orientamento suggerito</p>
+          <h3 id="finder-result-title"></h3>
+          <p id="finder-result-copy"></p>
+          <a id="finder-result-link" class="text-link" href="/contatti">Prepara il colloquio <span aria-hidden="true">→</span></a>
+        </div>
+        <p id="finder-error" class="finder-error" role="alert" hidden>Completa le tre risposte per vedere l’orientamento.</p>
+      </form>
+    </div>
+  </section>
+
+  <section class="section section--surface" aria-labelledby="tracks-heading">
+    <div class="shell">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Percorsi / 02</p>
+          <h2 id="tracks-heading" class="display-xl">Cinque direzioni. Un solo metodo.</h2>
+        </div>
+        <p class="lead">
+          I titoli definitivi, l’agenzia didattica e gli standard applicabili vengono
+          confermati nel piano individuale prima dell’iscrizione.
+        </p>
+      </div>
+
+      <div class="track-list">
+        {tracks.map(track => (
+          <article class="track">
+            <p class="track__code">{track.code}</p>
+            <div>
+              <h3>{track.title}</h3>
+              <p>{track.forWho}</p>
+            </div>
+            <ul>
+              {track.focus.map(item => <li>{item}</li>)}
+            </ul>
+            <p class="track__outcome">{track.outcome}</p>
+          </article>
+        ))}
       </div>
     </div>
   </section>
 
+  <section class="section section--paper" aria-labelledby="process-heading">
+    <div class="shell">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow eyebrow--dark">Processo / 03</p>
+          <h2 id="process-heading" class="display-xl">Sapere prima cosa accade.</h2>
+        </div>
+        <p class="lead lead--dark">La trasparenza è parte della sicurezza: aspettative, costi e criteri non si scoprono a metà percorso.</p>
+      </div>
+      <ol class="process-grid">
+        <li><span>01</span><h3>Colloquio</h3><p>Obiettivi, brevetti, attività recente, configurazione e disponibilità reale.</p></li>
+        <li><span>02</span><h3>Valutazione</h3><p>Una sessione iniziale rende visibili punti forti e prerequisiti da consolidare.</p></li>
+        <li><span>03</span><h3>Piano scritto</h3><p>Programma, standard, logistica, attrezzatura, costi e criteri di completamento.</p></li>
+        <li><span>04</span><h3>Debrief</h3><p>Ogni sessione produce correzioni pratiche e una decisione sul passo successivo.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="faq-heading">
+    <div class="shell faq-grid">
+      <div>
+        <p class="eyebrow">Domande / 04</p>
+        <h2 id="faq-heading" class="display-xl">Le risposte che servono prima.</h2>
+      </div>
+      <div class="faq-list">
+        {faqs.map((item, index) => (
+          <details>
+            <summary><span>0{index + 1}</span>{item.q}</summary>
+            <p>{item.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--surface">
+    <div class="shell course-cta">
+      <div>
+        <p class="eyebrow">Primo contatto</p>
+        <h2 class="display-xl">Arriva con i dati utili.</h2>
+        <p class="lead">Brevetti, ultime immersioni, configurazione, obiettivo e periodo disponibile: bastano per iniziare bene.</p>
+      </div>
+      <a class="button" href="/contatti?argomento=formazione">Prepara la richiesta <span aria-hidden="true">→</span></a>
+    </div>
+  </section>
 </Layout>
 
 <script>
-  import { gsap } from 'gsap';
-  import { ScrollTrigger } from 'gsap/ScrollTrigger';
-  gsap.registerPlugin(ScrollTrigger);
-  gsap.utils.toArray<HTMLElement>('.fade-up').forEach(el => {
-    gsap.fromTo(el, { opacity: 0, y: 40 }, {
-      opacity: 1, y: 0, duration: 0.8, ease: 'power3.out',
-      scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' },
-    });
+  const form = document.querySelector<HTMLFormElement>('#course-finder');
+  const result = document.querySelector<HTMLElement>('#finder-result');
+  const error = document.querySelector<HTMLElement>('#finder-error');
+  const title = document.querySelector<HTMLElement>('#finder-result-title');
+  const copy = document.querySelector<HTMLElement>('#finder-result-copy');
+  const link = document.querySelector<HTMLAnchorElement>('#finder-result-link');
+
+  const suggestions = {
+    base: {
+      title: 'Fondamenta e controllo',
+      copy: 'Il passo più utile è una valutazione delle basi e della configurazione in acqua libera. Costruire continuità ora renderà sensato qualsiasi percorso tecnico successivo.',
+    },
+    tech: {
+      title: 'Percorso tecnico',
+      copy: 'Hai una base compatibile con un colloquio su decompressione, miscele e range. La valutazione iniziale chiarirà configurazione, prerequisiti e livello adatto.',
+    },
+    cave: {
+      title: 'Preparazione cave',
+      copy: 'L’obiettivo è ambiente ostruito. Prima di scegliere Cavern, Intro o Full Cave va verificata la padronanza della configurazione e delle abilità tecniche in acqua libera.',
+    },
+    ccr: {
+      title: 'Rebreather e long range',
+      copy: 'Serve un’analisi specifica di esperienza tecnica, unità, procedure e obiettivo operativo. Il colloquio evita di scegliere il rebreather soltanto per la prestazione dichiarata.',
+    },
+    pro: {
+      title: 'Percorso professionale',
+      copy: 'Il punto di partenza è documentare esperienza, continuità e responsabilità già esercitate. Si valuteranno poi standard, leadership, primo soccorso e ruolo desiderato.',
+    },
+  } as const;
+
+  form?.addEventListener('submit', event => {
+    event.preventDefault();
+    const data = new FormData(form);
+    const experience = String(data.get('experience') || '');
+    const goal = String(data.get('goal') || '');
+    const frequency = String(data.get('frequency') || '');
+
+    if (!experience || !goal || !frequency) {
+      if (error) error.hidden = false;
+      if (result) result.hidden = true;
+      form.querySelector<HTMLSelectElement>('select:invalid')?.focus();
+      return;
+    }
+
+    if (error) error.hidden = true;
+    let key: keyof typeof suggestions = 'base';
+    if (goal === 'pro') key = 'pro';
+    else if (goal === 'ccr') key = experience === 'new' || experience === 'rec' ? 'base' : 'ccr';
+    else if (goal === 'overhead') key = experience === 'tech' || experience === 'cave' ? 'cave' : 'base';
+    else if (goal === 'depth') key = experience === 'new' || frequency === 'low' ? 'base' : 'tech';
+
+    const suggestion = suggestions[key];
+    if (title) title.textContent = suggestion.title;
+    if (copy) copy.textContent = suggestion.copy;
+    if (link) link.href = `/contatti?argomento=${encodeURIComponent(suggestion.title)}`;
+    if (result) {
+      result.hidden = false;
+      result.focus({ preventScroll: true });
+      result.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'nearest' });
+    }
   });
 </script>
 
 <style>
-  .scrollbar-hide::-webkit-scrollbar { display: none; }
-  .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+  .finder-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(340px, 1.2fr);
+    gap: clamp(2.5rem, 8vw, 8rem);
+    align-items: start;
+  }
+
+  .finder {
+    display: grid;
+    gap: 1.1rem;
+    padding: clamp(1.25rem, 4vw, 2.5rem);
+    background: var(--ink-soft);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+  }
+
+  .finder-result {
+    padding: 1.4rem;
+    background: rgba(117, 229, 255, 0.07);
+    border: 1px solid rgba(117, 229, 255, 0.32);
+    border-radius: var(--radius);
+  }
+
+  .finder-result h3 {
+    margin-bottom: 0.5rem;
+    font-family: var(--font-display);
+    font-size: 2rem;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .finder-error { margin: 0; color: var(--danger); font-weight: 700; }
+
+  .track-list { border-top: 1px solid var(--line); }
+
+  .track {
+    display: grid;
+    grid-template-columns: 8rem minmax(220px, 0.8fr) minmax(220px, 0.9fr) minmax(220px, 0.8fr);
+    gap: clamp(1rem, 3vw, 2.5rem);
+    align-items: start;
+    padding-block: 1.8rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .track__code {
+    color: var(--cyan);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 600;
+  }
+
+  .track h3 {
+    margin-bottom: 0.45rem;
+    font-family: var(--font-display);
+    font-size: clamp(1.7rem, 1.3rem + 1vw, 2.4rem);
+    line-height: 0.95;
+    text-transform: uppercase;
+  }
+
+  .track p { margin: 0; color: var(--mist); }
+
+  .track ul {
+    display: grid;
+    gap: 0.35rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .track li::before { margin-right: 0.6rem; color: var(--cyan); content: '—'; }
+  .track .track__outcome { color: var(--bone-soft); }
+
+  .process-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid rgba(8, 11, 12, 0.2);
+    border-left: 1px solid rgba(8, 11, 12, 0.2);
+  }
+
+  .process-grid li {
+    min-height: 22rem;
+    padding: clamp(1.25rem, 3vw, 2rem);
+    border-right: 1px solid rgba(8, 11, 12, 0.2);
+    border-bottom: 1px solid rgba(8, 11, 12, 0.2);
+  }
+
+  .process-grid span {
+    display: block;
+    margin-bottom: 5rem;
+    color: #087e98;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+  }
+
+  .process-grid h3 {
+    margin-bottom: 0.55rem;
+    font-family: var(--font-display);
+    font-size: 2rem;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .process-grid p { color: #465150; }
+
+  .faq-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.7fr) minmax(320px, 1.3fr);
+    gap: clamp(2rem, 8vw, 8rem);
+    align-items: start;
+  }
+
+  .faq-list { border-top: 1px solid var(--line); }
+
+  .faq-list details { border-bottom: 1px solid var(--line); }
+
+  .faq-list summary {
+    display: grid;
+    grid-template-columns: 3rem 1fr auto;
+    gap: 1rem;
+    align-items: center;
+    min-height: 72px;
+    cursor: pointer;
+    font-weight: 700;
+    list-style: none;
+  }
+
+  .faq-list summary::-webkit-details-marker { display: none; }
+  .faq-list summary::after { color: var(--cyan); content: '+'; font-family: var(--font-mono); font-size: 1.4rem; }
+  .faq-list details[open] summary::after { content: '−'; }
+  .faq-list summary span { color: var(--cyan); font-family: var(--font-mono); font-size: 0.68rem; }
+  .faq-list details > p { margin: 0 0 1.5rem 4rem; color: var(--mist); }
+
+  .course-cta {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 3rem;
+  }
+
+  .course-cta > div { max-width: 48rem; }
+
+  @media (max-width: 980px) {
+    .track { grid-template-columns: 6rem 1fr 1fr; }
+    .track__outcome { grid-column: 2 / -1; }
+    .process-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 760px) {
+    .finder-grid,
+    .faq-grid { grid-template-columns: 1fr; }
+    .track { grid-template-columns: 1fr; }
+    .track__outcome { grid-column: auto; }
+    .course-cta { align-items: stretch; flex-direction: column; }
+  }
+
+  @media (max-width: 540px) {
+    .process-grid { grid-template-columns: 1fr; border-left: 0; }
+    .process-grid li { min-height: auto; border-left: 1px solid rgba(8, 11, 12, 0.2); }
+    .process-grid span { margin-bottom: 2.5rem; }
+  }
 </style>

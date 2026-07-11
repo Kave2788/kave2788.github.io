@@ -1,424 +1,494 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import HeroCanvas from '../components/HeroCanvas.astro';
 
-// URL immagini Unsplash verificate (200 OK)
-const photos = {
-  hero:       'https://images.unsplash.com/photo-1682687982167-d7fb3ed8541d',  // subacqueo in grotta
-  about:      'https://images.unsplash.com/photo-1683009427470-a36fee396389',  // cave diver
-  record:     'https://images.unsplash.com/photo-1543076499-a6133cb932fd',     // grotta con luce (cava Georgia)
-  quote:      'https://images.unsplash.com/photo-1510074232337-05d50fa189ba',  // diver pesci
-  blog1:      'https://images.unsplash.com/photo-1543076499-a6133cb932fd',
-  blog2:      'https://images.unsplash.com/photo-1682687982167-d7fb3ed8541d',
-  cta:        'https://images.unsplash.com/photo-1510074232337-05d50fa189ba',
-};
-
-const galleryPreview = [
-  { url: photos.hero,   caption: "Grotta dell'Elefante Bianco" },
-  { url: photos.about,  caption: 'Su Gologone, Sardegna' },
-  { url: photos.record, caption: 'Caverna con luce naturale' },
-  { url: 'https://images.unsplash.com/photo-1664888908848-d7e8ec255537', caption: 'Navigazione in grotta' },
-  { url: photos.quote,  caption: 'Raja Ampat — visibilità 40+ m' },
-  { url: photos.cta,    caption: 'Risalita nel blu' },
+const proof = [
+  {
+    value: '−135 m',
+    label: 'Su Gologone · 2010',
+    note: 'Limite esplorativo documentato',
+    href: 'https://idese.cultura.gov.it/en/place/su-gologone/',
+  },
+  {
+    value: '300+',
+    label: 'Elefante Bianco',
+    note: 'Immersioni riportate dal CNSAS nel 2008',
+    href: 'https://www.cnsas.it/wp-content/uploads/2017/05/aprile-2008.pdf',
+  },
+  {
+    value: '2018',
+    label: 'Soccorso europeo',
+    note: 'Procedure congiunte CNSAS · ECRA',
+    href: 'https://news.cnsas.it/soccorso-speleosubacqueo-verso-un-codice-europeo-di-intervento/',
+  },
 ];
 
-function u(base: string, w = 1200, h = 800) {
-  return `${base}?auto=format&fit=crop&w=${w}&h=${h}&q=80`;
-}
+const atlas = [
+  {
+    index: '01 / Sardegna',
+    title: 'Su Gologone',
+    metric: '−135 m',
+    text: 'Nel 2010 la squadra estende il rilievo della risorgenza e porta il limite esplorato a 135 metri di profondità.',
+    href: '/blog/su-gologone-2010',
+    status: 'Verificato',
+  },
+  {
+    index: '02 / Piemonte',
+    title: 'Arma del Lupo',
+    metric: '135 min',
+    text: 'Nel gennaio 2012 una spedizione collettiva documenta 300 metri di nuove gallerie e raggiunge quota −121 metri.',
+    href: '/blog/arma-del-lupo',
+    status: 'Verificato',
+  },
+  {
+    index: '03 / Veneto',
+    title: 'Elefante Bianco',
+    metric: '300+',
+    text: 'Una grotta di riferimento nel Canale di Brenta: esplorazione, conoscenza del sistema e operazioni di soccorso.',
+    href: '/elefante-bianco',
+    status: 'Verificato',
+  },
+];
 ---
 
 <Layout
-  title="Alberto Cavedon — Speleologo Subacqueo"
-  description="Alberto Cavedon: speleologo subacqueo di fama mondiale, oltre 300 immersioni nell'Elefante Bianco, –135m a Su Gologone. Direttore Scuola Nazionale Speleosubacquea CNSAS."
+  title="Alberto Cavedon — Archivio sommerso"
+  description="L'archivio di Alberto Cavedon: speleologia subacquea, esplorazioni documentate, soccorso e formazione tecnica."
 >
+  <section class="home-hero" aria-labelledby="hero-title">
+    <picture class="home-hero__picture">
+      <source srcset="/images/cave-archive-hero.avif" type="image/avif" />
+      <img
+        src="/images/cave-archive-hero.webp"
+        alt="Illustrazione editoriale di un subacqueo lungo un filo guida in una grotta sommersa"
+        width="1536"
+        height="1024"
+        fetchpriority="high"
+      />
+    </picture>
+    <div class="home-hero__veil" aria-hidden="true"></div>
+    <div class="home-hero__contours" aria-hidden="true"></div>
 
-  <!-- ══════════════════════════════════════════════
-       HERO — Three.js WebGL scene + testo sovrapposto
-  ══════════════════════════════════════════════ -->
-  <section id="hero" class="relative h-screen flex flex-col items-center justify-center overflow-hidden bg-black">
-    <HeroCanvas />
-
-    <!-- Radial vignette overlay -->
-    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_40%,_rgba(0,0,0,0.85)_100%)] pointer-events-none z-10"></div>
-    <!-- Bottom fade -->
-    <div class="absolute bottom-0 inset-x-0 h-40 bg-gradient-to-t from-black to-transparent pointer-events-none z-10"></div>
-
-    <!-- Ambient glow behind title -->
-    <div class="hero-glow z-10"></div>
-
-    <div class="relative z-20 text-center px-6 max-w-5xl mx-auto select-none">
-      <p id="hero-eyebrow" class="label-eyebrow mb-6 opacity-0">
-        Speleologo Subacqueo · Valstagna, Vicenza
-      </p>
-      <h1 id="hero-title" class="text-white leading-[0.92] mb-8 opacity-0"
-          style="font-family: var(--font-family-display); font-size: clamp(4rem, 12vw, 10rem); font-weight: 800; letter-spacing: -0.04em;">
-        Alberto<br/>
-        <span class="gradient-text text-neon">Cavedon</span>
-      </h1>
-      <p id="hero-sub" class="text-xl md:text-2xl text-white/55 max-w-2xl mx-auto mb-12 opacity-0 leading-relaxed font-light">
-        Dove finisce la luce, comincia l'esplorazione.
-      </p>
-      <div id="hero-cta" class="flex flex-col sm:flex-row gap-4 justify-center opacity-0">
-        <a href="/corsi" class="btn-apple text-base px-8 py-4">Scopri i corsi UTR</a>
-        <a href="/esperienze" class="btn-apple-outline text-base px-8 py-4">Esplorazioni →</a>
-      </div>
-    </div>
-
-    <!-- Scroll line -->
-    <div id="scroll-hint" class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-0 z-20">
-      <span class="text-white/30 text-[10px] tracking-[0.3em] uppercase">Scorri</span>
-      <div class="w-px h-12 bg-gradient-to-b from-ocean-blue/60 to-transparent"></div>
-    </div>
-  </section>
-
-  <!-- ══════════════════════════════════════════════
-       FOTO HERO — prima immersione reale (fullbleed)
-  ══════════════════════════════════════════════ -->
-  <section class="relative h-[70vh] overflow-hidden" aria-label="Foto: immersione in grotta">
-    <img
-      src={u(photos.hero, 1600, 900)}
-      alt="Subacqueo in una grotta sottomarina — stile esplorazioni di Alberto Cavedon"
-      class="w-full h-full object-cover"
-      loading="eager"
-    />
-    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></div>
-    <div class="absolute bottom-12 left-1/2 -translate-x-1/2 text-center z-10">
-      <p class="text-white/50 text-xs tracking-widest uppercase mb-2">Photo: NEOM / Unsplash</p>
-      <p class="text-white font-bold text-2xl md:text-3xl">Ogni discesa è un'altra storia.</p>
-    </div>
-  </section>
-
-  <!-- ══════════════════════════════════════════════
-       METRICS — contatori animati
-  ══════════════════════════════════════════════ -->
-  <section class="bg-black py-24 border-y border-white/5">
-    <div class="max-w-5xl mx-auto px-6">
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
-        {[
-          { target: 300, suffix: '+', label: 'Immersioni Elefante Bianco' },
-          { target: 135, suffix: ' m', prefix: '–', label: 'Record profondità Su Gologone' },
-          { target: 40,  suffix: '+', label: 'Anni di esperienza attiva' },
-          { target: 2545, suffix: ' m', label: 'Sifone più lungo esplorato' },
-        ].map(m => (
-          <div class="stat-block fade-up" data-target={m.target} data-suffix={m.suffix} data-prefix={m.prefix ?? ''}>
-            <p class="counter stat-number">
-              {m.prefix ?? ''}{m.target}{m.suffix}
-            </p>
-            <p class="text-white/40 text-xs mt-2 leading-tight font-medium tracking-wide uppercase">{m.label}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- ══════════════════════════════════════════════
-       CHI È — split 50/50 con foto reale
-  ══════════════════════════════════════════════ -->
-  <section class="bg-black overflow-hidden">
-    <div class="max-w-7xl mx-auto grid md:grid-cols-2 min-h-[600px]">
-      <!-- Foto -->
-      <div class="relative overflow-hidden img-3d-wrap rounded-none order-2 md:order-1" style="border-radius:0">
-        <img
-          src={u(photos.about, 800, 1000)}
-          alt="Cave diver in grotta allagata"
-          class="w-full h-full object-cover"
-          loading="lazy"
-        />
-        <div class="absolute inset-0 bg-gradient-to-r from-transparent to-black/60 md:block hidden"></div>
-      </div>
-      <!-- Testo -->
-      <div class="flex flex-col justify-center px-8 md:px-16 py-20 order-1 md:order-2 fade-up">
-        <p class="label-eyebrow mb-4">Chi è</p>
-        <h2 class="display-lg text-white mb-6" style="font-family: var(--font-family-display);">Una vita<br/>nell'abisso.</h2>
-        <p class="text-white/60 text-lg leading-relaxed mb-4">
-          Alberto Cavedon è uno dei più esperti speleosubacquei italiani.
-          Membro del <strong class="text-white">Gruppo Grotte Giara Modon</strong> di Valstagna,
-          tecnico CNSAS e <strong class="text-white">Direttore della Scuola Nazionale Speleosubacquea</strong>.
+    <div class="shell home-hero__content">
+      <div class="home-hero__copy hero-animate">
+        <p class="eyebrow">Alberto Cavedon · Speleologia subacquea</p>
+        <h1 id="hero-title" class="display-title">
+          Sotto il<br />
+          limite <span class="text-accent">visibile.</span>
+        </h1>
+        <p class="home-hero__lead">
+          Esplorazione, soccorso e formazione tecnica raccontati attraverso dati,
+          rilievi e fonti. Senza trasformare il rischio in spettacolo.
         </p>
-        <p class="text-white/60 text-lg leading-relaxed mb-10">
-          Ha esplorato grotte sommerse in Italia, Francia, Svizzera, Croazia e Grecia.
-          Il suo sito di riferimento è <a href="https://www.speleosubtek.com" target="_blank" rel="noopener" class="text-ocean-blue hover:underline">speleosubtek.com</a>.
-        </p>
-        <a href="/about" class="btn-apple self-start">La mia storia</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ══════════════════════════════════════════════
-       SU GOLOGONE — Cinematic fullbleed + dati record
-  ══════════════════════════════════════════════ -->
-  <section class="relative min-h-screen flex items-center overflow-hidden" aria-labelledby="record-heading">
-    <img
-      src={u(photos.record, 1600, 1000)}
-      alt="Grotta sottomarina con raggio di luce"
-      class="absolute inset-0 w-full h-full object-cover"
-      loading="lazy"
-    />
-    <div class="absolute inset-0 bg-gradient-to-r from-black/95 via-black/70 to-transparent"></div>
-    <div class="relative z-10 max-w-6xl mx-auto px-6 py-32">
-      <div class="max-w-xl fade-up">
-        <p class="label-eyebrow mb-4">Sardegna · Maggio 2010</p>
-        <h2 id="record-heading" class="display-lg text-white mb-2" style="font-family: var(--font-family-display);">Su Gologone.</h2>
-        <p class="gradient-text text-neon mb-8" style="font-family: var(--font-family-display); font-size: clamp(4rem, 10vw, 8rem); font-weight: 800; letter-spacing: -0.04em; line-height: 1;">–135 m</p>
-        <p class="text-white/60 text-lg leading-relaxed mb-8">
-          Dopo 13 anni dall'ultima esplorazione di Olivier Isler (–107 m),
-          Alberto supera la fessura a quota –107 m e spinge a –135 m,
-          aggiungendo <strong class="text-white">155 metri di nuovo sviluppo</strong>
-          nelle mappe della sorgente più profonda della Sardegna.
-        </p>
-        <div class="grid grid-cols-3 gap-4 mb-10">
-          {[
-            { n: '10', label: 'giorni di spedizione' },
-            { n: '3+', label: 'anni di preparazione' },
-            { n: '155 m', label: 'nuovo sviluppo' },
-          ].map(s => (
-            <div class="card-glass text-center tilt-3d">
-              <p class="text-white font-black text-2xl">{s.n}</p>
-              <p class="text-white/40 text-xs mt-1">{s.label}</p>
-            </div>
-          ))}
+        <div class="button-row">
+          <a class="button" href="/esperienze">Apri l’atlante <span aria-hidden="true">↘</span></a>
+          <a class="button-secondary" href="/corsi">Trova il tuo percorso</a>
         </div>
-        <a href="/esperienze" class="btn-apple">Tutte le esplorazioni</a>
       </div>
+
+      <div class="home-hero__depth hero-animate hero-animate--delay" aria-label="Scala di profondità illustrativa">
+        <span>0 m</span>
+        <span>−40</span>
+        <span>−80</span>
+        <strong>−135 m</strong>
+      </div>
+    </div>
+
+    <p class="home-hero__caption">Visuale editoriale · non è documentazione di una spedizione reale</p>
+  </section>
+
+  <section class="proof-strip" aria-label="Dati documentati">
+    <div class="shell stat-grid">
+      {proof.map(item => (
+        <a class="stat" href={item.href} target="_blank" rel="noopener" aria-label={`${item.value}, ${item.label}. Apri la fonte`}>
+          <strong>{item.value}</strong>
+          <span>{item.label}</span>
+          <small>{item.note} <span aria-hidden="true">↗</span></small>
+        </a>
+      ))}
     </div>
   </section>
 
-  <!-- ══════════════════════════════════════════════
-       GALLERY STRIP — foto reali con hover 3D
-  ══════════════════════════════════════════════ -->
-  <section class="bg-black py-24 overflow-hidden" aria-labelledby="gallery-heading">
-    <div class="max-w-6xl mx-auto px-6 mb-10 flex items-end justify-between fade-up">
+  <section class="section">
+    <div class="shell manifesto-grid">
       <div>
-        <p class="label-eyebrow mb-2">Gallery</p>
-        <h2 id="gallery-heading" class="display-md text-white" style="font-family: var(--font-family-display);">Dall'abisso.</h2>
+        <p class="eyebrow">Metodo / 01</p>
+        <h2 class="display-xl">L’abisso non è un primato.</h2>
       </div>
-      <a href="/gallery" class="text-ocean-blue text-sm font-semibold hover:underline hidden md:block">
-        Vedi tutte →
-      </a>
-    </div>
-    <!-- Auto-scroll strip: le immagini sono duplicate per il loop seamless -->
-    <div class="scroll-strip-auto-outer" role="list" aria-label="Galleria foto">
-      <div class="scroll-strip-auto pl-6">
-        {[...galleryPreview, ...galleryPreview].map((p, i) => (
-          <a href="/gallery" class="img-3d-wrap w-72 h-52" role="listitem" aria-hidden={i >= galleryPreview.length ? 'true' : undefined}>
-            <img
-              src={u(p.url, 600, 400)}
-              alt={p.caption}
-              class="w-full h-full object-cover"
-              loading="lazy"
-              width="600"
-              height="400"
-            />
-            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent flex items-end p-4">
-              <p class="text-white text-sm font-medium">{p.caption}</p>
-            </div>
-          </a>
-        ))}
+      <div class="manifesto-copy">
+        <p class="lead">
+          Una profondità da sola non racconta nulla. Dietro ogni metro ci sono studio,
+          gas, configurazione, persone di supporto, rilievo e una via di ritorno.
+        </p>
+        <p>
+          Questo sito nasce come archivio leggibile: distingue i fatti verificati dalle
+          memorie ancora da validare e collega ogni passaggio importante alla sua fonte.
+        </p>
+        <a class="text-link" href="/about">Il profilo e il metodo <span aria-hidden="true">→</span></a>
       </div>
     </div>
   </section>
 
-  <!-- ══════════════════════════════════════════════
-       CORSI — cards glassmorphism con tilt 3D
-  ══════════════════════════════════════════════ -->
-  <section class="bg-apple-dark py-28" aria-labelledby="corsi-heading">
-    <div class="max-w-6xl mx-auto px-6">
-      <div class="text-center mb-16 fade-up">
-        <p class="label-eyebrow mb-4">Formazione</p>
-        <h2 id="corsi-heading" class="display-md text-white mb-4" style="font-family: var(--font-family-display);">Corsi UTR</h2>
-        <p class="text-white/50 text-xl max-w-xl mx-auto">
-          Quarant'anni di esperienza reale.<br/>Niente di teorico.
+  <section class="section section--surface" aria-labelledby="atlas-heading">
+    <div class="shell">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Atlante / 02</p>
+          <h2 id="atlas-heading" class="display-xl">Tre ingressi nell’archivio.</h2>
+        </div>
+        <p class="lead">
+          Non una collezione di record: luoghi, squadre, condizioni e documenti da leggere
+          come parti dello stesso sistema.
         </p>
       </div>
-      <div class="grid md:grid-cols-3 gap-5">
-        {[
-          { title: 'Cave Diving Base', price: '€ 890', duration: '4 giorni', href: '/corsi#cave-base', num: '01',
-            desc: "Tecniche di esplorazione in grotta allagata. Gas, filo guida, navigazione al buio." },
-          { title: 'UTR Soccorso', price: '€ 1.200', duration: '5 giorni', href: '/corsi#utr-soccorso', num: '02',
-            desc: "Soccorso avanzato in ambiente ipogeo sommerso. Per operatori CNSAS e istruttori." },
-          { title: 'Deep Cave', price: '€ 1.800', duration: '7 giorni', href: '/corsi#deep-cave', num: '03',
-            desc: "Rebreather e gas misti oltre i 100 m. Solo cave divers certificati." },
-        ].map(c => (
-          <a href={c.href} class="card-glass tilt-3d flex flex-col group fade-up" aria-label={c.title}>
-            <span class="font-mono text-ocean-blue text-sm font-bold tracking-widest mb-4 block">{c.num}</span>
-            <h3 class="text-white font-bold text-xl mb-2 group-hover:text-ocean-blue transition-colors">{c.title}</h3>
-            <p class="text-white/50 text-sm flex-1 mb-6 leading-relaxed">{c.desc}</p>
-            <div class="flex items-center justify-between border-t border-white/10 pt-5">
-              <span class="text-ocean-blue font-bold text-lg">{c.price}</span>
-              <span class="text-white/30 text-sm">{c.duration}</span>
+
+      <div class="card-grid">
+        {atlas.map(item => (
+          <article class="archive-card home-atlas-card">
+            <div class="card-index">
+              <span>{item.index}</span>
+              <span class="status">{item.status}</span>
             </div>
-          </a>
+            <p class="home-atlas-card__metric">{item.metric}</p>
+            <h3>{item.title}</h3>
+            <p>{item.text}</p>
+            <a class="source-link" href={item.href}>Apri la scheda <span aria-hidden="true">→</span></a>
+          </article>
         ))}
       </div>
-      <div class="text-center mt-12 fade-up">
-        <a href="/corsi" class="btn-apple px-10">Vedi tutti i corsi</a>
+
+      <div class="section-action">
+        <a class="button-secondary" href="/esperienze">Esplora tutto l’atlante</a>
       </div>
     </div>
   </section>
 
-  <!-- ══════════════════════════════════════════════
-       QUOTE — fullbleed con foto + citazione
-  ══════════════════════════════════════════════ -->
-  <section class="relative py-40 overflow-hidden">
-    <img
-      src={u(photos.quote, 1600, 800)}
-      alt="Grotta sottomarina con luce naturale"
-      class="absolute inset-0 w-full h-full object-cover opacity-30"
-      loading="lazy"
-    />
-    <div class="absolute inset-0 bg-black/70"></div>
-    <div class="relative z-10 max-w-4xl mx-auto px-6 text-center fade-up">
-      <p class="text-ocean-blue/50 font-black mb-4 leading-none" style="font-family: var(--font-family-display); font-size: 6rem; line-height: 0.8;">"</p>
-      <blockquote class="text-white leading-tight mb-8" style="font-family: var(--font-family-display); font-size: clamp(1.75rem, 4vw, 3.5rem); font-weight: 700; letter-spacing: -0.03em;">
-        Non esiste simulazione che sostituisca il buio reale, la corrente reale, il freddo reale.
-      </blockquote>
-      <p class="text-white/35 tracking-[0.25em] text-xs uppercase">— Alberto Cavedon · Scubazone 2013</p>
+  <section class="section section--paper" aria-labelledby="training-heading">
+    <div class="shell feature-split">
+      <div>
+        <p class="eyebrow eyebrow--dark">Formazione / 03</p>
+        <h2 id="training-heading" class="display-xl">Prima il subacqueo. Poi il corso.</h2>
+        <p class="lead lead--dark">
+          Certificazione precedente, configurazione, continuità di allenamento e obiettivo:
+          il percorso giusto parte da qui, non dal nome del brevetto.
+        </p>
+        <div class="button-row">
+          <a class="button button--dark" href="/corsi#orientamento">Fai il pre-orientamento</a>
+          <a class="text-link training-link" href="/contatti">Parla direttamente con Alberto <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+      <ol class="training-steps">
+        <li><span>01</span><div><strong>Valutare</strong><p>Esperienza reale, assetto, controllo e frequenza in acqua.</p></div></li>
+        <li><span>02</span><div><strong>Preparare</strong><p>Colmare prima le basi che il livello successivo dà già per acquisite.</p></div></li>
+        <li><span>03</span><div><strong>Verificare</strong><p>La certificazione arriva quando gli standard sono dimostrati, non a calendario.</p></div></li>
+      </ol>
     </div>
   </section>
 
-  <!-- ══════════════════════════════════════════════
-       BLOG — cards su sfondo dark
-  ══════════════════════════════════════════════ -->
-  <section class="bg-black py-24" aria-labelledby="blog-heading">
-    <div class="max-w-6xl mx-auto px-6">
-      <div class="flex items-end justify-between mb-12 fade-up">
-        <div>
-          <p class="label-eyebrow mb-2">Diario</p>
-          <h2 id="blog-heading" class="display-md text-white" style="font-family: var(--font-family-display);">Dal campo.</h2>
-        </div>
-        <a href="/blog" class="text-ocean-blue text-sm font-semibold hover:underline hidden md:block">
-          Tutti i post →
+  <section class="section" aria-labelledby="film-heading">
+    <div class="shell film-grid">
+      <div class="film-poster" aria-hidden="true">
+        <span class="film-poster__depth">−135</span>
+        <span class="film-poster__unit">metri</span>
+        <div class="film-poster__line"></div>
+      </div>
+      <div>
+        <p class="eyebrow">Documento / 04</p>
+        <h2 id="film-heading" class="display-xl">Dove la terra si spacca.</h2>
+        <p class="lead">
+          Il documentario di Massimo D’Alessandro ricostruisce tre spedizioni a Su Gologone:
+          preparazione, squadra, imprevisti e rilievo. Quarantacinque minuti per vedere ciò
+          che un numero non può spiegare.
+        </p>
+        <p class="meta">Documentario · 2012 · 45 min · Italiano</p>
+        <a class="button-secondary" href="https://vimeo.com/1164379037" target="_blank" rel="noopener">
+          Guarda su Vimeo <span aria-hidden="true">↗</span>
         </a>
       </div>
-      <div class="grid md:grid-cols-2 gap-5">
-        {[
-          {
-            photo: photos.blog1,
-            tag: 'Record',
-            date: 'Maggio 2010',
-            title: 'Su Gologone 2010: come ho superato il record di Isler',
-            href: '/blog/su-gologone-2010',
-          },
-          {
-            photo: photos.blog2,
-            tag: 'Cave Diving',
-            date: 'Gennaio 2012',
-            title: 'Arma del Lupo: tre ore dentro la montagna, –121 m',
-            href: '/blog/arma-del-lupo',
-          },
-        ].map(p => (
-          <a href={p.href} class="group relative overflow-hidden rounded-3xl h-72 img-3d-wrap tilt-3d fade-up" aria-label={p.title}>
-            <img
-              src={u(p.photo, 800, 500)}
-              alt={p.title}
-              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-              loading="lazy"
-            />
-            <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent"></div>
-            <div class="absolute bottom-0 left-0 p-6">
-              <div class="flex items-center gap-2 mb-2">
-                <span class="text-xs bg-ocean-blue/20 text-ocean-blue px-2 py-0.5 rounded-full font-semibold">{p.tag}</span>
-                <span class="text-white/40 text-xs">{p.date}</span>
-              </div>
-              <h3 class="text-white font-bold text-lg leading-snug group-hover:text-ocean-blue transition-colors">
-                {p.title}
-              </h3>
-            </div>
-          </a>
-        ))}
+    </div>
+  </section>
+
+  <section class="section section--surface">
+    <div class="shell home-contact">
+      <div>
+        <p class="eyebrow">Contatto / 05</p>
+        <h2 class="display-xl">Una domanda precisa apre la strada giusta.</h2>
+      </div>
+      <div>
+        <p class="lead">Corsi, spedizioni, consulenze tecniche, interviste o materiale d’archivio.</p>
+        <a class="button" href="/contatti">Prepara la richiesta <span aria-hidden="true">→</span></a>
       </div>
     </div>
   </section>
-
-  <!-- ══════════════════════════════════════════════
-       CTA finale — con foto + overlay
-  ══════════════════════════════════════════════ -->
-  <section class="relative py-40 overflow-hidden text-center">
-    <img
-      src={u(photos.cta, 1600, 800)}
-      alt="Luce nell'abisso"
-      class="absolute inset-0 w-full h-full object-cover opacity-20"
-      loading="lazy"
-    />
-    <div class="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black"></div>
-    <div class="relative z-10 max-w-2xl mx-auto px-6 fade-up">
-      <h2 class="display-lg text-white mb-6" style="font-family: var(--font-family-display);">Scendi con me.</h2>
-      <p class="text-white/50 text-xl mb-10 font-light leading-relaxed">
-        Corsi UTR, spedizioni, seminari.<br/>Contattami per iniziare.
-      </p>
-      <a href="/contatti" class="btn-apple text-base px-12 py-4">Inizia il percorso</a>
-    </div>
-  </section>
-
 </Layout>
 
-<script>
-  import { gsap } from 'gsap';
-  import { ScrollTrigger } from 'gsap/ScrollTrigger';
-  gsap.registerPlugin(ScrollTrigger);
+<style>
+  .home-hero {
+    position: relative;
+    display: grid;
+    min-height: 100svh;
+    align-items: end;
+    overflow: hidden;
+    background: #050708;
+  }
 
-  // Hero elements start translated — must be set BEFORE the timeline plays
-  gsap.set(['#hero-eyebrow','#hero-title','#hero-sub','#hero-cta'], { y: 40 });
+  .home-hero__picture,
+  .home-hero__picture img,
+  .home-hero__veil,
+  .home-hero__contours {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
 
-  // Hero entrance sequence
-  const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
-  tl.to('#hero-eyebrow', { opacity: 1, y: 0, duration: 1,   delay: 0.5 }, 0)
-    .to('#hero-title',   { opacity: 1, y: 0, duration: 1.2 }, 0.3)
-    .to('#hero-sub',     { opacity: 1, y: 0, duration: 1   }, 0.7)
-    .to('#hero-cta',     { opacity: 1, y: 0, duration: 0.8 }, 1.0)
-    .to('#scroll-hint',  { opacity: 1,       duration: 0.6 }, 1.3);
+  .home-hero__picture img {
+    object-fit: cover;
+    object-position: 62% center;
+  }
 
-  // ScrollTrigger fade-up
-  gsap.utils.toArray<HTMLElement>('.fade-up').forEach(el => {
-    gsap.fromTo(el,
-      { opacity: 0, y: 60 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: el,
-          start: 'top 88%',
-          toggleActions: 'play none none none',
-        },
-      }
-    );
-  });
+  .home-hero__veil {
+    background:
+      linear-gradient(90deg, rgba(5, 7, 8, 0.98) 0%, rgba(5, 7, 8, 0.88) 34%, rgba(5, 7, 8, 0.2) 73%, rgba(5, 7, 8, 0.45) 100%),
+      linear-gradient(0deg, #050708 0%, transparent 30%, rgba(5, 7, 8, 0.1) 78%, rgba(5, 7, 8, 0.8) 100%);
+  }
 
-  // Animated number counters
-  gsap.utils.toArray<HTMLElement>('.counter').forEach(el => {
-    const parent = el.closest('[data-target]') as HTMLElement;
-    if (!parent) return;
-    const target = parseInt(parent.dataset.target ?? '0');
-    const suffix = parent.dataset.suffix ?? '';
-    const prefix = parent.dataset.prefix ?? '';
+  .home-hero__contours {
+    opacity: 0.15;
+    background: repeating-radial-gradient(ellipse at 15% 56%, transparent 0 28px, rgba(117, 229, 255, 0.24) 29px 30px);
+    transform: scale(1.3, 0.8) rotate(-8deg);
+    transform-origin: left center;
+  }
 
-    ScrollTrigger.create({
-      trigger: parent,
-      start: 'top 85%',
-      once: true,
-      onEnter: () => {
-        const obj = { val: 0 };
-        gsap.to(obj, {
-          val: target, duration: 2, ease: 'power2.out',
-          onUpdate() { el.textContent = prefix + Math.round(obj.val) + suffix; },
-        });
-      },
-    });
-  });
+  .home-hero__content {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 8rem;
+    gap: 2rem;
+    align-items: end;
+    padding-top: 9rem;
+    padding-bottom: clamp(5rem, 9vw, 8rem);
+  }
 
-  // Parallax on fullbleed images
-  gsap.utils.toArray<HTMLElement>('section img.absolute, section img.w-full.h-full').forEach(img => {
-    gsap.to(img, {
-      yPercent: 20,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: img.closest('section'),
-        start: 'top bottom',
-        end: 'bottom top',
-        scrub: true,
-      },
-    });
-  });
-</script>
+  .home-hero__copy { max-width: 58rem; }
+  .home-hero__copy .display-title { max-width: 8ch; }
+
+  .home-hero__lead {
+    max-width: 42rem;
+    margin-block: 1.75rem 2rem;
+    color: #ccd4d1;
+    font-size: clamp(1.04rem, 0.95rem + 0.45vw, 1.35rem);
+  }
+
+  .home-hero__depth {
+    display: grid;
+    align-content: space-between;
+    min-height: 22rem;
+    padding-left: 1rem;
+    color: #c0ccca;
+    border-left: 1px solid rgba(117, 229, 255, 0.55);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+  }
+
+  .home-hero__depth span,
+  .home-hero__depth strong { position: relative; }
+
+  .home-hero__depth span::before,
+  .home-hero__depth strong::before {
+    position: absolute;
+    top: 0.7em;
+    left: -1rem;
+    width: 0.55rem;
+    height: 1px;
+    content: '';
+    background: var(--cyan);
+  }
+
+  .home-hero__depth strong {
+    color: var(--cyan);
+    font-size: 0.9rem;
+  }
+
+  .home-hero__caption {
+    position: absolute;
+    z-index: 3;
+    right: 1rem;
+    bottom: 1rem;
+    margin: 0;
+    color: rgba(241, 238, 229, 0.48);
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .proof-strip { background: #050708; }
+
+  .proof-strip .stat {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .proof-strip .stat small {
+    display: block;
+    margin-top: 0.85rem;
+    color: rgba(174, 187, 184, 0.68);
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    line-height: 1.5;
+  }
+
+  .proof-strip .stat:hover { background: rgba(117, 229, 255, 0.04); }
+
+  .manifesto-grid,
+  .home-contact {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(300px, 0.85fr);
+    gap: clamp(2.5rem, 8vw, 8rem);
+    align-items: start;
+  }
+
+  .manifesto-copy > p:not(.lead) { color: var(--mist); }
+
+  .home-atlas-card { min-height: 29rem; }
+
+  .home-atlas-card__metric {
+    margin-bottom: 1.5rem;
+    color: var(--cyan);
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 2rem + 2.6vw, 5.2rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 0.9;
+  }
+
+  .home-atlas-card .source-link {
+    position: absolute;
+    right: 2rem;
+    bottom: 1.35rem;
+    left: 2rem;
+  }
+
+  .section-action {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 2rem;
+  }
+
+  .training-steps {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid rgba(8, 11, 12, 0.2);
+  }
+
+  .training-steps li {
+    display: grid;
+    grid-template-columns: 3rem 1fr;
+    gap: 1.25rem;
+    padding-block: 1.3rem;
+    border-bottom: 1px solid rgba(8, 11, 12, 0.2);
+  }
+
+  .training-steps > li > span {
+    color: #087e98;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+  }
+
+  .training-steps strong {
+    display: block;
+    margin-bottom: 0.3rem;
+    font-family: var(--font-display);
+    font-size: 1.65rem;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .training-steps p { margin: 0; color: #465150; }
+  .training-link { color: #087e98; }
+  .training-link:hover { color: var(--ink); }
+
+  .film-grid {
+    display: grid;
+    grid-template-columns: minmax(280px, 0.9fr) minmax(0, 1.1fr);
+    gap: clamp(2rem, 8vw, 8rem);
+    align-items: center;
+  }
+
+  .film-poster {
+    position: relative;
+    display: grid;
+    min-height: clamp(30rem, 55vw, 42rem);
+    align-content: end;
+    padding: clamp(1.5rem, 5vw, 4rem);
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 70% 16%, rgba(117, 229, 255, 0.32), transparent 13%),
+      repeating-radial-gradient(ellipse at 70% 16%, transparent 0 31px, rgba(117, 229, 255, 0.09) 32px 33px),
+      linear-gradient(145deg, #152326, #060808 70%);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+  }
+
+  .film-poster__depth {
+    position: relative;
+    z-index: 1;
+    color: var(--cyan);
+    font-family: var(--font-display);
+    font-size: clamp(6rem, 12vw, 11rem);
+    font-weight: 800;
+    letter-spacing: -0.06em;
+    line-height: 0.7;
+  }
+
+  .film-poster__unit {
+    color: var(--bone);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .film-poster__line {
+    position: absolute;
+    top: 22%;
+    right: -8%;
+    width: 80%;
+    height: 1px;
+    background: var(--amber);
+    transform: rotate(-27deg);
+    transform-origin: right;
+  }
+
+  .home-contact { align-items: end; }
+
+  @media (max-width: 900px) {
+    .manifesto-grid,
+    .film-grid,
+    .home-contact { grid-template-columns: 1fr; }
+
+    .film-poster { min-height: 32rem; }
+  }
+
+  @media (max-width: 640px) {
+    .home-hero { min-height: 850px; }
+    .home-hero__picture img { object-position: 68% center; }
+    .home-hero__veil {
+      background:
+        linear-gradient(0deg, #050708 0%, rgba(5, 7, 8, 0.65) 48%, rgba(5, 7, 8, 0.46) 76%, rgba(5, 7, 8, 0.84) 100%),
+        linear-gradient(90deg, rgba(5, 7, 8, 0.86), transparent 84%);
+    }
+
+    .home-hero__content {
+      grid-template-columns: 1fr;
+      padding-bottom: 5.5rem;
+    }
+
+    .home-hero__depth { display: none; }
+    .home-hero__caption { right: 0.65rem; bottom: 0.65rem; left: 0.65rem; text-align: center; }
+    .home-atlas-card { min-height: 25rem; }
+  }
+</style>

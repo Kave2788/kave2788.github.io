@@ -1,91 +1,11 @@
 ---
+import ArchiveStory from '../../components/ArchiveStory.astro';
+import { getArchiveStory } from '../../data/archive';
 import Layout from '../../layouts/Layout.astro';
+
+const story = getArchiveStory('su-gologone-2012');
 ---
 
-<Layout
-  title="Su Gologone 2012 — Alberto Cavedon"
-  description="Ritorno a Su Gologone nel giugno 2012 con un team italo-svizzero per continuare le esplorazioni oltre i –135 m."
->
-  <div class="pt-24">
-    <article class="max-w-3xl mx-auto px-6 py-16">
-      <header class="mb-12">
-        <div class="flex items-center gap-3 mb-6">
-          <span class="text-xs bg-apple-blue/20 text-ocean-blue px-3 py-1 rounded-full font-semibold">Sardegna</span>
-          <span class="text-apple-grey text-sm">Giugno 2012</span>
-          <span class="text-apple-grey/40 text-sm">· 6 min lettura</span>
-        </div>
-        <h1 class="display-lg text-white leading-tight mb-6">
-          Di nuovo a Su Gologone:<br/>
-          spingere ancora più a fondo.
-        </h1>
-        <p class="text-xl text-apple-grey leading-relaxed">
-          Due anni dopo il record torno nella sorgente sarda con un team
-          italo-svizzero per mappare i corridoi oltre i –135 m.
-        </p>
-      </header>
-
-      <div class="py-16 bg-gradient-to-br from-ocean-deep via-apple-black to-apple-dark rounded-3xl flex items-center justify-center mb-14 border border-white/10 border-b border-ocean-blue/20">
-        <div class="text-center">
-          <p class="text-ocean-blue font-bold text-2xl mb-2">Su Gologone · Oliena, Sardegna</p>
-          <p class="font-mono text-white/50 text-sm">Giugno 2012</p>
-        </div>
-      </div>
-
-      <div class="space-y-7 text-apple-grey text-lg leading-relaxed">
-        <p>
-          Dopo l'impresa del 2010 la domanda era una sola: cosa c'è oltre i –135 m?
-          Il condotto esplorato due anni prima si interrompeva in modo promettente —
-          non una fessura cieca, ma un allargamento verso est che invitava a proseguire.
-          Con la spedizione di giugno 2012 abbiamo cercato di rispondere.
-        </p>
-
-        <h2 class="fade-up text-white font-bold text-2xl mt-10 mb-4">Il team</h2>
-        <p>
-          Per questa missione il team è internazionale: tecnici italiani dell'associazione
-          <strong class="text-white">ASSO</strong> e colleghi svizzeri con cui avevo già
-          collaborato sulle grotte dell'altopiano di Asiago. La logistica è quella collaudata
-          nel 2010 — campo sulla riva, stazioni di gas, comunicazioni via filo.
-        </p>
-
-        <h2 class="fade-up text-white font-bold text-2xl mt-10 mb-4">Le immersioni</h2>
-        <p>
-          Le prime uscite servono a ripristinare il filo guida — due anni di corrente
-          e sedimenti hanno spostato alcune sezioni. Poi si scende progressivamente.
-          Il passaggio della fessura a –107 m resta il momento più delicato: in configurazione
-          side-mount il margine è di pochi centimetri.
-        </p>
-        <p>
-          Oltre i –135 m il condotto si biforca. La diramazione principale sale leggermente
-          verso nord-est, suggerendo un collegamento con il sistema delle grotte asciutte del
-          Supramonte. La seconda, più stretta, scende verso i –140 m prima di allargarsi
-          in una sala non ancora documentata.
-        </p>
-
-        <h2 class="fade-up text-white font-bold text-2xl mt-10 mb-4">Risultati</h2>
-        <p>
-          Aggiungiamo decine di metri alle planimetrie esistenti e confermiamo che
-          il sistema ha ancora molto da offrire. Su Gologone non è una grotta esaurita —
-          è una grotta che richiede ogni volta attrezzatura, gas e preparazione ai loro
-          limiti assoluti.
-        </p>
-      </div>
-
-      <div class="mt-16 pt-8 border-t border-white/10 flex justify-between">
-        <a href="/blog" class="text-apple-blue text-sm font-semibold hover:underline">← Tutti i post</a>
-        <a href="/blog/arma-del-lupo" class="text-apple-blue text-sm font-semibold hover:underline">Post successivo →</a>
-      </div>
-    </article>
-  </div>
+<Layout title={`${story.title} — Alberto Cavedon`} description={story.description}>
+  <ArchiveStory story={story} />
 </Layout>
-
-<script>
-  import { gsap } from 'gsap';
-  import { ScrollTrigger } from 'gsap/ScrollTrigger';
-  gsap.registerPlugin(ScrollTrigger);
-  gsap.utils.toArray<HTMLElement>('.fade-up').forEach(el => {
-    gsap.fromTo(el, { opacity: 0, y: 40 }, {
-      opacity: 1, y: 0, duration: 0.8, ease: 'power3.out',
-      scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none none' },
-    });
-  });
-</script>

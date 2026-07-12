@@ -1,11 +1,3 @@
 ---
-import ArchiveStory from '../../components/ArchiveStory.astro';
-import { getArchiveStory } from '../../data/archive';
-import Layout from '../../layouts/Layout.astro';
-
-const story = getArchiveStory('su-gologone-2012');
+return Astro.redirect('/blog/su-gologone', 301);
 ---
-
-<Layout title={`${story.title} — Alberto Cavedon`} description={story.description}>
-  <ArchiveStory story={story} />
-</Layout>

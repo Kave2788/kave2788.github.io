@@ -13,9 +13,16 @@ const statusClass = story.status === 'Verificato'
 
 <article class="archive-story" data-status={story.status}>
   <header class="article-header story-hero">
+    <figure class="story-photo">
+      <img src={story.image.src} alt={story.image.alt} width="1600" height="1067" loading="eager" />
+      <figcaption>
+        <a href={story.image.creditHref} target="_blank" rel="noopener">{story.image.credit}</a>
+      </figcaption>
+    </figure>
+
     <div class="narrow shell--narrow">
       <nav class="archive-back" aria-label="Navigazione archivio">
-        <a class="text-link" href="/blog">Torna all’archivio</a>
+        <a class="text-link" href="/esperienze">Torna all’archivio</a>
       </nav>
 
       <div class="article-meta story-meta" aria-label="Informazioni sulla scheda">
@@ -73,9 +80,44 @@ const statusClass = story.status === 'Verificato'
     </aside>
   </div>
 
+  <slot name="evidence" />
+
   <footer class="section section--tight archive-footer">
     <div class="narrow shell--narrow">
-      <a class="text-link" href="/blog">Consulta tutte le schede dell’archivio</a>
+      <a class="text-link" href="/esperienze">Consulta tutte le schede dell’archivio</a>
     </div>
   </footer>
 </article>
+
+<style>
+  .story-photo {
+    margin: 0 0 clamp(2rem, 5vw, 3.5rem);
+    position: relative;
+  }
+
+  .story-photo img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    max-height: 60vh;
+  }
+
+  .story-photo figcaption {
+    position: absolute;
+    right: 0.75rem;
+    bottom: 0.75rem;
+    padding: 0.3rem 0.6rem;
+    background: rgba(5, 7, 8, 0.6);
+    border-radius: 0.3rem;
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+  }
+
+  .story-photo figcaption a {
+    color: rgba(241, 238, 229, 0.85);
+    text-decoration: none;
+  }
+
+  .story-photo figcaption a:hover { color: var(--cyan); }
+</style>

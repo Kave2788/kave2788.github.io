@@ -25,3 +25,6 @@ pnpm-debug.log*
 
 # temporary web research
 .firecrawl/
+
+# generated document previews
+tmp/

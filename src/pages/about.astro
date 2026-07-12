@@ -1,173 +1,114 @@
 ---
 import Layout from '../layouts/Layout.astro';
 
-const timeline = [
-  {
-    year: '2000—2011',
-    title: 'Il ramo profondo di Fontanazzi',
-    text: 'Un report GUE del 2017 attribuisce ad Alberto Cavedon e al suo gruppo l’estensione dell’esplorazione del ramo profondo fino a quota −120 metri.',
-    source: 'https://www.gue.com/files/annualreports/2017-Project-Reports.pdf',
-    sourceLabel: 'GUE Project Report 2017',
-  },
-  {
-    year: '2008',
-    title: 'Elefante Bianco · intervento CNSAS',
-    text: 'Durante il recupero di uno speleosub, Alberto guida la ricerca del ROV, bonifica e risagola il tratto operativo con visibilità estremamente ridotta.',
-    source: 'https://www.cnsas.it/wp-content/uploads/2017/05/aprile-2008.pdf',
-    sourceLabel: 'Il Soccorso Alpino · aprile 2008',
-  },
-  {
-    year: '2010',
-    title: 'Su Gologone · −135 metri',
-    text: 'La spedizione porta il limite conosciuto della risorgenza sarda a 135 metri di profondità. Il risultato è riportato da fonti istituzionali e locali.',
-    source: 'https://idese.cultura.gov.it/en/place/su-gologone/',
-    sourceLabel: 'Istituto Centrale Patrimonio Immateriale',
-  },
-  {
-    year: '2012',
-    title: 'Arma del Lupo · nuovo ramo',
-    text: 'Una spedizione sostenuta da 62 speleologi documenta 300 metri di nuove gallerie. L’immersione di Alberto dura 135 minuti e raggiunge quota −121 metri.',
-    source: 'https://www.speleosubtek.com/archivio/esplorazioni-e-spedizioni/',
-    sourceLabel: 'Archivio Speleosubtek',
-  },
-  {
-    year: '2018',
-    title: 'Procedure europee di soccorso',
-    text: 'CNSAS documenta Alberto come direttore della Scuola nazionale speleosubacquea durante il lavoro con squadre europee per uniformare le procedure post-sifone.',
-    source: 'https://news.cnsas.it/soccorso-speleosubacqueo-verso-un-codice-europeo-di-intervento/',
-    sourceLabel: 'CNSAS News',
-  },
-  {
-    year: '2025',
-    title: 'Trent’anni di esperienza, raccontati',
-    text: 'Nel podcast ScubaMed affronta la decompressione in ambiente ostruito e le decisioni che distinguono la grotta da un profilo di risalita lineare.',
-    source: 'https://music.amazon.com.br/podcasts/851e8a18-9358-4969-a3f2-7a8cf6a215b1/episodes/5bb8cf95-a545-4795-bb71-032d6de3fdd8/scubamed-scuba-stories-in-grotta-con-alberto-cavedon',
-    sourceLabel: 'ScubaMed · Scuba Stories',
-  },
+const qualifications = [
+  { title: 'Professional Trimix Instructor', detail: 'Percorso fino a 100 m · ISO 24802-2 · UTRtek', status: 'Verificato · scade 31 dic 2026' },
+  { title: 'Technical Cave Instructor', detail: 'Formazione cave diving · ISO 24802-2 · UTRtek', status: 'Verificato · scade 31 dic 2026' },
+  { title: '508 – Professional CCR Rebreather 100 m', detail: 'Circuito chiuso fino a 100 m · ISO 24807 · UTRtek', status: 'Verificato · rilasciato 28 ott 2024' },
+  { title: 'BLS-D & RCP Instructor', detail: 'Medical First Aid · ISO 24802-2 · UTRtek', status: 'Verificato · scade 31 dic 2026' },
 ];
 
-const qualifications = [
-  { title: 'Professional Trimix Instructor', detail: 'Percorso fino a 100 m · ISO 24802-2', status: 'Validità dichiarata 2026' },
-  { title: 'Technical Cave Instructor', detail: 'Formazione cave diving · ISO 24802-2', status: 'Validità dichiarata 2026' },
-  { title: 'Professional CCR Rebreather', detail: 'Circuito chiuso fino a 100 m · ISO 24807', status: 'Rilascio dichiarato 2024' },
-  { title: 'BLS-D & RCP Instructor', detail: 'Medical First Aid · ISO 24802-2', status: 'Validità dichiarata 2026' },
+const sources = [
+  { label: 'Valstagna.info · biografia pubblica', href: 'https://www.valstagna.info/index.php/sport/256-alberto-cavedon' },
+  { label: 'CNSAS News · codice europeo di intervento, 2019', href: 'https://news.cnsas.it/soccorso-speleosubacqueo-verso-un-codice-europeo-di-intervento/' },
+  { label: 'Il Soccorso Alpino · aprile 2008', href: 'https://www.cnsas.it/wp-content/uploads/2017/05/aprile-2008.pdf' },
+  { label: 'Gruppo Grotte Trevisiol · Fontanazzi', href: 'http://gruppogrottetrevisiol.org/fontanazzi-solagna/' },
+  { label: 'ScubaMed · Scuba Stories, 2025', href: 'https://music.amazon.com.br/podcasts/851e8a18-9358-4969-a3f2-7a8cf6a215b1/episodes/5bb8cf95-a545-4795-bb71-032d6de3fdd8/scubamed-scuba-stories-in-grotta-con-alberto-cavedon' },
 ];
 ---
 
 <Layout
   title="Profilo — Alberto Cavedon"
-  description="Il profilo documentato di Alberto Cavedon: esplorazioni speleosubacquee, soccorso CNSAS e formazione tecnica."
+  description="La biografia documentata di Alberto Cavedon: dal 1987 alle esplorazioni internazionali, fino alla direzione della Scuola Nazionale Speleosubacquea del CNSAS."
 >
   <header class="page-hero">
     <div class="shell page-hero__grid">
       <div class="hero-animate">
-        <p class="eyebrow">Profilo / Alberto Cavedon</p>
-        <h1 class="display-title">La competenza<br />prima del <span class="text-accent">limite.</span></h1>
+        <p class="eyebrow">Profilo</p>
+        <h1 class="display-title">Alberto<br /><span class="text-accent">Cavedon.</span></h1>
       </div>
       <div class="page-hero__aside hero-animate hero-animate--delay">
-        <p class="lead">Speleosubacqueo, formatore tecnico e già direttore della Scuola nazionale speleosubacquea CNSAS.</p>
-        <p class="meta">Canale di Brenta · Vicenza · Italia</p>
+        <p class="lead">Speleosubacqueo, istruttore tecnico e direttore della Scuola Nazionale Speleosubacquea del CNSAS.</p>
+        <p class="meta">Nato a Thiene (VI) il 15 agosto 1963 · attivo nel Canale di Brenta, Vicenza</p>
       </div>
     </div>
   </header>
 
   <section class="section">
-    <div class="shell profile-grid">
-      <div class="profile-plate" aria-hidden="true">
-        <span>AC</span>
-        <div class="profile-plate__axis"><i>0</i><i>−40</i><i>−80</i><i>−120</i></div>
-        <p>Speleologia<br />subacquea</p>
+    <div class="shell bio-grid">
+      <div class="prose bio-copy">
+        <h2 class="display-xl">Dal 1987 alla speleologia subacquea.</h2>
+        <p>
+          Alberto Cavedon inizia a immergersi nel 1987, a ventiquattro anni, con il brevetto PADI Open Water,
+          arrivando presto al livello di Assistant Instructor. Nel 1995 scopre la speleologia subacquea: da lì
+          in avanti la sua attività si sposta quasi interamente dentro le grotte allagate, in Italia e all’estero.
+        </p>
+        <p>
+          Dal 1999 comincia il percorso tecnico che lo porterà, negli anni, a diventare Istruttore Rebreather
+          (Voyager), Istruttore OWS e Nitrox, Istruttore Trimix e Technical Cave Advanced Instructor con
+          didattica UTR. È membro attivo del Gruppo Grotte “Giara Modon” di Valstagna.
+        </p>
+
+        <h2 class="display-xl">Le esplorazioni.</h2>
+        <p>
+          Tra la fine degli anni ’90 e il 2011 esplora a fondo la Grotta di Fontanazzi, nel Canale di Brenta:
+          con l’assistenza di Luigi Casati, uno dei più noti speleosub al mondo, raggiunge circa 133 metri di
+          profondità e quasi 1000 metri di progressione in un’unica immersione di otto ore. Nello stesso periodo
+          lavora anche alle Grotte di Oliero e alla Grotta di Riomartino, a Crissolo.
+        </p>
+        <p>
+          Il decennio successivo porta due delle sue esplorazioni più documentate: la sorgente di Su Gologone,
+          in Sardegna, dove tra il 2010 e il 2025 estende il limite esplorativo fino a −135 metri; e il Sifone
+          del Lago Grande, nell’Arma del Lupo Inferiore (Piemonte), raggiunto a −121 metri nel gennaio 2012 dopo
+          una spedizione di 62 speleologi. I dettagli di ogni esplorazione, con le fonti, sono nella
+          pagina <a class="text-link" href="/esperienze">Esplorazioni</a>.
+        </p>
+
+        <h2 class="display-xl">Il soccorso speleosubacqueo.</h2>
+        <p>
+          Alberto fa parte del Corpo Nazionale Soccorso Alpino e Speleologico con la qualifica di Tecnico
+          Altofondalista. Nel gennaio 2008 guida da solo il recupero di uno speleosub disperso nella Grotta
+          dell’Elefante Bianco, a Valstagna, dove ha effettuato più di 300 immersioni nel corso degli anni.
+          Nell’ottobre 2010 è tra gli specialisti italiani inviati in Francia per la ricerca di uno speleosub
+          disperso nella Dragonnière de Gaud, in Ardèche.
+        </p>
+        <p>
+          Dal 2019, almeno, risulta direttore della Scuola Nazionale Speleosubacquea del CNSAS: in
+          quell’anno rappresenta l’Italia nel lavoro con squadre europee per uniformare le procedure di
+          soccorso oltre sifone.
+        </p>
+
+        <h2 class="display-xl">Oggi.</h2>
+        <p>
+          Continua a esplorare e a formare. Nel 2025 la sua sagola guida viene ritrovata ancora in posizione
+          durante una nuova spedizione a Su Gologone, e racconta trent’anni di immersioni in grotta nel podcast
+          ScubaMed “Scuba Stories”.
+        </p>
       </div>
-      <div class="profile-copy">
-        <p class="eyebrow">Territorio / Metodo</p>
-        <h2 class="display-xl">Una storia costruita dentro il carsismo vicentino.</h2>
-        <div class="prose">
-          <p>
-            Alberto opera nel Canale di Brenta, nel territorio di Vicenza: una geografia in cui
-            altopiano, risorgenze e grotte non sono sfondo, ma scuola quotidiana. Da qui nasce un
-            percorso che unisce esplorazione, rilievo, formazione e soccorso.
-          </p>
-          <p>
-            Le spedizioni più note non sono imprese individuali. Su Gologone, Arma del Lupo,
-            Fontanazzi e l’Elefante Bianco mostrano lo stesso schema: squadre numerose, logistica,
-            tecnici in superficie, materiali ridondanti e responsabilità distribuite.
-          </p>
-          <p>
-            Anche la didattica segue questa logica. L’obiettivo non è consegnare rapidamente un
-            livello, ma capire se controllo, configurazione e capacità decisionale sono già adatti
-            all’ambiente successivo.
-          </p>
-        </div>
-      </div>
+
+      <aside class="bio-sources" aria-labelledby="bio-sources-heading">
+        <p class="eyebrow">Fonti</p>
+        <h3 id="bio-sources-heading">Verificabile</h3>
+        <p class="bio-sources__intro">Questa biografia è costruita su fonti pubbliche, indipendenti dal soggetto.</p>
+        <ul>
+          {sources.map((source) => (
+            <li><a href={source.href} target="_blank" rel="noopener">{source.label} <span aria-hidden="true">↗</span></a></li>
+          ))}
+        </ul>
+      </aside>
     </div>
   </section>
 
-  <section class="section section--paper">
+  <section class="section section--surface" aria-labelledby="qualifiche-heading">
     <div class="shell">
       <div class="section-heading">
         <div>
-          <p class="eyebrow eyebrow--dark">Principi / 01</p>
-          <h2 class="display-xl">Tre cose che vengono prima.</h2>
-        </div>
-        <p class="lead lead--dark">Prima della profondità, prima dell’attrezzatura, prima del brevetto.</p>
-      </div>
-      <div class="card-grid">
-        <article class="card card--paper">
-          <div class="card-index"><span>01</span><span>Preparazione</span></div>
-          <h3>Il margine si costruisce a terra.</h3>
-          <p>Pianificazione, ripetizione e conoscenza della configurazione riducono le decisioni improvvisate.</p>
-        </article>
-        <article class="card card--paper">
-          <div class="card-index"><span>02</span><span>Squadra</span></div>
-          <h3>Nessuna punta parte da sola.</h3>
-          <p>Chi entra è solo la parte visibile di un sistema fatto di trasporti, gas, assistenza e rilievo.</p>
-        </article>
-        <article class="card card--paper">
-          <div class="card-index"><span>03</span><span>Ritorno</span></div>
-          <h3>Uscire è parte dell’esplorazione.</h3>
-          <p>Ogni scelta viene letta nella direzione opposta: autonomia, decompressione e vie di recupero.</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section class="section section--surface" aria-labelledby="timeline-heading">
-    <div class="shell">
-      <div class="section-heading">
-        <div>
-          <p class="eyebrow">Cronologia / 02</p>
-          <h2 id="timeline-heading" class="display-xl">Tracce verificabili.</h2>
-        </div>
-        <p class="lead">Una cronologia prudente: entra soltanto ciò che oggi può essere collegato a un documento pubblico.</p>
-      </div>
-
-      <ol class="timeline">
-        {timeline.map(item => (
-          <li>
-            <time>{item.year}</time>
-            <div>
-              <h3>{item.title}</h3>
-              <p>{item.text}</p>
-            </div>
-            <a class="source-link" href={item.source} target="_blank" rel="noopener">
-              {item.sourceLabel} <span aria-hidden="true">↗</span>
-            </a>
-          </li>
-        ))}
-      </ol>
-    </div>
-  </section>
-
-  <section class="section" aria-labelledby="qualifiche-heading">
-    <div class="shell">
-      <div class="section-heading">
-        <div>
-          <p class="eyebrow">Formazione / 03</p>
-          <h2 id="qualifiche-heading" class="display-xl">Qualifiche dichiarate.</h2>
+          <p class="eyebrow">Formazione</p>
+          <h2 id="qualifiche-heading" class="display-xl">Qualifiche verificate.</h2>
         </div>
         <p class="lead">
-          Sintesi dei certificati UTRtek messi a disposizione per il sito. Codici personali e
-          numeri di certificato non vengono pubblicati inutilmente.
+          Sintesi dei certificati UTRtek, controllati sui tesserini originali. Codici personali e
+          numeri di certificato non vengono pubblicati per tutela della privacy.
         </p>
       </div>
       <div class="qualification-grid">
@@ -176,7 +117,7 @@ const qualifications = [
             <span class="qualification__index">0{index + 1}</span>
             <h3>{item.title}</h3>
             <p>{item.detail}</p>
-            <span class="status status--review">{item.status}</span>
+            <span class="status">{item.status}</span>
           </article>
         ))}
       </div>
@@ -187,14 +128,14 @@ const qualifications = [
     </div>
   </section>
 
-  <section class="section section--surface">
+  <section class="section">
     <div class="shell profile-cta">
       <div>
         <p class="eyebrow">Passo successivo</p>
         <h2 class="display-xl">Dalla biografia al percorso.</h2>
       </div>
       <div class="button-row">
-        <a class="button" href="/esperienze">Apri l’atlante</a>
+        <a class="button" href="/esperienze">Apri le esplorazioni</a>
         <a class="button-secondary" href="/corsi">Esplora la formazione</a>
       </div>
     </div>
@@ -202,97 +143,61 @@ const qualifications = [
 </Layout>
 
 <style>
-  .profile-grid {
+  .bio-grid {
     display: grid;
-    grid-template-columns: minmax(280px, 0.78fr) minmax(0, 1.22fr);
+    grid-template-columns: minmax(0, 1.55fr) minmax(260px, 0.85fr);
     gap: clamp(2.5rem, 8vw, 8rem);
     align-items: start;
   }
 
-  .profile-plate {
+  .bio-copy h2 {
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .bio-copy h2:first-child { margin-top: 0; }
+
+  .bio-copy p { color: var(--mist); }
+
+  .bio-sources {
     position: sticky;
     top: 7rem;
-    display: grid;
-    min-height: 38rem;
-    align-content: space-between;
-    padding: clamp(1.5rem, 4vw, 3rem);
-    overflow: hidden;
-    background:
-      radial-gradient(circle at 75% 22%, rgba(117, 229, 255, 0.28), transparent 14%),
-      repeating-radial-gradient(ellipse at 75% 22%, transparent 0 23px, rgba(117, 229, 255, 0.1) 24px 25px),
-      var(--surface);
+    padding: clamp(1.5rem, 4vw, 2.25rem);
+    background: var(--surface);
     border: 1px solid var(--line);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow);
   }
 
-  .profile-plate > span {
-    color: var(--cyan);
+  .bio-sources h3 {
+    margin: 0.4rem 0 0.9rem;
     font-family: var(--font-display);
-    font-size: clamp(8rem, 18vw, 15rem);
-    font-weight: 800;
-    letter-spacing: -0.08em;
-    line-height: 0.7;
-  }
-
-  .profile-plate > p {
-    margin: 0;
-    font-family: var(--font-display);
-    font-size: 2rem;
-    font-weight: 600;
-    line-height: 0.9;
+    font-size: 1.8rem;
     text-transform: uppercase;
   }
 
-  .profile-plate__axis {
-    position: absolute;
-    top: 3rem;
-    right: 1.5rem;
-    bottom: 3rem;
+  .bio-sources__intro { margin: 0 0 1.4rem; color: var(--mist); font-size: 0.9rem; }
+
+  .bio-sources ul {
     display: grid;
-    align-content: space-between;
-    padding-left: 0.8rem;
-    color: var(--mist);
-    border-left: 1px solid var(--line-strong);
-    font-family: var(--font-mono);
-    font-size: 0.6rem;
-  }
-
-  .profile-copy { padding-top: 2rem; }
-  .profile-copy .display-xl { margin-bottom: 2rem; }
-
-  .timeline {
+    gap: 0.9rem;
     margin: 0;
     padding: 0;
     list-style: none;
     border-top: 1px solid var(--line);
   }
 
-  .timeline li {
-    display: grid;
-    grid-template-columns: 8rem minmax(0, 1fr) minmax(12rem, 0.42fr);
-    gap: clamp(1rem, 4vw, 3.5rem);
-    align-items: start;
-    padding-block: 1.6rem;
-    border-bottom: 1px solid var(--line);
+  .bio-sources li { padding-top: 0.9rem; border-top: 1px solid var(--line); }
+  .bio-sources li:first-child { padding-top: 0; border-top: 0; }
+
+  .bio-sources a {
+    color: var(--bone);
+    font-size: 0.82rem;
+    line-height: 1.4;
+    text-decoration: none;
   }
 
-  .timeline time {
-    color: var(--cyan);
-    font-family: var(--font-mono);
-    font-size: 0.78rem;
-    font-weight: 600;
-  }
-
-  .timeline h3 {
-    margin-bottom: 0.5rem;
-    font-family: var(--font-display);
-    font-size: 1.65rem;
-    line-height: 1;
-    text-transform: uppercase;
-  }
-
-  .timeline p { margin: 0; color: var(--mist); }
+  .bio-sources a:hover { color: var(--cyan); }
 
   .qualification-grid {
     display: grid;
@@ -339,16 +244,12 @@ const qualifications = [
   .profile-cta { margin-top: 0; }
 
   @media (max-width: 900px) {
-    .profile-grid { grid-template-columns: 1fr; }
-    .profile-plate { position: relative; top: auto; min-height: 30rem; }
-    .timeline li { grid-template-columns: 6rem 1fr; }
-    .timeline .source-link { grid-column: 2; }
+    .bio-grid { grid-template-columns: 1fr; }
+    .bio-sources { position: relative; top: auto; }
   }
 
   @media (max-width: 640px) {
-    .timeline li,
     .qualification-grid { grid-template-columns: 1fr; }
-    .timeline .source-link { grid-column: auto; }
     .qualification-grid { border-left: 0; }
     .qualification { border-left: 1px solid var(--line); }
     .qualification-note,

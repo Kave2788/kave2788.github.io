@@ -2,430 +2,340 @@
 import Layout from '../layouts/Layout.astro';
 import { archiveStories } from '../data/archive';
 
-const verified = archiveStories.filter(story => story.status === 'Verificato');
-const review = archiveStories.filter(story => story.status === 'In revisione');
-const orderedStories = [...verified, ...review];
+const orderedStories = archiveStories.filter(story => story.status === 'Verificato');
 
-const depthPoints = [
-  { value: 0, label: 'Superficie' },
-  { value: 40, label: '−40 m' },
-  { value: 80, label: '−80 m' },
-  { value: 120, label: 'Fontanazzi · −120 m' },
-  { value: 121, label: 'Arma del Lupo · −121 m' },
-  { value: 135, label: 'Su Gologone · −135 m' },
+const media = [
+  {
+    type: 'Documentario',
+    date: '2012 · 45 min',
+    title: 'Su Gologone: dove la terra si spacca',
+    text: 'Tre spedizioni, una squadra di quindici persone e il rilievo di una risorgenza ancora aperta.',
+    href: 'https://vimeo.com/1164379037',
+    source: 'Vimeo · Massimo D’Alessandro',
+    accent: 'cyan',
+  },
+  {
+    type: 'Podcast',
+    date: '2025 · 28 min',
+    title: 'Scuba Stories: in grotta con Alberto Cavedon',
+    text: 'Una conversazione su decompressione, ambiente ostruito e decisioni in tempo reale.',
+    href: 'https://music.amazon.com.br/podcasts/851e8a18-9358-4969-a3f2-7a8cf6a215b1/episodes/5bb8cf95-a545-4795-bb71-032d6de3fdd8/scubamed-scuba-stories-in-grotta-con-alberto-cavedon',
+    source: 'ScubaMed · Amazon Music',
+    accent: 'amber',
+  },
+  {
+    type: 'Archivio fotografico',
+    date: '2008—2024',
+    title: 'Le gallerie Speleosubtek',
+    text: 'Serie fotografiche pubblicate per spedizione e località. Restano sulla fonte originale per conservare contesto e provenienza.',
+    href: 'https://www.speleosubtek.com/photogallery/',
+    source: 'Speleosubtek',
+    accent: 'bone',
+  },
+  {
+    type: 'Pubblicazioni',
+    date: 'Archivio tecnico',
+    title: 'Dispense di speleologia subacquea',
+    text: 'Sagolatura, configurazioni, incidenti, ricerca scientifica, DPV, rebreather e gestione dei gas.',
+    href: 'https://www.speleosubtek.com/',
+    source: 'Speleosubtek · documenti PDF',
+    accent: 'cyan',
+  },
+  {
+    type: 'Rivista',
+    date: 'Maggio 2012',
+    title: 'Intervista ad Alberto Cavedon',
+    text: 'Una fonte editoriale del Club Alpino Italiano sul lavoro speleosubacqueo e sulle esplorazioni di quegli anni.',
+    href: 'https://tecadigitale.cai.it/periodici/PDF/Montagne%20360/Montagne%20360_001_005_2012.pdf',
+    source: 'CAI · Montagne360',
+    accent: 'amber',
+  },
+  {
+    type: 'Soccorso',
+    date: '2018—2019',
+    title: 'Verso un codice europeo di intervento',
+    text: 'Il lavoro con squadre europee sulle procedure condivise per scenari traumatici oltre sifone.',
+    href: 'https://news.cnsas.it/soccorso-speleosubacqueo-verso-un-codice-europeo-di-intervento/',
+    source: 'CNSAS News',
+    accent: 'bone',
+  },
 ];
 ---
 
 <Layout
-  title="Atlante delle esplorazioni — Alberto Cavedon"
-  description="Un atlante documentato delle esplorazioni speleosubacquee legate ad Alberto Cavedon, con stato di verifica e fonti consultabili."
+  title="Esplorazioni — Alberto Cavedon"
+  description="Le esplorazioni speleosubacquee di Alberto Cavedon: luoghi, immersioni e fonti pubbliche, con fotografie reali di ogni zona."
 >
-  <header class="page-hero">
+  <header class="page-hero explore-hero">
     <div class="shell page-hero__grid">
       <div class="hero-animate">
-        <p class="eyebrow">Atlante / Esplorazioni</p>
-        <h1 class="display-title">Luoghi, squadre,<br /><span class="text-accent">prove.</span></h1>
+        <p class="eyebrow">Esplorazioni</p>
+        <h1 class="display-title">Sei spedizioni,<br /><span class="text-accent">sei luoghi.</span></h1>
       </div>
       <div class="page-hero__aside hero-animate hero-animate--delay">
-        <p class="lead">Una mappa non per trovare l’ingresso, ma per capire quali informazioni reggono e quali attendono ancora una fonte.</p>
-        <p class="meta">{verified.length} schede verificate · {review.length} in revisione</p>
+        <p class="lead">Dalla Sardegna al Piemonte, dal Veneto all’Ardèche: ogni scheda è legata a un luogo reale e a una fonte pubblica.</p>
+        <p class="meta">{orderedStories.length} schede verificate</p>
       </div>
     </div>
   </header>
 
-  <section class="section section--tight section--surface" aria-labelledby="map-heading">
-    <div class="shell atlas-map-grid">
-      <div>
-        <p class="eyebrow">Geografia / 01</p>
-        <h2 id="map-heading" class="display-xl">Il sistema prima del punto.</h2>
-        <p class="lead">Schema geografico editoriale. Le posizioni servono a orientare il racconto e non sono coordinate di navigazione o accesso.</p>
-        <ul class="map-legend" aria-label="Legenda luoghi">
-          <li><span class="map-dot map-dot--cyan"></span> Dato esplorativo verificato</li>
-          <li><span class="map-dot map-dot--amber"></span> Attività personale in revisione</li>
-        </ul>
-      </div>
-
-      <figure class="atlas-map">
-        <svg viewBox="0 0 760 620" role="img" aria-labelledby="atlas-map-title atlas-map-desc">
-          <title id="atlas-map-title">Schema dei luoghi presenti nell’archivio</title>
-          <desc id="atlas-map-desc">Il Canale di Brenta e il Piemonte sono nell’Italia settentrionale; Su Gologone e Bue Marino in Sardegna; Vrelo Bune in Bosnia-Erzegovina.</desc>
-          <g class="contours" aria-hidden="true">
-            <path d="M40 120c130-85 274-64 390 14s210 58 286-25" />
-            <path d="M15 173c148-92 303-68 420 16s217 60 305-30" />
-            <path d="M28 232c156-88 305-58 410 22s205 73 286-2" />
-            <path d="M66 296c133-67 256-38 349 35s181 80 275 19" />
-            <path d="M84 372c125-52 234-17 320 48s172 86 257 39" />
-            <path d="M104 454c113-36 211 1 286 58s154 78 230 48" />
-          </g>
-          <g class="guide-line" aria-hidden="true"><path d="M109 514L262 419 353 285 489 213 631 276" /></g>
-
-          <g class="point point--verified" transform="translate(489 213)">
-            <circle r="10" /><circle r="24" class="pulse" />
-            <text x="18" y="-17">Canale di Brenta</text><text x="18" y="3" class="map-meta">Elefante Bianco · Fontanazzi</text>
-          </g>
-          <g class="point point--verified" transform="translate(353 285)">
-            <circle r="10" /><circle r="24" class="pulse" />
-            <text x="-18" y="-20" text-anchor="end">Piemonte</text><text x="-18" y="0" text-anchor="end" class="map-meta">Arma del Lupo</text>
-          </g>
-          <g class="point point--verified" transform="translate(262 419)">
-            <circle r="10" /><circle r="24" class="pulse" />
-            <text x="18" y="-17">Sardegna</text><text x="18" y="3" class="map-meta">Su Gologone</text>
-          </g>
-          <g class="point point--review" transform="translate(217 476)">
-            <circle r="8" />
-            <text x="18" y="6" class="map-meta">Bue Marino · revisione</text>
-          </g>
-          <g class="point point--review" transform="translate(631 276)">
-            <circle r="8" />
-            <text x="-18" y="-15" text-anchor="end">Bosnia-Erzegovina</text><text x="-18" y="5" text-anchor="end" class="map-meta">Vrelo Bune · revisione</text>
-          </g>
-        </svg>
-        <figcaption>Rappresentazione schematica · non usare per pianificare immersioni</figcaption>
-      </figure>
-    </div>
-  </section>
-
-  <section class="section" aria-labelledby="archive-heading">
+  <section class="section" aria-labelledby="explore-heading">
     <div class="shell">
       <div class="section-heading">
         <div>
-          <p class="eyebrow">Schede / 02</p>
-          <h2 id="archive-heading" class="display-xl">Aprire una storia, vedere le prove.</h2>
+          <p class="eyebrow">Schede / 01</p>
+          <h2 id="explore-heading" class="display-xl">Aprire una storia, vedere le prove.</h2>
         </div>
-        <div>
-          <p class="lead">Ogni voce espone il proprio stato. Le schede in revisione spiegano esattamente quale documento manca.</p>
-          <div class="atlas-filters" role="group" aria-label="Filtra le schede">
-            <button type="button" class="is-active" data-filter="all" aria-pressed="true">Tutte</button>
-            <button type="button" data-filter="Verificato" aria-pressed="false">Verificate</button>
-            <button type="button" data-filter="In revisione" aria-pressed="false">In revisione</button>
-          </div>
-        </div>
+        <p class="lead">Ogni scheda porta la fotografia del luogo reale e collega ai documenti primari usati per verificarla.</p>
       </div>
 
-      <div class="atlas-list" id="atlas-list">
-        {orderedStories.map((story, index) => (
-          <article class="atlas-entry" data-status={story.status}>
-            <div class="atlas-entry__index">{String(index + 1).padStart(2, '0')}</div>
-            <div>
-              <div class="atlas-entry__meta">
-                <span class={story.status === 'Verificato' ? 'status' : 'status status--review'}>{story.status}</span>
+      <div class="explore-grid">
+        {orderedStories.map((story) => (
+          <a class="explore-card" href={`/blog/${story.slug}`}>
+            <figure class="explore-card__photo">
+              <img src={story.image.src} alt={story.image.alt} width="800" height="533" loading="lazy" />
+            </figure>
+            <div class="explore-card__body">
+              <div class="explore-card__meta">
+                <span>{story.place.split('·')[1]?.trim() ?? story.place}</span>
                 <span>{story.dateLabel}</span>
               </div>
-              <h3><a href={`/blog/${story.slug}`}>{story.title}</a></h3>
+              <h3>{story.title}</h3>
               <p>{story.summary}</p>
+              <dl class="explore-card__facts">
+                {story.facts.slice(0, 2).map((fact) => (
+                  <div><dt>{fact.label}</dt><dd>{fact.value}</dd></div>
+                ))}
+              </dl>
+              <span class="explore-card__link">Apri la scheda <span aria-hidden="true">→</span></span>
             </div>
-            <dl>
-              {story.facts.slice(0, 2).map(fact => (
-                <div><dt>{fact.label}</dt><dd>{fact.value}</dd></div>
-              ))}
-            </dl>
-            <a class="atlas-entry__open" href={`/blog/${story.slug}`} aria-label={`Apri la scheda ${story.title}`}>↗</a>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--paper" aria-labelledby="media-heading">
+    <div class="shell">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow eyebrow--dark">Media / 02</p>
+          <h2 id="media-heading" class="display-xl">L’archivio fuori dal sito.</h2>
+        </div>
+        <p class="lead lead--dark">Documentario, podcast, fotografie e pubblicazioni già pubblicati altrove. I collegamenti esterni si aprono sulla fonte originale, dove conservano data e contesto.</p>
+      </div>
+
+      <div class="media-grid">
+        {media.map((item) => (
+          <article class={`media-card media-card--${item.accent}`}>
+            <div class="media-card__bar" aria-hidden="true"></div>
+            <div class="media-card__meta">
+              <span class="media-card__type">{item.type}</span>
+              <span>{item.date}</span>
+            </div>
+            <h3>{item.title}</h3>
+            <p>{item.text}</p>
+            <a class="media-card__link" href={item.href} target="_blank" rel="noopener">
+              {item.source} <span aria-hidden="true">↗</span>
+            </a>
           </article>
         ))}
       </div>
-      <p id="atlas-empty" class="atlas-empty" hidden>Nessuna scheda per questo filtro.</p>
-    </div>
-  </section>
 
-  <section class="section section--paper" aria-labelledby="depth-heading">
-    <div class="shell depth-grid">
-      <div>
-        <p class="eyebrow eyebrow--dark">Profilo / 03</p>
-        <h2 id="depth-heading" class="display-xl">Tre quote, tre contesti.</h2>
-        <p class="lead lead--dark">
-          La profondità è mostrata soltanto dove una fonte la collega chiaramente a una
-          specifica esplorazione. Il grafico non confronta difficoltà né rischio.
-        </p>
+      <div class="media-contribute">
+        <p>Hai una fotografia, un rilievo o un articolo con provenienza chiara? L’archivio cresce solo con materiali datati e citabili.</p>
+        <a class="button-secondary" href="/contatti?argomento=archivio">Proponi un documento</a>
       </div>
-      <figure class="depth-profile">
-        <figcaption class="meta">Profondità documentate · metri</figcaption>
-        <div class="depth-axis" aria-hidden="true">
-          {depthPoints.map(point => (
-            <div class="depth-tick" style={`--depth: ${point.value / 135}`}>
-              <span>{point.label}</span>
-            </div>
-          ))}
-          <div class="depth-water"></div>
-        </div>
-        <div class="sr-summary">
-          Fontanazzi: meno 120 metri; Arma del Lupo: meno 121 metri; Su Gologone: meno 135 metri.
-        </div>
-      </figure>
-    </div>
-  </section>
-
-  <section class="section section--surface" aria-labelledby="sources-heading">
-    <div class="shell">
-      <div class="section-heading">
-        <div>
-          <p class="eyebrow">Registro / 04</p>
-          <h2 id="sources-heading" class="display-xl">Fonti aperte.</h2>
-        </div>
-        <p class="lead">Documenti pubblici usati per costruire l’atlante. Nessun link sostituisce la verifica operativa con gli enti competenti.</p>
-      </div>
-      <ul class="source-ledger">
-        <li><span class="source-type">Istituzionale</span><span>Su Gologone · scheda del luogo e quota 2010</span><a href="https://idese.cultura.gov.it/en/place/su-gologone/" target="_blank" rel="noopener">Idese ↗</a></li>
-        <li><span class="source-type">Soccorso</span><span>Operazione Elefante Bianco · gennaio 2008</span><a href="https://www.cnsas.it/wp-content/uploads/2017/05/aprile-2008.pdf" target="_blank" rel="noopener">CNSAS ↗</a></li>
-        <li><span class="source-type">Tecnica</span><span>Arma del Lupo · quota, durata e sviluppo</span><a href="https://www.speleosubtek.com/archivio/esplorazioni-e-spedizioni/" target="_blank" rel="noopener">Speleosubtek ↗</a></li>
-        <li><span class="source-type">Progetto</span><span>Fontanazzi · storia del ramo profondo</span><a href="https://www.gue.com/files/annualreports/2017-Project-Reports.pdf" target="_blank" rel="noopener">GUE ↗</a></li>
-      </ul>
     </div>
   </section>
 </Layout>
 
-<script>
-  const buttons = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-filter]'));
-  const entries = Array.from(document.querySelectorAll<HTMLElement>('.atlas-entry'));
-  const empty = document.querySelector<HTMLElement>('#atlas-empty');
-
-  buttons.forEach(button => button.addEventListener('click', () => {
-    const filter = button.dataset.filter || 'all';
-    buttons.forEach(item => {
-      const active = item === button;
-      item.classList.toggle('is-active', active);
-      item.setAttribute('aria-pressed', String(active));
-    });
-
-    let visible = 0;
-    entries.forEach(entry => {
-      const show = filter === 'all' || entry.dataset.status === filter;
-      entry.hidden = !show;
-      if (show) visible += 1;
-    });
-    if (empty) empty.hidden = visible > 0;
-  }));
-</script>
-
 <style>
-  .atlas-map-grid {
+  .explore-grid {
     display: grid;
-    grid-template-columns: minmax(280px, 0.72fr) minmax(0, 1.28fr);
-    gap: clamp(2.5rem, 7vw, 7rem);
-    align-items: center;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem;
   }
 
-  .map-legend {
-    display: grid;
-    gap: 0.55rem;
-    margin: 2rem 0 0;
-    padding: 0;
-    color: var(--mist);
-    list-style: none;
-    font-family: var(--font-mono);
-    font-size: 0.68rem;
-    text-transform: uppercase;
-  }
-
-  .map-dot {
-    display: inline-block;
-    width: 0.65rem;
-    height: 0.65rem;
-    margin-right: 0.5rem;
-    border-radius: 50%;
-  }
-
-  .map-dot--cyan { background: var(--cyan); }
-  .map-dot--amber { background: var(--amber); }
-
-  .atlas-map {
-    margin: 0;
-    padding: 1rem;
-    background: #090d0e;
+  .explore-card {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    color: inherit;
+    text-decoration: none;
+    background: var(--surface);
     border: 1px solid var(--line);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow);
+    transition: border-color 0.2s ease, transform 0.2s ease;
   }
 
-  .atlas-map svg { width: 100%; height: auto; }
-
-  .atlas-map figcaption {
-    color: rgba(174, 187, 184, 0.65);
-    font-family: var(--font-mono);
-    font-size: 0.58rem;
-    letter-spacing: 0.08em;
-    text-align: right;
-    text-transform: uppercase;
+  .explore-card:hover {
+    border-color: var(--cyan);
+    transform: translateY(-2px);
   }
 
-  .contours path {
-    fill: none;
-    stroke: rgba(117, 229, 255, 0.14);
-    stroke-width: 1;
+  .explore-card__photo {
+    margin: 0;
+    aspect-ratio: 3 / 2;
+    overflow: hidden;
   }
 
-  .guide-line path { fill: none; stroke: rgba(229, 169, 79, 0.55); stroke-width: 1; stroke-dasharray: 4 7; }
+  .explore-card__photo img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
 
-  .point circle { fill: var(--cyan); }
-  .point .pulse { fill: none; stroke: rgba(117, 229, 255, 0.35); stroke-width: 1; }
-  .point--review circle { fill: var(--amber); }
-  .point text { fill: var(--bone); font-family: var(--font-display); font-size: 18px; font-weight: 600; text-transform: uppercase; }
-  .point .map-meta { fill: var(--mist); font-family: var(--font-mono); font-size: 10px; font-weight: 400; text-transform: none; }
+  .explore-card:hover .explore-card__photo img { transform: scale(1.04); }
 
-  .atlas-filters {
+  .explore-card__body {
     display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-top: 1.5rem;
+    flex: 1;
+    flex-direction: column;
+    padding: clamp(1.25rem, 3vw, 1.75rem);
   }
 
-  .atlas-filters button {
-    min-height: 44px;
-    padding: 0.55rem 0.9rem;
-    color: var(--mist);
-    background: transparent;
-    border: 1px solid var(--line-strong);
-    border-radius: 999px;
-    cursor: pointer;
-    font-size: 0.78rem;
-    font-weight: 700;
-  }
-
-  .atlas-filters button:hover,
-  .atlas-filters button.is-active { color: var(--ink); background: var(--cyan); border-color: var(--cyan); }
-
-  .atlas-list { border-top: 1px solid var(--line); }
-
-  .atlas-entry {
-    display: grid;
-    grid-template-columns: 4rem minmax(0, 1.1fr) minmax(240px, 0.65fr) 3rem;
-    gap: clamp(1rem, 3vw, 2.5rem);
-    align-items: center;
-    padding-block: 1.7rem;
-    border-bottom: 1px solid var(--line);
-  }
-
-  .atlas-entry[hidden] { display: none; }
-  .atlas-entry__index { color: var(--cyan); font-family: var(--font-mono); font-size: 0.72rem; }
-
-  .atlas-entry__meta {
+  .explore-card__meta {
     display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-    align-items: center;
-    margin-bottom: 0.75rem;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.9rem;
     color: var(--mist);
     font-family: var(--font-mono);
     font-size: 0.64rem;
     text-transform: uppercase;
   }
 
-  .atlas-entry h3 {
-    margin-bottom: 0.55rem;
+  .explore-card h3 {
+    margin-bottom: 0.6rem;
     font-family: var(--font-display);
-    font-size: clamp(1.7rem, 1.35rem + 1vw, 2.5rem);
-    line-height: 0.95;
+    font-size: clamp(1.5rem, 1.2rem + 1vw, 2rem);
+    line-height: 1.05;
     text-transform: uppercase;
   }
 
-  .atlas-entry h3 a { text-decoration: none; }
-  .atlas-entry h3 a:hover { color: var(--cyan); }
-  .atlas-entry p { margin: 0; color: var(--mist); }
+  .explore-card__body > p { margin: 0 0 1.25rem; color: var(--mist); }
 
-  .atlas-entry dl { display: grid; gap: 0.8rem; margin: 0; }
-  .atlas-entry dl div { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-  .atlas-entry dt { color: var(--mist); font-size: 0.72rem; }
-  .atlas-entry dd { margin: 0; color: var(--bone); font-family: var(--font-mono); font-size: 0.72rem; text-align: right; }
-
-  .atlas-entry__open {
+  .explore-card__facts {
     display: grid;
-    width: 44px;
-    height: 44px;
-    place-items: center;
+    gap: 0.5rem;
+    margin: 0 0 1.25rem;
+  }
+
+  .explore-card__facts div { display: grid; grid-template-columns: 1fr auto; gap: 1rem; }
+  .explore-card__facts dt { color: var(--mist); font-size: 0.72rem; }
+  .explore-card__facts dd { margin: 0; color: var(--bone); font-family: var(--font-mono); font-size: 0.72rem; }
+
+  .explore-card__link {
+    margin-top: auto;
     color: var(--cyan);
-    border: 1px solid var(--line-strong);
-    border-radius: 50%;
-    text-decoration: none;
+    font-size: 0.78rem;
+    font-weight: 700;
   }
 
-  .atlas-entry__open:hover { color: var(--ink); background: var(--cyan); border-color: var(--cyan); }
-  .atlas-empty { padding: 2rem; color: var(--mist); text-align: center; }
-
-  .depth-grid {
+  .media-grid {
     display: grid;
-    grid-template-columns: minmax(280px, 0.78fr) minmax(360px, 1.22fr);
-    gap: clamp(3rem, 8vw, 8rem);
-    align-items: center;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.25rem;
   }
 
-  .depth-profile { margin: 0; }
-  .depth-profile figcaption { color: #465150; }
-
-  .depth-axis {
+  .media-card {
     position: relative;
-    height: 36rem;
-    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    padding: clamp(1.5rem, 3vw, 2rem);
     overflow: hidden;
-    background: linear-gradient(#d9eef0 0%, #80b6c0 22%, #214f59 63%, #071618 100%);
-    border: 1px solid rgba(8, 11, 12, 0.24);
+    background: var(--ink-soft);
+    border: 1px solid var(--line);
     border-radius: var(--radius-lg);
+    transition: border-color 0.2s ease, transform 0.2s ease;
   }
 
-  .depth-axis::after {
-    position: absolute;
-    inset: 0;
-    content: '';
-    opacity: 0.35;
-    background: repeating-linear-gradient(to bottom, transparent 0 3.95rem, rgba(241, 238, 229, 0.35) 4rem);
-  }
+  .media-card:hover { transform: translateY(-2px); }
 
-  .depth-tick {
+  .media-card__bar {
     position: absolute;
-    z-index: 2;
-    top: calc(var(--depth) * 88% + 4%);
-    right: 1rem;
-    left: 1rem;
-    border-top: 1px solid rgba(241, 238, 229, 0.75);
-  }
-
-  .depth-tick span {
-    position: absolute;
-    top: -0.75rem;
+    top: 0;
     left: 0;
-    padding: 0.2rem 0.45rem;
-    color: var(--bone);
-    background: rgba(8, 11, 12, 0.78);
-    border-radius: 0.3rem;
+    width: 100%;
+    height: 3px;
+  }
+
+  .media-card--cyan { border-color: rgba(117, 229, 255, 0.28); }
+  .media-card--cyan .media-card__bar { background: var(--cyan); }
+  .media-card--cyan:hover { border-color: var(--cyan); }
+
+  .media-card--amber { border-color: rgba(229, 169, 79, 0.32); }
+  .media-card--amber .media-card__bar { background: var(--amber); }
+  .media-card--amber:hover { border-color: var(--amber); }
+
+  .media-card--bone { border-color: var(--line-strong); }
+  .media-card--bone .media-card__bar { background: var(--bone); }
+  .media-card--bone:hover { border-color: var(--bone); }
+
+  .media-card__meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin: 0.5rem 0 1.1rem;
+    color: var(--mist);
     font-family: var(--font-mono);
-    font-size: 0.65rem;
+    font-size: 0.62rem;
+    text-transform: uppercase;
   }
 
-  .depth-water {
-    position: absolute;
-    right: 15%;
-    bottom: 0;
-    width: 1px;
-    height: 100%;
-    background: var(--amber);
-    transform: rotate(8deg);
-    transform-origin: bottom;
+  .media-card__type { color: var(--cyan); font-weight: 700; }
+  .media-card--amber .media-card__type { color: var(--amber); }
+  .media-card--bone .media-card__type { color: var(--bone); }
+
+  .media-card h3 {
+    margin-bottom: 0.65rem;
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 1.2rem + 1vw, 1.9rem);
+    line-height: 1.05;
+    text-transform: uppercase;
   }
 
-  .sr-summary {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
+  .media-card > p { margin: 0 0 1.5rem; color: var(--mist); }
+
+  .media-card__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: auto;
+    padding: 0.7rem 1rem;
+    color: var(--ink);
+    background: var(--cyan);
+    border-radius: 999px;
+    font-size: 0.76rem;
+    font-weight: 700;
+    text-decoration: none;
+    align-self: flex-start;
+    transition: opacity 0.2s ease;
   }
+
+  .media-card__link:hover { opacity: 0.85; }
+
+  .media-contribute {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+
+  .media-contribute p { max-width: 42rem; margin: 0; color: var(--mist); }
 
   @media (max-width: 920px) {
-    .atlas-map-grid,
-    .depth-grid { grid-template-columns: 1fr; }
-    .atlas-entry { grid-template-columns: 3rem 1fr 3rem; }
-    .atlas-entry dl { grid-column: 2; }
-    .atlas-entry__open { grid-column: 3; grid-row: 1; }
+    .explore-grid { grid-template-columns: 1fr; }
+    .media-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
 
   @media (max-width: 600px) {
-    .atlas-map { padding: 0.25rem; overflow-x: auto; }
-    .atlas-map svg { min-width: 650px; }
-    .atlas-entry { grid-template-columns: 1fr auto; }
-    .atlas-entry__index { display: none; }
-    .atlas-entry dl { grid-column: 1 / -1; }
-    .atlas-entry__open { grid-column: 2; grid-row: 1; }
-    .depth-axis { height: 30rem; }
+    .media-grid { grid-template-columns: 1fr; }
+    .media-contribute { align-items: stretch; flex-direction: column; }
   }
 </style>

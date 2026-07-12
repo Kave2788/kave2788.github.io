@@ -23,10 +23,8 @@ const isCurrent = (href: string) => href === '/'
 
 const nav = [
   { href: '/about', label: 'Profilo' },
-  { href: '/esperienze', label: 'Atlante' },
+  { href: '/esperienze', label: 'Esplorazioni' },
   { href: '/corsi', label: 'Formazione' },
-  { href: '/gallery', label: 'Media' },
-  { href: '/blog', label: 'Taccuino' },
 ];
 
 const structuredData = {
@@ -134,9 +132,8 @@ const structuredData = {
           <p class="footer-label">Percorsi</p>
           <ul class="footer-links">
             <li><a href="/about">Profilo</a></li>
-            <li><a href="/esperienze">Atlante</a></li>
+            <li><a href="/esperienze">Esplorazioni</a></li>
             <li><a href="/corsi">Formazione</a></li>
-            <li><a href="/blog">Taccuino</a></li>
           </ul>
         </div>
         <div>
@@ -144,7 +141,7 @@ const structuredData = {
           <ul class="footer-links">
             <li><a href="https://www.speleosubtek.com" target="_blank" rel="noopener">Speleosubtek <span aria-hidden="true">↗</span></a></li>
             <li><a href="https://news.cnsas.it" target="_blank" rel="noopener">CNSAS News <span aria-hidden="true">↗</span></a></li>
-            <li><a href="/gallery">Fonti e media</a></li>
+            <li><a href="/esperienze">Fonti e media</a></li>
           </ul>
         </div>
         <div>
@@ -155,7 +152,7 @@ const structuredData = {
       </div>
       <div class="shell site-footer__bottom">
         <p>© {new Date().getFullYear()} Alberto Cavedon</p>
-        <p>Dati verificati dove indicato · <a href="/privacy">Privacy</a></p>
+        <p><a href="/privacy">Privacy</a></p>
       </div>
     </footer>
 

@@ -1,14 +1,11 @@
 ---
 import ArchiveStory from '../../components/ArchiveStory.astro';
-import ArmaLupoDocuments from '../../components/ArmaLupoDocuments.astro';
 import { getArchiveStory } from '../../data/archive';
 import Layout from '../../layouts/Layout.astro';
 
-const story = getArchiveStory('arma-del-lupo');
+const story = getArchiveStory('riomartino');
 ---
 
 <Layout title={`${story.title} — Alberto Cavedon`} description={story.description}>
-  <ArchiveStory story={story}>
-    <ArmaLupoDocuments slot="evidence" />
-  </ArchiveStory>
+  <ArchiveStory story={story} />
 </Layout>

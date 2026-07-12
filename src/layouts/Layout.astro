@@ -5,105 +5,118 @@ interface Props {
   title: string;
   description?: string;
   image?: string;
+  imageAlt?: string;
 }
 
 const {
   title,
-  description = 'Alberto Cavedon — Speleologo subacqueo di fama mondiale. Direttore della Scuola Nazionale Speleosubacquea CNSAS. Corsi UTR e spedizioni.',
-  image = '/images/og.jpg',
+  description = 'Alberto Cavedon — speleologia subacquea, esplorazione, soccorso e formazione tecnica.',
+  image = '/images/cave-archive-hero.webp',
+  imageAlt = 'Illustrazione editoriale di un subacqueo in una grotta sommersa',
 } = Astro.props;
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? 'https://albertocavedon.it');
-const currentPath = Astro.url.pathname;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? 'https://kave2788.github.io');
+const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
+const isCurrent = (href: string) => href === '/'
+  ? currentPath === '/'
+  : currentPath.startsWith(href);
+
+const nav = [
+  { href: '/about', label: 'Profilo' },
+  { href: '/esperienze', label: 'Atlante' },
+  { href: '/corsi', label: 'Formazione' },
+  { href: '/gallery', label: 'Media' },
+  { href: '/blog', label: 'Taccuino' },
+];
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Alberto Cavedon',
+  description: 'Speleosubacqueo, esploratore e formatore tecnico italiano.',
+  url: canonicalURL.origin,
+  sameAs: [
+    'https://www.speleosubtek.com',
+    'https://www.facebook.com/p/speleosubit-Alberto-Cavedon-100066547968023/',
+  ],
+  homeLocation: {
+    '@type': 'Place',
+    name: 'Canale di Brenta, Vicenza, Italia',
+  },
+};
 ---
 
 <!doctype html>
 <html lang="it">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#080b0c" />
     <link rel="canonical" href={canonicalURL} />
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={image} />
+    <meta property="og:image" content={new URL(image, canonicalURL.origin)} />
+    <meta property="og:image:alt" content={imageAlt} />
     <meta property="og:url" content={canonicalURL} />
-    <meta name="theme-color" content="#000000" />
+    <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
     <slot name="head" />
-
-    <!-- JSON-LD Person -->
-    <script type="application/ld+json" set:html={JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Alberto Cavedon",
-      "jobTitle": "Speleologo subacqueo, Direttore Scuola Nazionale Speleosubacquea CNSAS",
-      "url": canonicalURL.origin,
-      "sameAs": ["https://www.speleosubtek.com", "https://www.facebook.com/p/speleosubit-Alberto-Cavedon-100066547968023/"],
-      "address": { "@type": "PostalAddress", "addressLocality": "Valstagna", "addressRegion": "Vicenza", "addressCountry": "IT" }
-    })} />
   </head>
   <body>
+    <a class="skip-link" href="#main-content">Vai al contenuto</a>
 
-    <!-- Nav Apple style -->
-    <header class="nav-apple" x-data="{ open: false }">
-      <nav class="w-full max-w-6xl mx-auto px-6 flex items-center justify-between" aria-label="Navigazione">
-        <a href="/" class="flex items-center gap-2.5 hover:opacity-80 transition-opacity" aria-label="Home — Alberto Cavedon">
-          <img src="/logo-cavedon.jpg" alt="" aria-hidden="true" class="w-9 h-9 rounded-full" loading="eager" />
-          <span class="text-sm font-semibold text-white tracking-wide hidden sm:block">Alberto Cavedon</span>
+    <header class="site-header">
+      <div class="site-header__inner shell">
+        <a class="brand" href="/" aria-label="Alberto Cavedon — home">
+          <svg class="brand__mark" viewBox="0 0 42 42" aria-hidden="true">
+            <circle cx="21" cy="21" r="18.5" />
+            <path d="M7 28c8-10 14-13 28-14M8 33c9-8 17-10 27-9" />
+            <circle cx="29.5" cy="14.5" r="2.2" class="brand__beacon" />
+          </svg>
+          <span class="brand__copy">
+            <strong>Alberto Cavedon</strong>
+            <small>Archivio sommerso</small>
+          </span>
         </a>
 
-        <!-- Desktop -->
-        <ul class="hidden md:flex items-center gap-8 text-xs font-medium text-apple-grey" role="list">
-          <li><a href="/about" class={`hover:text-white transition-colors ${currentPath.startsWith('/about') ? 'text-white' : ''}`}>Chi sono</a></li>
-          <li><a href="/esperienze" class={`hover:text-white transition-colors ${currentPath.startsWith('/esperienze') ? 'text-white' : ''}`}>Esplorazioni</a></li>
-          <li><a href="/corsi" class={`hover:text-white transition-colors ${currentPath.startsWith('/corsi') ? 'text-white' : ''}`}>Corsi UTR</a></li>
-          <li><a href="/gallery" class={`hover:text-white transition-colors ${currentPath.startsWith('/gallery') ? 'text-white' : ''}`}>Gallery</a></li>
-          <li><a href="/blog" class={`hover:text-white transition-colors ${currentPath.startsWith('/blog') ? 'text-white' : ''}`}>Blog</a></li>
-          <li>
-            <a href="/contatti" class={`text-xs font-semibold transition-colors ${currentPath.startsWith('/contatti') ? 'text-white' : 'text-apple-blue hover:text-apple-blue-hover'}`}>
-              Contatti
-            </a>
-          </li>
-        </ul>
+        <nav class="desktop-nav" aria-label="Navigazione principale">
+          <ul>
+            {nav.map(item => (
+              <li>
+                <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+                  {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+          <a class="header-cta" href="/contatti">Contatti</a>
+        </nav>
 
-        <!-- Mobile -->
-        <button
-          @click="open = !open"
-          class="md:hidden text-apple-grey hover:text-white transition-colors p-1"
-          :aria-expanded="open.toString()"
-          aria-label="Menu"
-        >
-          <svg x-show="!open" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-          </svg>
-          <svg x-show="open" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-          </svg>
-        </button>
-      </nav>
-
-      <!-- Mobile menu -->
-      <div
-        x-show="open"
-        x-transition:enter="transition ease-out duration-200"
-        x-transition:enter-start="opacity-0 -translate-y-2"
-        x-transition:enter-end="opacity-100 translate-y-0"
-        class="absolute top-14 inset-x-0 bg-black/95 backdrop-blur-xl border-t border-white/10 md:hidden"
-      >
-        <ul class="flex flex-col px-6 py-6 gap-5 text-sm font-medium" role="list">
-          <li><a href="/about" @click="open=false" class={`hover:text-white transition-colors block ${currentPath.startsWith('/about') ? 'text-white' : 'text-apple-grey'}`}>Chi sono</a></li>
-          <li><a href="/esperienze" @click="open=false" class={`hover:text-white transition-colors block ${currentPath.startsWith('/esperienze') ? 'text-white' : 'text-apple-grey'}`}>Esplorazioni</a></li>
-          <li><a href="/corsi" @click="open=false" class={`hover:text-white transition-colors block ${currentPath.startsWith('/corsi') ? 'text-white' : 'text-apple-grey'}`}>Corsi UTR</a></li>
-          <li><a href="/gallery" @click="open=false" class={`hover:text-white transition-colors block ${currentPath.startsWith('/gallery') ? 'text-white' : 'text-apple-grey'}`}>Gallery</a></li>
-          <li><a href="/blog" @click="open=false" class={`hover:text-white transition-colors block ${currentPath.startsWith('/blog') ? 'text-white' : 'text-apple-grey'}`}>Blog</a></li>
-          <li><a href="/contatti" @click="open=false" class={`font-semibold block ${currentPath.startsWith('/contatti') ? 'text-white' : 'text-apple-blue'}`}>Contatti</a></li>
-        </ul>
+        <details class="mobile-nav">
+          <summary aria-label="Apri il menu">
+            <span></span><span></span>
+          </summary>
+          <nav aria-label="Navigazione mobile">
+            <ul>
+              {nav.map(item => (
+                <li>
+                  <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+                    {item.label}
+                  </a>
+                </li>
+              ))}
+              <li><a href="/contatti">Contatti</a></li>
+            </ul>
+          </nav>
+        </details>
       </div>
     </header>
 
@@ -111,105 +124,48 @@ const currentPath = Astro.url.pathname;
       <slot />
     </main>
 
-    <!-- Footer Apple style -->
-    <footer class="bg-apple-dark border-t border-white/10 pt-12 pb-8 mt-0">
-      <div class="max-w-6xl mx-auto px-6">
-        <div class="grid md:grid-cols-5 gap-8 pb-10 border-b border-white/10">
-          <div class="md:col-span-1">
-            <p class="text-sm font-semibold text-white mb-3">Alberto Cavedon</p>
-            <p class="text-xs text-apple-grey leading-relaxed">
-              Speleologo subacqueo.<br/>
-              Direttore Scuola Nazionale<br/>
-              Speleosubacquea CNSAS.
-            </p>
-          </div>
-          <div>
-            <p class="text-xs font-semibold text-white mb-3 uppercase tracking-wider">Esplora</p>
-            <ul class="space-y-2 text-xs text-apple-grey">
-              <li><a href="/about" class="hover:text-white transition-colors">Chi sono</a></li>
-              <li><a href="/esperienze" class="hover:text-white transition-colors">Esplorazioni</a></li>
-              <li><a href="/gallery" class="hover:text-white transition-colors">Gallery</a></li>
-              <li><a href="/blog" class="hover:text-white transition-colors">Blog</a></li>
-            </ul>
-          </div>
-          <div>
-            <p class="text-xs font-semibold text-white mb-3 uppercase tracking-wider">Formazione</p>
-            <ul class="space-y-2 text-xs text-apple-grey">
-              <li><a href="/corsi#cave-base" class="hover:text-white transition-colors">Cave Diving Base</a></li>
-              <li><a href="/corsi#utr-soccorso" class="hover:text-white transition-colors">UTR Soccorso</a></li>
-              <li><a href="/corsi#deep-cave" class="hover:text-white transition-colors">Deep Cave Exploration</a></li>
-              <li><a href="/corsi#seminario" class="hover:text-white transition-colors">Seminari</a></li>
-            </ul>
-          </div>
-          <div>
-            <p class="text-xs font-semibold text-white mb-3 uppercase tracking-wider">Certificazioni</p>
-            <ul class="space-y-2 text-xs text-apple-grey">
-              <li>UTRtek ISO International</li>
-              <li>CNSAS Speleosubacquea</li>
-              <li>Scuola Nazionale Speleosubacquea</li>
-            </ul>
-          </div>
-          <div>
-            <p class="text-xs font-semibold text-white mb-3 uppercase tracking-wider">Contatti</p>
-            <ul class="space-y-2 text-xs text-apple-grey">
-              <li><a href="mailto:info@speleosubtek.com" class="hover:text-white transition-colors">info@speleosubtek.com</a></li>
-              <li><a href="https://www.speleosubtek.com" target="_blank" rel="noopener" class="hover:text-white transition-colors">speleosubtek.com</a></li>
-              <li><a href="/contatti" class="hover:text-white transition-colors">Modulo di contatto</a></li>
-            </ul>
-          </div>
+    <footer class="site-footer">
+      <div class="shell site-footer__grid">
+        <div class="site-footer__intro">
+          <p class="eyebrow">AC / Archivio sommerso</p>
+          <p class="site-footer__statement">Esplorare significa preparare, misurare, documentare e tornare.</p>
         </div>
-        <div class="flex flex-col sm:flex-row items-center justify-between pt-6 gap-3">
-          <p class="text-xs text-apple-grey">Copyright © {new Date().getFullYear()} Alberto Cavedon. Tutti i diritti riservati.</p>
-          <div class="flex gap-4 text-xs text-apple-grey">
-            <a href="/privacy" class="hover:text-white transition-colors">Privacy</a>
-            <a href="/contatti" class="hover:text-white transition-colors">Contatti</a>
-          </div>
+        <div>
+          <p class="footer-label">Percorsi</p>
+          <ul class="footer-links">
+            <li><a href="/about">Profilo</a></li>
+            <li><a href="/esperienze">Atlante</a></li>
+            <li><a href="/corsi">Formazione</a></li>
+            <li><a href="/blog">Taccuino</a></li>
+          </ul>
         </div>
+        <div>
+          <p class="footer-label">Riferimenti</p>
+          <ul class="footer-links">
+            <li><a href="https://www.speleosubtek.com" target="_blank" rel="noopener">Speleosubtek <span aria-hidden="true">↗</span></a></li>
+            <li><a href="https://news.cnsas.it" target="_blank" rel="noopener">CNSAS News <span aria-hidden="true">↗</span></a></li>
+            <li><a href="/gallery">Fonti e media</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer-label">Contatto diretto</p>
+          <a class="footer-mail" href="mailto:info@speleosubtek.com">info@speleosubtek.com</a>
+          <p class="footer-note">Per corsi, progetti, interviste e collaborazioni.</p>
+        </div>
+      </div>
+      <div class="shell site-footer__bottom">
+        <p>© {new Date().getFullYear()} Alberto Cavedon</p>
+        <p>Dati verificati dove indicato · <a href="/privacy">Privacy</a></p>
       </div>
     </footer>
 
-  <!-- Lenis smooth scroll + global 3D card tilt -->
-  <script>
-    import Lenis from 'lenis';
-    import { gsap } from 'gsap';
-    import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-    gsap.registerPlugin(ScrollTrigger);
-
-    // Smooth scroll
-    const lenis = new Lenis({ lerp: 0.08, smoothWheel: true });
-    lenis.on('scroll', ScrollTrigger.update);
-    gsap.ticker.add(time => lenis.raf(time * 1000));
-    gsap.ticker.lagSmoothing(0);
-
-    // 3D tilt effect on all .card-apple elements
-    function initTilt() {
-      document.querySelectorAll<HTMLElement>('.card-apple, .tilt-3d').forEach(card => {
-        card.style.transformStyle = 'preserve-3d';
-        card.style.transition = 'transform 0.1s ease-out, box-shadow 0.3s ease';
-
-        card.addEventListener('mousemove', (e: MouseEvent) => {
-          const rect = card.getBoundingClientRect();
-          const cx = rect.left + rect.width  / 2;
-          const cy = rect.top  + rect.height / 2;
-          const dx = (e.clientX - cx) / (rect.width  / 2);
-          const dy = (e.clientY - cy) / (rect.height / 2);
-          const rotX = -dy * 8;
-          const rotY =  dx * 8;
-          card.style.transform = `perspective(800px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale3d(1.02,1.02,1.02)`;
-          card.style.boxShadow = `${-dx * 12}px ${-dy * 12}px 40px rgba(0,163,224,0.2)`;
-        });
-
-        card.addEventListener('mouseleave', () => {
-          card.style.transform = 'perspective(800px) rotateX(0deg) rotateY(0deg) scale3d(1,1,1)';
-          card.style.boxShadow = '';
-        });
+    <script>
+      const menus = document.querySelectorAll<HTMLDetailsElement>('.mobile-nav');
+      menus.forEach(menu => {
+        menu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+          menu.open = false;
+        }));
       });
-    }
-
-    // Init after DOM ready + re-init on navigation
-    document.addEventListener('DOMContentLoaded', initTilt);
-    document.addEventListener('astro:page-load', initTilt);
-  </script>
+    </script>
   </body>
 </html>

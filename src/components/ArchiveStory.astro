@@ -1,0 +1,81 @@
+---
+import type { ArchiveStory as ArchiveStoryData } from '../data/archive';
+
+interface Props {
+  story: ArchiveStoryData;
+}
+
+const { story } = Astro.props;
+const statusClass = story.status === 'Verificato'
+  ? 'status status-badge status-badge--verified'
+  : 'status status--review status-badge status-badge--review';
+---
+
+<article class="archive-story" data-status={story.status}>
+  <header class="article-header story-hero">
+    <div class="narrow shell--narrow">
+      <nav class="archive-back" aria-label="Navigazione archivio">
+        <a class="text-link" href="/blog">Torna all’archivio</a>
+      </nav>
+
+      <div class="article-meta story-meta" aria-label="Informazioni sulla scheda">
+        <span class={statusClass}>Stato: {story.status}</span>
+        <span>{story.category}</span>
+        {story.dateISO ? <time datetime={story.dateISO}>{story.dateLabel}</time> : <span>{story.dateLabel}</span>}
+      </div>
+
+      <p class="eyebrow">{story.place}</p>
+      <h1 class="display-title">{story.title}</h1>
+      <p class="lead">{story.summary}</p>
+
+      <p class="verification-note">
+        <strong>{story.status}.</strong> {story.verificationNote}
+      </p>
+
+      <dl class="fact-grid" aria-label="Dati principali">
+        {story.facts.map((fact) => (
+          <div class="fact">
+            <dt class="fact__label">{fact.label}</dt>
+            <dd class="fact__value">{fact.value}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </header>
+
+  <div class="story-layout narrow shell--narrow">
+    <div class="prose story-body">
+      {story.sections.map((section) => (
+        <section class="story-section">
+          <h2>{section.title}</h2>
+          {section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+        </section>
+      ))}
+    </div>
+
+    <aside class="article-sources source-panel" aria-labelledby="sources-heading">
+      <p class="eyebrow">Tracciabilità</p>
+      <h2 id="sources-heading">Fonti pubbliche</h2>
+      <p class="source-panel__intro">
+        Le note indicano con precisione che cosa sostiene ogni fonte e che cosa resta da verificare.
+      </p>
+      <ol class="source-list">
+        {story.sources.map((source) => (
+          <li class="source-item">
+            <a class="source-link" href={source.url} rel="external">
+              <span class="source-link__publisher">{source.publisher}</span>
+              <span class="source-link__title">{source.title}</span>
+            </a>
+            <p class="source-note">{source.note}</p>
+          </li>
+        ))}
+      </ol>
+    </aside>
+  </div>
+
+  <footer class="section section--tight archive-footer">
+    <div class="narrow shell--narrow">
+      <a class="text-link" href="/blog">Consulta tutte le schede dell’archivio</a>
+    </div>
+  </footer>
+</article>

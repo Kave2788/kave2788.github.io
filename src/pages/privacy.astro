@@ -1,0 +1,69 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="Nota privacy — Alberto Cavedon"
+  description="Informazioni tecniche sul trattamento dei dati e sui servizi esterni usati dal sito di Alberto Cavedon."
+>
+  <header class="page-hero">
+    <div class="shell page-hero__grid">
+      <div>
+        <p class="eyebrow">Privacy / Nota tecnica</p>
+        <h1 class="display-title">Pochi dati.<br /><span class="text-accent">Detti chiaramente.</span></h1>
+      </div>
+      <div class="page-hero__aside">
+        <p class="lead">Il sito non contiene account, analytics, newsletter o un modulo che invia dati a un server.</p>
+        <p class="meta">Ultimo aggiornamento · 11 luglio 2026</p>
+      </div>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="narrow privacy-copy prose">
+      <h2>Che cosa fa il modulo contatti</h2>
+      <p>
+        I campi della pagina Contatti restano nel browser. Quando premi il pulsante, il sito
+        prepara un collegamento <code>mailto:</code> e apre il programma email del dispositivo.
+        Il messaggio viene inviato soltanto se lo confermi nel tuo programma di posta.
+      </p>
+
+      <h2>Che cosa non viene raccolto dal sito</h2>
+      <p>
+        Non sono presenti registrazione, area riservata, pagamenti, commenti, analytics,
+        profilazione, pixel pubblicitari o iscrizione a newsletter. Il sito non imposta cookie
+        applicativi propri.
+      </p>
+
+      <h2>Servizi esterni</h2>
+      <p>
+        Le pagine sono previste per la pubblicazione tramite GitHub Pages. Come ogni servizio di
+        hosting, GitHub può trattare dati tecnici di connessione nei propri log. I caratteri web
+        sono forniti da Google Fonts: il browser effettua quindi una richiesta ai server di Google
+        per scaricarli. I link a Vimeo, Amazon Music, Facebook e alle fonti documentali si aprono
+        soltanto quando li selezioni e sono regolati dalle informative dei rispettivi servizi.
+      </p>
+
+      <h2>Email ricevute</h2>
+      <p>
+        Le email inviate a <a href="mailto:info@speleosubtek.com">info@speleosubtek.com</a> vengono
+        usate per rispondere alla richiesta e gestire l’eventuale rapporto successivo. Per chiedere
+        rettifica o cancellazione di una conversazione, puoi scrivere allo stesso indirizzo.
+      </p>
+
+      <h2>Ambito di questa nota</h2>
+      <p>
+        Questa pagina descrive il comportamento tecnico dell’attuale versione del sito. Prima di
+        aggiungere analytics, newsletter, pagamenti o un vero endpoint per i moduli, la nota dovrà
+        essere aggiornata e verificata sul piano legale.
+      </p>
+
+      <p><a class="button-secondary" href="/contatti">Torna ai contatti</a></p>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .privacy-copy code { padding: 0.15rem 0.35rem; color: var(--cyan); background: var(--surface); border-radius: 0.3rem; font-family: var(--font-mono); }
+  .privacy-copy .button-secondary { margin-top: 2rem; }
+</style>

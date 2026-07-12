@@ -1,43 +1,40 @@
-# Astro Starter Kit: Minimal
+# Alberto Cavedon — Archivio sommerso
+
+Sito editoriale statico dedicato all’attività speleosubacquea di Alberto Cavedon.
+
+## Principi
+
+- fatti verificati separati dalle voci ancora in revisione;
+- fonti pubbliche collegate a ogni scheda d’archivio;
+- nessuna fotografia stock presentata come documentazione reale;
+- nessun modulo o newsletter che simuli un invio inesistente;
+- HTML/CSS nativo, JavaScript solo per menu, filtri e orientamento;
+- navigazione da tastiera, contrasto WCAG AA e movimento ridotto.
+
+## Struttura
+
+- `src/data/archive.ts` — storie, stato di verifica e fonti;
+- `src/components/ArchiveStory.astro` — template delle schede;
+- `src/layouts/Layout.astro` — navigazione, metadati e footer;
+- `src/styles/global.css` — sistema visivo globale;
+- `public/images/` — asset locali ottimizzati.
+
+## Sviluppo
+
+Richiede Node.js 22.12 o successivo.
 
 ```sh
-npm create astro@latest -- --template minimal
+npm install
+npm run dev
+npm run build
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+La build statica viene generata in `dist/`.
 
-## 🚀 Project Structure
+## Pubblicazione
 
-Inside of your Astro project, you'll see the following folders and files:
+Il progetto è configurato per `https://kave2788.github.io` e include un workflow GitHub Pages con Node 22. Prima del push, verificare che il remote Git non contenga credenziali e usare un URL HTTPS pulito o SSH.
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+## Contenuti da convalidare
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Le schede marcate `In revisione` non devono essere promosse a `Verificato` senza una fonte primaria o una documentazione pubblica consultabile. Le qualifiche riportate nel profilo vanno ricontrollate con Alberto prima della pubblicazione definitiva.

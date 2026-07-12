@@ -1,127 +1,317 @@
 ---
 import Layout from '../layouts/Layout.astro';
 
-// URL Unsplash verificate (tutte 200 OK)
-const BASE = [
-  ['1682687982167-d7fb3ed8541d', "Grotta dell'Elefante Bianco — subacqueo in esplorazione"],
-  ['1683009427470-a36fee396389', 'Cave diving — navigazione con filo guida'],
-  ['1543076499-a6133cb932fd',    'Grotta con luce naturale — Martvili Canyon'],
-  ['1510074232337-05d50fa189ba', 'Raja Ampat — visibilità 40+ m'],
-  ['1664888908848-d7e8ec255537', 'Grotta sommersa — corridoio verticale'],
-] as const;
-
-const items = BASE.map(([id, caption], i) => ({
-  id: i,
-  src:   `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=1200&h=800&q=80`,
-  thumb: `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=600&h=400&q=80`,
-  alt: `${caption} — foto Alberto Cavedon`,
-  caption,
-}));
+const media = [
+  {
+    type: 'Documentario',
+    date: '2012 · 45 min',
+    title: 'Su Gologone: dove la terra si spacca',
+    text: 'Tre spedizioni, una squadra di quindici persone e il rilievo di una risorgenza ancora aperta.',
+    href: 'https://vimeo.com/1164379037',
+    source: 'Vimeo · Massimo D’Alessandro',
+    accent: 'cyan',
+  },
+  {
+    type: 'Podcast',
+    date: '2025 · 28 min',
+    title: 'Scuba Stories: in grotta con Alberto Cavedon',
+    text: 'Una conversazione su decompressione, ambiente ostruito e decisioni in tempo reale.',
+    href: 'https://music.amazon.com.br/podcasts/851e8a18-9358-4969-a3f2-7a8cf6a215b1/episodes/5bb8cf95-a545-4795-bb71-032d6de3fdd8/scubamed-scuba-stories-in-grotta-con-alberto-cavedon',
+    source: 'ScubaMed · Amazon Music',
+    accent: 'amber',
+  },
+  {
+    type: 'Archivio fotografico',
+    date: '2008—2024',
+    title: 'Le gallerie Speleosubtek',
+    text: 'Serie fotografiche pubblicate per spedizione e località. Restano sulla fonte originale per conservare contesto e provenienza.',
+    href: 'https://www.speleosubtek.com/photogallery/',
+    source: 'Speleosubtek',
+    accent: 'bone',
+  },
+  {
+    type: 'Pubblicazioni',
+    date: 'Archivio tecnico',
+    title: 'Dispense di speleologia subacquea',
+    text: 'Sagolatura, configurazioni, incidenti, ricerca scientifica, DPV, rebreather e gestione dei gas.',
+    href: 'https://www.speleosubtek.com/',
+    source: 'Speleosubtek · documenti PDF',
+    accent: 'cyan',
+  },
+  {
+    type: 'Rivista',
+    date: 'Maggio 2012',
+    title: 'Intervista ad Alberto Cavedon',
+    text: 'Una fonte editoriale del Club Alpino Italiano sul lavoro speleosubacqueo e sulle esplorazioni di quegli anni.',
+    href: 'https://tecadigitale.cai.it/periodici/PDF/Montagne%20360/Montagne%20360_001_005_2012.pdf',
+    source: 'CAI · Montagne360',
+    accent: 'amber',
+  },
+  {
+    type: 'Soccorso',
+    date: '2018—2019',
+    title: 'Verso un codice europeo di intervento',
+    text: 'Il lavoro con squadre europee sulle procedure condivise per scenari traumatici oltre sifone.',
+    href: 'https://news.cnsas.it/soccorso-speleosubacqueo-verso-un-codice-europeo-di-intervento/',
+    source: 'CNSAS News',
+    accent: 'bone',
+  },
+];
 ---
 
 <Layout
-  title="Gallery — Alberto Cavedon"
-  description="Fotografie delle esplorazioni speleosub di Alberto Cavedon: grotte, sorgenti carsiche e il mondo sommerso."
+  title="Media e fonti — Alberto Cavedon"
+  description="Documentari, podcast, fotografie, pubblicazioni e fonti pubbliche sull'attività speleosubacquea di Alberto Cavedon."
 >
-  <div x-data="lightbox()">
+  <header class="page-hero">
+    <div class="shell page-hero__grid">
+      <div class="hero-animate">
+        <p class="eyebrow">Media / Fonti</p>
+        <h1 class="display-title">Vedere il contesto.<br /><span class="text-accent">Conservare la fonte.</span></h1>
+      </div>
+      <div class="page-hero__aside hero-animate hero-animate--delay">
+        <p class="lead">Niente fotografie generiche presentate come spedizioni reali. Ogni documento resta collegato al luogo in cui è stato pubblicato.</p>
+        <p class="meta">Video · Audio · Fotografia · Stampa · Tecnica</p>
+      </div>
+    </div>
+  </header>
 
-    <!-- Hero -->
-    <section class="section-dark pt-40 pb-16 text-center">
-      <p class="label-eyebrow mb-4">Gallery</p>
-      <h1 class="display-xl text-white mb-4">Fotografie<br/><span class="text-ocean-blue">dall'abisso.</span></h1>
-      <p class="text-apple-grey text-lg">Clicca per ingrandire · ← → per navigare · Esc per chiudere</p>
-    </section>
+  <section class="section media-feature">
+    <div class="shell media-feature__grid">
+      <figure class="identity-visual">
+        <picture>
+          <source srcset="/images/cave-archive-hero.avif" type="image/avif" />
+          <img
+            src="/images/cave-archive-hero.webp"
+            alt="Illustrazione editoriale di un subacqueo in una grotta sommersa"
+            width="1536"
+            height="1024"
+            loading="lazy"
+          />
+        </picture>
+        <figcaption>
+          <span>Visuale editoriale originale</span>
+          <span>Non è documentazione di spedizione</span>
+        </figcaption>
+      </figure>
+      <div>
+        <p class="eyebrow">Identità / 01</p>
+        <h2 class="display-xl">Una copertina, non una prova.</h2>
+        <p class="lead">
+          L’immagine principale è un’illustrazione creata per questo archivio. Non raffigura
+          Alberto né una grotta specifica. Le fotografie reali vengono invece collegate alle
+          raccolte originali, dove conservano data, sequenza e contesto.
+        </p>
+        <ul class="rule-list">
+          <li><span>01</span><p>Illustrazioni dichiarate come tali.</p></li>
+          <li><span>02</span><p>Nessuna attribuzione fotografica inventata.</p></li>
+          <li><span>03</span><p>Materiali originali pubblicati con fonte e autorizzazione.</p></li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
-    <!-- Grid -->
-    <section class="bg-apple-black pb-24 px-6">
-      <div class="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
-        {items.map((item, idx) => (
-          <button
-            class="group relative overflow-hidden aspect-[4/3] bg-apple-mid focus:outline-none focus:ring-2 focus:ring-apple-blue rounded-xl"
-            @click={`open(${idx})`}
-            aria-label={`Apri: ${item.caption}`}
-          >
-            <img
-              src={item.thumb}
-              alt={item.alt}
-              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-              loading={idx < 4 ? 'eager' : 'lazy'}
-              width="600"
-              height="400"
-            />
-            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300 flex items-end p-3">
-              <p class="text-white text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 line-clamp-2">
-                {item.caption}
-              </p>
+  <section class="section section--surface" aria-labelledby="library-heading">
+    <div class="shell">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Raccolta / 02</p>
+          <h2 id="library-heading" class="display-xl">L’archivio fuori dal sito.</h2>
+        </div>
+        <p class="lead">Sei ingressi a materiali già pubblicati. I collegamenti esterni si aprono sulla fonte originale.</p>
+      </div>
+
+      <div class="media-grid">
+        {media.map((item, index) => (
+          <article class={`media-card media-card--${item.accent}`}>
+            <div class="media-card__top">
+              <span>0{index + 1}</span>
+              <span>{item.date}</span>
             </div>
-          </button>
+            <div class="media-card__signal" aria-hidden="true"></div>
+            <p class="media-card__type">{item.type}</p>
+            <h3>{item.title}</h3>
+            <p>{item.text}</p>
+            <a href={item.href} target="_blank" rel="noopener">
+              {item.source} <span aria-hidden="true">↗</span>
+            </a>
+          </article>
         ))}
       </div>
-    </section>
-
-    <!-- Lightbox -->
-    <div
-      x-show="isOpen"
-      x-transition:enter="transition ease-out duration-200"
-      x-transition:enter-start="opacity-0"
-      x-transition:enter-end="opacity-100"
-      x-transition:leave="transition ease-in duration-150"
-      x-transition:leave-start="opacity-100"
-      x-transition:leave-end="opacity-0"
-      class="fixed inset-0 z-50 bg-black/95 backdrop-blur-sm flex items-center justify-center p-4"
-      @click.self="isOpen = false"
-      @keydown.escape.window="isOpen = false"
-      @keydown.arrow-left.window="prev()"
-      @keydown.arrow-right.window="next()"
-      role="dialog"
-      aria-modal="true"
-    >
-      <div class="relative max-w-5xl w-full">
-        <img
-          :src="items[currentIdx].src"
-          :alt="items[currentIdx].alt"
-          class="w-full max-h-[80vh] object-contain rounded-2xl"
-        />
-        <p class="text-center text-apple-grey mt-4 text-sm" x-text="items[currentIdx].caption"></p>
-        <p class="text-center text-apple-grey/40 text-xs mt-1" x-text="(currentIdx + 1) + ' / ' + items.length"></p>
-      </div>
-
-      <button @click="prev()" class="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors" aria-label="Precedente">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
-      </button>
-      <button @click="next()" class="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors" aria-label="Successiva">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-      </button>
-      <button @click="isOpen = false" class="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors" aria-label="Chiudi">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-      </button>
     </div>
-  </div>
+  </section>
+
+  <section class="section section--paper">
+    <div class="shell contribute-grid">
+      <div>
+        <p class="eyebrow eyebrow--dark">Contribuisci / 03</p>
+        <h2 class="display-xl">Hai una fotografia, un rilievo o un articolo?</h2>
+      </div>
+      <div>
+        <p class="lead lead--dark">
+          L’archivio cresce solo con materiali di provenienza chiara. Indica autore, data,
+          luogo, persone presenti e condizioni d’uso: evitiamo di perdere il contesto una
+          seconda volta.
+        </p>
+        <a class="button button--dark" href="/contatti?argomento=archivio">Proponi un documento</a>
+      </div>
+    </div>
+  </section>
 </Layout>
 
-<script>
-  const BASE = [
-    ['1682687982167-d7fb3ed8541d', "Grotta dell'Elefante Bianco — subacqueo in esplorazione"],
-    ['1683009427470-a36fee396389', 'Cave diving — navigazione con filo guida'],
-    ['1543076499-a6133cb932fd',    'Grotta con luce naturale — Martvili Canyon'],
-    ['1510074232337-05d50fa189ba', 'Raja Ampat — visibilità 40+ m'],
-    ['1664888908848-d7e8ec255537', 'Grotta sommersa — corridoio verticale'],
-  ] as const;
+<style>
+  .media-feature__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(300px, 0.8fr);
+    gap: clamp(2.5rem, 8vw, 8rem);
+    align-items: center;
+  }
 
-  const items = BASE.map(([id, caption]) => ({
-    src:   `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=1200&h=800&q=80`,
-    alt:   `${caption} — foto Alberto Cavedon`,
-    caption,
-  }));
+  .identity-visual {
+    margin: 0;
+    overflow: hidden;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+  }
 
-  document.addEventListener('alpine:init', () => {
-    (window as any).Alpine.data('lightbox', () => ({
-      isOpen: false,
-      currentIdx: 0,
-      items,
-      open(idx: number) { this.currentIdx = idx; this.isOpen = true; },
-      prev() { this.currentIdx = (this.currentIdx - 1 + this.items.length) % this.items.length; },
-      next() { this.currentIdx = (this.currentIdx + 1) % this.items.length; },
-    }));
-  });
-</script>
+  .identity-visual img {
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+  }
+
+  .identity-visual figcaption {
+    display: flex;
+    min-height: 58px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.8rem 1rem;
+    color: var(--mist);
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .media-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .media-card {
+    position: relative;
+    display: flex;
+    min-height: 34rem;
+    padding: clamp(1.25rem, 3vw, 2rem);
+    overflow: hidden;
+    flex-direction: column;
+    background: #0b0f10;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+  }
+
+  .media-card__top {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    color: var(--mist);
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    text-transform: uppercase;
+  }
+
+  .media-card__signal {
+    position: relative;
+    height: 9rem;
+    margin-block: 2.4rem;
+    overflow: hidden;
+  }
+
+  .media-card__signal::before,
+  .media-card__signal::after {
+    position: absolute;
+    content: '';
+    border-radius: 50%;
+  }
+
+  .media-card__signal::before {
+    top: 50%;
+    left: 50%;
+    width: 12rem;
+    height: 12rem;
+    border: 1px solid currentColor;
+    transform: translate(-50%, -50%) scaleY(0.32);
+    box-shadow: 0 0 0 1.4rem rgba(255, 255, 255, 0.025), 0 0 0 2.8rem rgba(255, 255, 255, 0.02);
+  }
+
+  .media-card__signal::after {
+    top: calc(50% - 4px);
+    right: 18%;
+    width: 8px;
+    height: 8px;
+    background: currentColor;
+  }
+
+  .media-card--cyan .media-card__signal { color: var(--cyan); }
+  .media-card--amber .media-card__signal { color: var(--amber); }
+  .media-card--bone .media-card__signal { color: var(--bone); }
+
+  .media-card__type {
+    margin-bottom: 0.7rem;
+    color: var(--cyan);
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .media-card h3 {
+    margin-bottom: 0.75rem;
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 1.45rem + 1vw, 2.5rem);
+    line-height: 0.95;
+    text-transform: uppercase;
+  }
+
+  .media-card > p:not(.media-card__type) { color: var(--mist); }
+
+  .media-card > a {
+    display: flex;
+    min-height: 48px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: auto;
+    color: var(--bone);
+    border-top: 1px solid var(--line);
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .media-card > a:hover { color: var(--cyan); }
+
+  .contribute-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(300px, 0.95fr);
+    gap: clamp(2.5rem, 8vw, 8rem);
+    align-items: end;
+  }
+
+  @media (max-width: 940px) {
+    .media-feature__grid,
+    .contribute-grid { grid-template-columns: 1fr; }
+    .media-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
+  @media (max-width: 620px) {
+    .media-grid { grid-template-columns: 1fr; }
+    .media-card { min-height: 30rem; }
+    .identity-visual figcaption { align-items: flex-start; flex-direction: column; justify-content: center; }
+  }
+</style>

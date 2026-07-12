@@ -1,270 +1,357 @@
 ---
 import Layout from '../layouts/Layout.astro';
+
+const timeline = [
+  {
+    year: '2000—2011',
+    title: 'Il ramo profondo di Fontanazzi',
+    text: 'Un report GUE del 2017 attribuisce ad Alberto Cavedon e al suo gruppo l’estensione dell’esplorazione del ramo profondo fino a quota −120 metri.',
+    source: 'https://www.gue.com/files/annualreports/2017-Project-Reports.pdf',
+    sourceLabel: 'GUE Project Report 2017',
+  },
+  {
+    year: '2008',
+    title: 'Elefante Bianco · intervento CNSAS',
+    text: 'Durante il recupero di uno speleosub, Alberto guida la ricerca del ROV, bonifica e risagola il tratto operativo con visibilità estremamente ridotta.',
+    source: 'https://www.cnsas.it/wp-content/uploads/2017/05/aprile-2008.pdf',
+    sourceLabel: 'Il Soccorso Alpino · aprile 2008',
+  },
+  {
+    year: '2010',
+    title: 'Su Gologone · −135 metri',
+    text: 'La spedizione porta il limite conosciuto della risorgenza sarda a 135 metri di profondità. Il risultato è riportato da fonti istituzionali e locali.',
+    source: 'https://idese.cultura.gov.it/en/place/su-gologone/',
+    sourceLabel: 'Istituto Centrale Patrimonio Immateriale',
+  },
+  {
+    year: '2012',
+    title: 'Arma del Lupo · nuovo ramo',
+    text: 'Una spedizione sostenuta da 62 speleologi documenta 300 metri di nuove gallerie. L’immersione di Alberto dura 135 minuti e raggiunge quota −121 metri.',
+    source: 'https://www.speleosubtek.com/archivio/esplorazioni-e-spedizioni/',
+    sourceLabel: 'Archivio Speleosubtek',
+  },
+  {
+    year: '2018',
+    title: 'Procedure europee di soccorso',
+    text: 'CNSAS documenta Alberto come direttore della Scuola nazionale speleosubacquea durante il lavoro con squadre europee per uniformare le procedure post-sifone.',
+    source: 'https://news.cnsas.it/soccorso-speleosubacqueo-verso-un-codice-europeo-di-intervento/',
+    sourceLabel: 'CNSAS News',
+  },
+  {
+    year: '2025',
+    title: 'Trent’anni di esperienza, raccontati',
+    text: 'Nel podcast ScubaMed affronta la decompressione in ambiente ostruito e le decisioni che distinguono la grotta da un profilo di risalita lineare.',
+    source: 'https://music.amazon.com.br/podcasts/851e8a18-9358-4969-a3f2-7a8cf6a215b1/episodes/5bb8cf95-a545-4795-bb71-032d6de3fdd8/scubamed-scuba-stories-in-grotta-con-alberto-cavedon',
+    sourceLabel: 'ScubaMed · Scuba Stories',
+  },
+];
+
+const qualifications = [
+  { title: 'Professional Trimix Instructor', detail: 'Percorso fino a 100 m · ISO 24802-2', status: 'Validità dichiarata 2026' },
+  { title: 'Technical Cave Instructor', detail: 'Formazione cave diving · ISO 24802-2', status: 'Validità dichiarata 2026' },
+  { title: 'Professional CCR Rebreather', detail: 'Circuito chiuso fino a 100 m · ISO 24807', status: 'Rilascio dichiarato 2024' },
+  { title: 'BLS-D & RCP Instructor', detail: 'Medical First Aid · ISO 24802-2', status: 'Validità dichiarata 2026' },
+];
 ---
 
 <Layout
-  title="Chi sono — Alberto Cavedon"
-  description="Biografia di Alberto Cavedon: speleologo subacqueo di Valstagna, direttore Scuola Nazionale Speleosubacquea CNSAS, oltre 300 immersioni nell'Elefante Bianco."
+  title="Profilo — Alberto Cavedon"
+  description="Il profilo documentato di Alberto Cavedon: esplorazioni speleosubacquee, soccorso CNSAS e formazione tecnica."
 >
+  <header class="page-hero">
+    <div class="shell page-hero__grid">
+      <div class="hero-animate">
+        <p class="eyebrow">Profilo / Alberto Cavedon</p>
+        <h1 class="display-title">La competenza<br />prima del <span class="text-accent">limite.</span></h1>
+      </div>
+      <div class="page-hero__aside hero-animate hero-animate--delay">
+        <p class="lead">Speleosubacqueo, formatore tecnico e già direttore della Scuola nazionale speleosubacquea CNSAS.</p>
+        <p class="meta">Canale di Brenta · Vicenza · Italia</p>
+      </div>
+    </div>
+  </header>
 
-  <!-- Hero page -->
-  <section class="section-dark pt-40 pb-24 text-center">
-    <div class="max-w-4xl mx-auto px-6">
-      <p class="label-eyebrow mb-4">Chi sono</p>
-      <h1 class="display-xl text-white mb-6">Alberto<br/><span class="text-ocean-blue">Cavedon</span></h1>
-      <p class="text-ocean-blue font-semibold tracking-wide text-xl mb-4">Oltre 40 anni sotto la superficie.</p>
-      <p class="body-lg max-w-2xl mx-auto">
-        Speleologo subacqueo. Valstagna, Vicenza.<br/>
-        Direttore della Scuola Nazionale Speleosubacquea CNSAS.
-      </p>
+  <section class="section">
+    <div class="shell profile-grid">
+      <div class="profile-plate" aria-hidden="true">
+        <span>AC</span>
+        <div class="profile-plate__axis"><i>0</i><i>−40</i><i>−80</i><i>−120</i></div>
+        <p>Speleologia<br />subacquea</p>
+      </div>
+      <div class="profile-copy">
+        <p class="eyebrow">Territorio / Metodo</p>
+        <h2 class="display-xl">Una storia costruita dentro il carsismo vicentino.</h2>
+        <div class="prose">
+          <p>
+            Alberto opera nel Canale di Brenta, nel territorio di Vicenza: una geografia in cui
+            altopiano, risorgenze e grotte non sono sfondo, ma scuola quotidiana. Da qui nasce un
+            percorso che unisce esplorazione, rilievo, formazione e soccorso.
+          </p>
+          <p>
+            Le spedizioni più note non sono imprese individuali. Su Gologone, Arma del Lupo,
+            Fontanazzi e l’Elefante Bianco mostrano lo stesso schema: squadre numerose, logistica,
+            tecnici in superficie, materiali ridondanti e responsabilità distribuite.
+          </p>
+          <p>
+            Anche la didattica segue questa logica. L’obiettivo non è consegnare rapidamente un
+            livello, ma capire se controllo, configurazione e capacità decisionale sono già adatti
+            all’ambiente successivo.
+          </p>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- Bio -->
-  <section class="section-mid py-24">
-    <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-5 gap-16 items-start">
-      <div class="md:col-span-3 space-y-6 text-apple-grey leading-relaxed text-lg fade-up">
-        <p>
-          Alberto Cavedon nasce e cresce a <strong class="text-white">Valstagna</strong>, nel Canale di Brenta
-          (Vicenza). È in questo territorio, dominato da altopiani carsici e grotte, che nasce la sua
-          passione per la speleologia e, naturalmente, per la sua declinazione sommersa.
-        </p>
-        <p>
-          È membro del <strong class="text-white">Gruppo Grotte Giara Modon</strong> di Valstagna e tecnico
-          della Commissione Speleosubacquea del CNSAS (Corpo Nazionale Soccorso Alpino e Speleologico).
-          Nel corso degli anni è diventato <strong class="text-white">Direttore della Scuola Nazionale
-          Speleosubacquea</strong> del CNSAS — il massimo riconoscimento istituzionale nel campo della
-          didattica speleosub in Italia.
-        </p>
-        <blockquote class="border-l-4 border-ocean-blue pl-5 py-2 my-2 italic text-white/80 text-lg leading-snug">
-          "La grotta non perdona chi non si prepara. Ed è proprio questa la sua bellezza: ti chiede tutto, e in cambio ti dà qualcosa che nessuna parola riesce a descrivere."
-          <footer class="mt-2 text-ocean-blue not-italic text-sm font-semibold">— Alberto Cavedon</footer>
-        </blockquote>
-        <p>
-          Ha effettuato oltre <strong class="text-white">300 immersioni nella Grotta dell'Elefante Bianco</strong>
-          (Valstagna, VI), un sistema che conosce meglio di chiunque altro, con sviluppo di 365 m
-          e profondità massima di –149 m. Ha esplorato grotte sommerse in
-          <strong class="text-white">Italia, Francia, Svizzera, Croazia e Grecia</strong>.
-        </p>
-        <p>
-          Nel maggio 2010 ha guidato una spedizione di 10 giorni alla sorgente di
-          <strong class="text-white">Su Gologone</strong> (Oliena, Sardegna), superando il limite di
-          –107 m stabilito 13 anni prima da Olivier Isler e raggiungendo –135 m,
-          con 155 metri di nuovo sviluppo esplorato.
-        </p>
-        <p>
-          Ha partecipato a operazioni di recupero in ambienti estremi, tra cui la
-          bonifica della Grotta dell'Elefante Bianco dopo l'incidente di un subacqueo straniero,
-          immergendosi in solitaria per raggiungere e assicurare il corpo prima dei soccorritori.
-        </p>
+  <section class="section section--paper">
+    <div class="shell">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow eyebrow--dark">Principi / 01</p>
+          <h2 class="display-xl">Tre cose che vengono prima.</h2>
+        </div>
+        <p class="lead lead--dark">Prima della profondità, prima dell’attrezzatura, prima del brevetto.</p>
       </div>
-
-      <aside class="md:col-span-2 space-y-5">
-        <!-- Identity card -->
-        <div class="card-apple fade-up">
-          <div class="grid grid-cols-2 gap-3 mb-5">
-            {[
-              { num: '300+',  label: 'immersioni Elefante Bianco' },
-              { num: '–135 m', label: 'Su Gologone' },
-              { num: '40+',   label: 'anni di esperienza' },
-              { num: '6',     label: 'paesi esplorati' },
-            ].map(s => (
-              <div class="bg-apple-black/60 rounded-xl p-4 flex flex-col items-center text-center">
-                <span class="text-ocean-blue font-bold text-2xl leading-none">{s.num}</span>
-                <span class="text-apple-grey text-xs mt-1 leading-tight">{s.label}</span>
-              </div>
-            ))}
-          </div>
-          <p class="text-white font-bold text-lg">Alberto Cavedon</p>
-          <p class="text-apple-grey text-sm">Valstagna · Vicenza · Italia</p>
-        </div>
-
-        <!-- Quick facts -->
-        <div class="card-apple fade-up">
-          <h2 class="text-white font-semibold mb-4 text-sm uppercase tracking-wider">Dati chiave</h2>
-          <dl class="space-y-3">
-            {[
-              { dt: 'Gruppo',     dd: 'Grotte Giara Modon, Valstagna' },
-              { dt: 'CNSAS',      dd: 'Direttore Scuola Speleosubacquea' },
-              { dt: 'Sito web',   dd: 'speleosubtek.com' },
-              { dt: 'Record',     dd: '–135 m, Su Gologone (2010)' },
-              { dt: 'Immersioni', dd: '300+ solo Elefante Bianco' },
-            ].map(f => (
-              <div class="flex justify-between text-sm">
-                <dt class="text-apple-grey">{f.dt}</dt>
-                <dd class="text-white font-medium text-right max-w-[60%]">{f.dd}</dd>
-              </div>
-            ))}
-          </dl>
-        </div>
-      </aside>
+      <div class="card-grid">
+        <article class="card card--paper">
+          <div class="card-index"><span>01</span><span>Preparazione</span></div>
+          <h3>Il margine si costruisce a terra.</h3>
+          <p>Pianificazione, ripetizione e conoscenza della configurazione riducono le decisioni improvvisate.</p>
+        </article>
+        <article class="card card--paper">
+          <div class="card-index"><span>02</span><span>Squadra</span></div>
+          <h3>Nessuna punta parte da sola.</h3>
+          <p>Chi entra è solo la parte visibile di un sistema fatto di trasporti, gas, assistenza e rilievo.</p>
+        </article>
+        <article class="card card--paper">
+          <div class="card-index"><span>03</span><span>Ritorno</span></div>
+          <h3>Uscire è parte dell’esplorazione.</h3>
+          <p>Ogni scelta viene letta nella direzione opposta: autonomia, decompressione e vie di recupero.</p>
+        </article>
+      </div>
     </div>
   </section>
 
-  <!-- Brevetti UTRtek reali -->
-  <section class="section-dark py-24" aria-labelledby="brevetti-heading">
-    <div class="max-w-6xl mx-auto px-6">
-      <div class="text-center mb-14 fade-up">
-        <p class="label-eyebrow mb-3">Qualifiche istruttore</p>
-        <h2 id="brevetti-heading" class="display-md text-white" style="font-family: var(--font-family-display);">
-          Brevetti UTRtek
-        </h2>
-        <p class="text-white/40 text-sm mt-3 max-w-xl mx-auto leading-relaxed">
-          Certificazioni istruttore rilasciate da <strong class="text-white/60">UTRtek UK Ltd · International Diving Certification</strong> — ISO International · SV Cert. Group
-        </p>
+  <section class="section section--surface" aria-labelledby="timeline-heading">
+    <div class="shell">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Cronologia / 02</p>
+          <h2 id="timeline-heading" class="display-xl">Tracce verificabili.</h2>
+        </div>
+        <p class="lead">Una cronologia prudente: entra soltanto ciò che oggi può essere collegato a un documento pubblico.</p>
       </div>
-      <div class="grid md:grid-cols-2 gap-5">
-        {[
-          {
-            cat:     'Correctly Instructor',
-            title:   'Professional Trimix Instructor',
-            sub:     '100 Mt',
-            iso:     'ISO 24802-2',
-            pik:     'ITA PTI/25-0158',
-            code:    'ITA 00082-I',
-            cert:    '342-EDU-25',
-            expires: '31 Dic 2026',
-            color:   'text-ocean-blue border-ocean-blue/30 bg-ocean-blue/5',
-            dot:     'bg-ocean-blue',
-          },
-          {
-            cat:     'Correctly Instructor',
-            title:   'Technical Cave Instructor',
-            sub:     'Cave Diving',
-            iso:     'ISO 24802-2',
-            pik:     'ITA CV3I/25-0158',
-            code:    'ITA 00082-I',
-            cert:    '342-EDU-25',
-            expires: '31 Dic 2026',
-            color:   'text-amber-400 border-amber-500/30 bg-amber-500/5',
-            dot:     'bg-amber-400',
-          },
-          {
-            cat:     'Correctly',
-            title:   'Professional CCR Rebreather',
-            sub:     '100 Mt — 508',
-            iso:     'ISO 24807',
-            pik:     'ITA ECCR4/24-16557',
-            code:    'ITA 00082-I',
-            cert:    '342-EDU-25',
-            expires: null,
-            issued:  '28 Ott 2024',
-            color:   'text-rose-400 border-rose-500/30 bg-rose-500/5',
-            dot:     'bg-rose-400',
-          },
-          {
-            cat:     'Other Instructor',
-            title:   'BLS-D & RCP',
-            sub:     'Medical First Aid Instructor',
-            iso:     'ISO 24802-2',
-            pik:     'ITA MDFI/25-0158',
-            code:    'ITA 00082-I',
-            cert:    '342-EDU-25',
-            expires: '31 Dic 2026',
-            color:   'text-emerald-400 border-emerald-500/30 bg-emerald-500/5',
-            dot:     'bg-emerald-400',
-          },
-        ].map(b => (
-          <article class={`card-glass fade-up border ${b.color} flex flex-col gap-4`}>
-            <div class="flex items-start justify-between gap-3">
-              <div>
-                <p class="text-white/35 text-[10px] font-bold tracking-[0.2em] uppercase mb-1">
-                  UTRtek · {b.cat}
-                </p>
-                <h3 class="text-white font-bold text-xl leading-tight" style="font-family: var(--font-family-display);">
-                  {b.title}
-                </h3>
-                <p class="text-white/50 text-sm mt-0.5">{b.sub}</p>
-              </div>
-              <span class={`w-2.5 h-2.5 rounded-full shrink-0 mt-1.5 ${b.dot}`}></span>
+
+      <ol class="timeline">
+        {timeline.map(item => (
+          <li>
+            <time>{item.year}</time>
+            <div>
+              <h3>{item.title}</h3>
+              <p>{item.text}</p>
             </div>
-
-            <dl class="grid grid-cols-2 gap-x-6 gap-y-2 text-xs border-t border-white/8 pt-4">
-              <div>
-                <dt class="text-white/30 mb-0.5">Standard</dt>
-                <dd class="text-white/70 font-mono font-semibold">{b.iso}</dd>
-              </div>
-              <div>
-                <dt class="text-white/30 mb-0.5">Codice istruttore</dt>
-                <dd class="text-white/70 font-mono font-semibold">{b.code}</dd>
-              </div>
-              <div>
-                <dt class="text-white/30 mb-0.5">PIK</dt>
-                <dd class="text-white/60 font-mono text-[11px]">{b.pik}</dd>
-              </div>
-              <div>
-                <dt class="text-white/30 mb-0.5">{b.expires ? 'Scadenza' : 'Rilascio'}</dt>
-                <dd class="text-white/70 font-semibold">{b.expires ?? b.issued}</dd>
-              </div>
-            </dl>
-
-            <p class="text-white/20 text-[10px] font-mono tracking-wide border-t border-white/5 pt-3">
-              Certificate n° {b.cert} · UTRtek UK Ltd · #1033518+
-            </p>
-          </article>
-        ))}
-      </div>
-      <p class="text-center text-white/20 text-xs mt-8 fade-up">
-        Verificabile su <a href="https://www.utrtek.com" target="_blank" rel="noopener" class="hover:text-white/40 transition-colors">utrtek.com</a>
-      </p>
-    </div>
-  </section>
-
-  <!-- Timeline -->
-  <section class="section-mid py-24">
-    <div class="max-w-3xl mx-auto px-6">
-      <div class="text-center mb-16 fade-up">
-        <p class="label-eyebrow mb-3">Cronologia</p>
-        <h2 class="display-md text-white">Tappe principali</h2>
-      </div>
-      <ol class="relative border-l border-ocean-blue/40 space-y-10 ml-3">
-        {[
-          { year: "Anni '80",   text: "Prime esplorazioni speleologiche nel Canale di Brenta. Ingresso nel Gruppo Grotte Giara Modon di Valstagna." },
-          { year: "Anni '90",   text: "Specializzazione nella speleologia subacquea. Prime immersioni nella Grotta dell'Elefante Bianco — inizia un rapporto che porterà a oltre 300 discese. Ingresso nel CNSAS come tecnico speleosubacqueo." },
-          { year: "Anni 2000",  text: "Esplorazioni sui sifoni dell'Altopiano di Asiago con team internazionale (P. Balordi, S. Kuster, G. Wimmer, G. Faur): 2545 m + 1150 m di sifoni superati, penetrando per chilometri nel cuore dell'altopiano." },
-          { year: "2008",       text: "Operazione di bonifica nella Grotta dell'Elefante Bianco: recupero in solitaria di un subacqueo straniero disperso a oltre 100 m di profondità." },
-          { year: "Mag. 2010",  text: "Spedizione di 10 giorni a Su Gologone (Oliena, Sardegna). Superato il record di Olivier Isler del 1997: raggiunge –135 m con +155 m di nuovo sviluppo esplorato — record nazionale di profondità in grotta allagata." },
-          { year: "Gen. 2012",  text: "Arma del Lupo, Veneto: –121 m, tre ore di penetrazione. Una delle immersioni in grotta più lunghe della sua carriera." },
-          { year: "Giu. 2012",  text: "Ritorno a Su Gologone con team internazionale italo-svizzero per continuare la mappatura oltre i –135 m." },
-          { year: "2013",       text: "Il racconto della spedizione Su Gologone viene pubblicato sulla rivista Scubazone, dando risonanza nazionale all'impresa." },
-          { year: "2020",       text: "Grotta del Bue Marino, Sardegna: esplorazione con il team speleosubtek in settembre." },
-          { year: "Oggi",       text: "Direttore Scuola Nazionale Speleosubacquea CNSAS. Attività didattica con certificazioni UTRtek, seminari e formazione di nuovi tecnici speleosub." },
-        ].map(e => (
-          <li class="ml-8 relative fade-up">
-            <span class="absolute -left-10 top-1 w-4 h-4 bg-ocean-blue rounded-full border-2 border-ocean-deep" aria-hidden="true"></span>
-            <p class="text-ocean-blue font-bold text-sm">{e.year}</p>
-            <p class="text-white/70 mt-1 text-sm leading-relaxed">{e.text}</p>
+            <a class="source-link" href={item.source} target="_blank" rel="noopener">
+              {item.sourceLabel} <span aria-hidden="true">↗</span>
+            </a>
           </li>
         ))}
       </ol>
     </div>
   </section>
 
-  <!-- CTA -->
-  <section class="section-dark py-24 text-center">
-    <div class="fade-up">
-      <h2 class="display-md text-white mb-8">Impara dall'esperienza.</h2>
-      <a href="/corsi" class="btn-apple">Vedi i corsi UTR</a>
-      <p class="mt-6">
-        <a href="/esperienze" class="text-ocean-blue hover:text-white transition-colors text-sm underline underline-offset-4">Scopri le esperienze guidate</a>
-      </p>
+  <section class="section" aria-labelledby="qualifiche-heading">
+    <div class="shell">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Formazione / 03</p>
+          <h2 id="qualifiche-heading" class="display-xl">Qualifiche dichiarate.</h2>
+        </div>
+        <p class="lead">
+          Sintesi dei certificati UTRtek messi a disposizione per il sito. Codici personali e
+          numeri di certificato non vengono pubblicati inutilmente.
+        </p>
+      </div>
+      <div class="qualification-grid">
+        {qualifications.map((item, index) => (
+          <article class="qualification">
+            <span class="qualification__index">0{index + 1}</span>
+            <h3>{item.title}</h3>
+            <p>{item.detail}</p>
+            <span class="status status--review">{item.status}</span>
+          </article>
+        ))}
+      </div>
+      <div class="qualification-note">
+        <p>Per enti, organizzatori e allievi è possibile richiedere verifica documentale diretta prima dell’attività.</p>
+        <a class="button-secondary" href="/contatti?argomento=qualifiche">Richiedi una verifica</a>
+      </div>
     </div>
   </section>
 
+  <section class="section section--surface">
+    <div class="shell profile-cta">
+      <div>
+        <p class="eyebrow">Passo successivo</p>
+        <h2 class="display-xl">Dalla biografia al percorso.</h2>
+      </div>
+      <div class="button-row">
+        <a class="button" href="/esperienze">Apri l’atlante</a>
+        <a class="button-secondary" href="/corsi">Esplora la formazione</a>
+      </div>
+    </div>
+  </section>
 </Layout>
 
-<script>
-  import { gsap } from 'gsap';
-  import { ScrollTrigger } from 'gsap/ScrollTrigger';
-  gsap.registerPlugin(ScrollTrigger);
+<style>
+  .profile-grid {
+    display: grid;
+    grid-template-columns: minmax(280px, 0.78fr) minmax(0, 1.22fr);
+    gap: clamp(2.5rem, 8vw, 8rem);
+    align-items: start;
+  }
 
-  gsap.utils.toArray<HTMLElement>('.fade-up').forEach(el => {
-    gsap.fromTo(el,
-      { opacity: 0, y: 40 },
-      {
-        opacity: 1, y: 0, duration: 0.8, ease: 'power3.out',
-        scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' },
-      }
-    );
-  });
-</script>
+  .profile-plate {
+    position: sticky;
+    top: 7rem;
+    display: grid;
+    min-height: 38rem;
+    align-content: space-between;
+    padding: clamp(1.5rem, 4vw, 3rem);
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 75% 22%, rgba(117, 229, 255, 0.28), transparent 14%),
+      repeating-radial-gradient(ellipse at 75% 22%, transparent 0 23px, rgba(117, 229, 255, 0.1) 24px 25px),
+      var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+  }
+
+  .profile-plate > span {
+    color: var(--cyan);
+    font-family: var(--font-display);
+    font-size: clamp(8rem, 18vw, 15rem);
+    font-weight: 800;
+    letter-spacing: -0.08em;
+    line-height: 0.7;
+  }
+
+  .profile-plate > p {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 600;
+    line-height: 0.9;
+    text-transform: uppercase;
+  }
+
+  .profile-plate__axis {
+    position: absolute;
+    top: 3rem;
+    right: 1.5rem;
+    bottom: 3rem;
+    display: grid;
+    align-content: space-between;
+    padding-left: 0.8rem;
+    color: var(--mist);
+    border-left: 1px solid var(--line-strong);
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+  }
+
+  .profile-copy { padding-top: 2rem; }
+  .profile-copy .display-xl { margin-bottom: 2rem; }
+
+  .timeline {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--line);
+  }
+
+  .timeline li {
+    display: grid;
+    grid-template-columns: 8rem minmax(0, 1fr) minmax(12rem, 0.42fr);
+    gap: clamp(1rem, 4vw, 3.5rem);
+    align-items: start;
+    padding-block: 1.6rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .timeline time {
+    color: var(--cyan);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-weight: 600;
+  }
+
+  .timeline h3 {
+    margin-bottom: 0.5rem;
+    font-family: var(--font-display);
+    font-size: 1.65rem;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .timeline p { margin: 0; color: var(--mist); }
+
+  .qualification-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    border-top: 1px solid var(--line);
+    border-left: 1px solid var(--line);
+  }
+
+  .qualification {
+    min-height: 18rem;
+    padding: clamp(1.25rem, 4vw, 2.5rem);
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .qualification__index {
+    display: block;
+    margin-bottom: 3rem;
+    color: var(--cyan);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+  }
+
+  .qualification h3 {
+    margin-bottom: 0.65rem;
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 1.5rem + 1vw, 2.6rem);
+    line-height: 0.95;
+    text-transform: uppercase;
+  }
+
+  .qualification p { color: var(--mist); }
+
+  .qualification-note,
+  .profile-cta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+
+  .qualification-note p { max-width: 42rem; margin: 0; color: var(--mist); }
+  .profile-cta { margin-top: 0; }
+
+  @media (max-width: 900px) {
+    .profile-grid { grid-template-columns: 1fr; }
+    .profile-plate { position: relative; top: auto; min-height: 30rem; }
+    .timeline li { grid-template-columns: 6rem 1fr; }
+    .timeline .source-link { grid-column: 2; }
+  }
+
+  @media (max-width: 640px) {
+    .timeline li,
+    .qualification-grid { grid-template-columns: 1fr; }
+    .timeline .source-link { grid-column: auto; }
+    .qualification-grid { border-left: 0; }
+    .qualification { border-left: 1px solid var(--line); }
+    .qualification-note,
+    .profile-cta { align-items: stretch; flex-direction: column; }
+  }
+</style>
